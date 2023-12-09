@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerSucursales.banderaEdicion?msg['viu.sucursales.editar']:msg['viu.sucursales.nuevo']}</h2>
+
+            <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.nombre']}*:" />
+                        <p:inputText value="#{controllerSucursales.sucursalNuevo.nombre}" 
+                                     required="true" onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" maxlength="50">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+
+
+                <p:column>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerSucursales.sucursalNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerSucursales.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+
+                    </h:panelGrid>
+                </p:column>
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="Codigo Empresa Core Amextra:" />
+                        <p:inputText value="#{controllerSucursales.sucursalNuevo.codEmpresaAmextra}" 
+                                     disabled="true"    required="true" onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" maxlength="50">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="Codigo Agencia Core Amextra*:" />
+                        <p:inputText value="#{controllerSucursales.sucursalNuevo.codAgenciaAmextra}" 
+                                     required="true" onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" maxlength="50">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+
+
+                <p:column>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.descripcion']}:"/>
+                        <p:inputTextarea cols="30" rows="5" value="#{controllerSucursales.sucursalNuevo.descripcion}" maxlength="50" onkeyup="soloMayusculas(this)"></p:inputTextarea>
+                    </p:panelGrid>
+                </p:column>
+            </p:panelGrid>
+
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerSucursales.sucursalNuevo.status}"/>
+
+
+
+
+            <cmp:botonesFormulario actionCancelar="#{controllerSucursales.cancelar()}" actionGuardar="#{controllerSucursales.guardar()}" banderaEdicion="#{controllerSucursales.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

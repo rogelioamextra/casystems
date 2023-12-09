@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>       
+        <cc:attribute name="actionAgregar" method-signature="void action(javax.faces.event.AjaxBehaviorEvent)" required="true"/> 
+        <cc:attribute name="actionEliminar" method-signature="void action(javax.faces.event.AjaxBehaviorEvent)" required="true"/> 
+        <cc:attribute name="processEliminar" type="java.lang.String" default="" required="false" /> 
+
+    </cc:interface>
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:commandButton value="#{msg['viu.generico.boton.eliminar.fila']}" actionListener="#{cc.attrs.actionEliminar}" process="@this"
+                         update="contenidoGeneral" style="color: #C3309AFF;" class="gray-button botonAgregarEliminar" icon="fa fa-minus-circle" />
+        <p:commandButton value="#{msg['viu.generico.boton.agregar.fila']}" action="#{cc.attrs.actionAgregar}" process="@this #{cc.attrs.processEliminar}"
+                         update="contenidoGeneral" class="gray-button botonAgregarEliminar" icon="fa fa-plus-circle" />
+    </cc:implementation>
+</html>

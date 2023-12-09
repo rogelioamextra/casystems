@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <h:body>
+        <div class="card card-w-title containerFondo">
+            <div id="main-wrapper-content">
+                <div class="ui-g">
+                    <h:panelGroup id="tarjetaWizard" class="panelWizard">
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="tarjetaTableroRecibidas estiloTarjetaTablero">
+                                <h:graphicImage styleClass="imagenesTarjetasTablero" name="images/descargar.png" library="icarus-layout"/>
+                                <h4 class="letraTarjeta">#{msg['viu.tablero.sol.recibidas']}</h4>
+                            </div>
+                            <div class="tarjetaTableroRecibidasPie estiloTarjetaTableroPie">
+                                <h3 class="letraTarjeta" style="margin: auto;">#{controllerTablero.recibidas}</h3>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="tarjetaTableroAprobadas estiloTarjetaTablero">
+                                <h:graphicImage styleClass="imagenesTarjetasTablero" name="images/me-gusta.png" library="icarus-layout"/>
+                                <h4 class="letraTarjeta">#{msg['viu.tablero.sol.aprobadas']}</h4>
+                            </div>
+                            <div class="tarjetaTableroAprobadasPie estiloTarjetaTableroPie">
+                                <h3 class="letraTarjeta" style="margin: auto;">#{controllerTablero.aprobadas}</h3>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 ">
+                            <div class="tarjetaTableroRechazadas estiloTarjetaTablero">
+                                <h:graphicImage styleClass="imagenesTarjetasTablero" name="images/disgusto.png" library="icarus-layout"/>
+                                <h4 class="letraTarjeta">#{msg['viu.tablero.sol.rechazadas']}</h4>
+                            </div>
+                            <div class="tarjetaTableroRechazadasPie estiloTarjetaTableroPie">
+                                <!--<h3 class="letraTarjeta" style="margin: auto;">9 - 60%</h3>-->
+                                <h3 class="letraTarjeta" style="margin: auto;">#{controllerTablero.rechazadas}</h3>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="tarjetaTableroPendientes estiloTarjetaTablero">
+                                <h:graphicImage styleClass="imagenesTarjetasTablero" name="images/repetir.png" library="icarus-layout"/>
+                                <h4 class="letraTarjeta">#{msg['viu.tablero.sol.pendientes']}</h4>
+                            </div>
+                            <div class="tarjetaTableroPendientesPie estiloTarjetaTableroPie">
+                                <h3 class="letraTarjeta" style="margin: auto;">#{controllerTablero.pendientes}</h3>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                </div>
+            </div>
+            <div id="main-wrapper-content">
+                <div class="ui-g" style="place-content: center;">
+                    <p:panelGrid columns="5" layout="grid" class="sinBordesFondo">
+                        <p:column>
+                            <p:panelGrid columns="1" layout="grid" class="sinBordesFondo">
+                                <p:outputLabel value="#{msg['viu.generico.fechaInicio']}" style="font-weight: bold;"/>
+                                <p:datePicker value="#{controllerTablero.fechaInicio}" >
+                                    <p:ajax event="dateSelect" listener="#{controllerTablero.buscarTodos()}"
+                                            process="@this" update="formContenido"/>
+                                </p:datePicker>
+
+
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column>
+                            <p:panelGrid columns="1" layout="grid" class="sinBordesFondo">
+                                <p:outputLabel value="#{msg['viu.generico.fechaFin']}" style="font-weight: bold;"/>
+                                <p:datePicker value="#{controllerTablero.fechaFinal}" >
+                                    <p:ajax event="dateSelect" listener="#{controllerTablero.buscarTodos()}" process="@this" update="formContenido"/>
+                                </p:datePicker>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column>
+                            <p:panelGrid columns="1" layout="grid" class="sinBordesFondo">
+                                <p:outputLabel value="#{msg['viu.generico.estatus']}" style="font-weight: bold;"/>
+                                <p:selectOneMenu value="#{controllerTablero.estatusSelect}" style="width: 108px"
+                                                 filter="true" filterMatchMode="startsWith"
+                                                 converter="listaConverter">
+                                    <f:selectItem itemLabel="#{msg['viu.generico.buscarTodos']}" itemValue="null"/>
+                                    <f:selectItems value="#{controllerTablero.listaEstatus}" var="em2" itemLabel="#{em2.nombre}"
+                                                   itemValue="#{em2}" />
+                                    <p:ajax event="change" listener="#{controllerTablero.buscarTodos()}" 
+                                            process="@this" update="formContenido"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column>
+                            <p:panelGrid columns="1" layout="grid" class="sinBordesFondo">
+                                <p:outputLabel value="#{msg['viu.tablero.grid.producto']}" style="font-weight: bold;"/>
+                                <p:selectOneMenu value="#{controllerTablero.productosSelect}" style="width: 108px"
+                                                 filter="true" filterMatchMode="startsWith"
+                                                 converter="listaConverter">
+                                    <f:selectItem itemLabel="#{msg['viu.generico.buscarTodos']}" itemValue="null"/>
+                                    <f:selectItems value="#{controllerTablero.listaProductos}" var="prod" itemLabel="#{prod.nombre}"
+                                                   itemValue="#{prod}" />
+                                    <p:ajax event="change" listener="#{controllerTablero.buscarTodos()}" 
+                                            process="@this" update="formContenido"/>
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:column>
+
+                    </p:panelGrid>
+                </div>
+            </div>
+            <div class="card">
+                <h:panelGroup layout="grid">
+                    <p:dataTable var="sol" value="#{controllerTablero.listaSolicitudes}"
+                                 rowsPerPageTemplate="5,10,15,20" paginator="true"
+                                 filteredValue="#{controllerTablero.filtro}"
+                                 paginatorPosition="bottom" rows="5" rendered="true"
+                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                 reflow="true" emptyMessage="#{msg['viu.generico.tabla.vacia']}" >
+                        <p:column styleClass="centrado" headerText="#{msg['viu.tablero.grid.folio']}" style="font-size: 14px" >
+                        </p:column>
+                        <p:column styleClass="centrado" headerText="#{msg['viu.tablero.grid.fecha']}" style="font-size: 14px" >
+
+                            <p:outputLabel value="#{sol.fechaSolicitud}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+
+                            </p:outputLabel>
+
+                        </p:column>
+
+                        <p:column styleClass="centrado" headerText="#{msg['viu.tablero.grid.producto']}" style="font-size: 14px">
+                            <p:outputLabel value="#{sol.idProductoCredito.nombre}" />
+
+
+                        </p:column>
+                        <p:column styleClass="centrado" headerText="#{msg['viu.generico.nombre']}" style="font-size: 14px">
+                            <p:outputLabel value="#{sol.idCliente.idPersona.nombreCompleto()}" />
+                        </p:column>
+
+                        <p:column styleClass="centrado" width="6%" headerText="#{msg['viu.tablero.grid.verifSms']}" style="font-size: 12px">
+                            <p:graphicImage style="width: 30px!important;" name="images/amextra/#{sol.idCliente.aproboVerificacionSms?'ok.jpg':'no.jpg'}"
+                                            library="icarus-layout"  />
+
+
+                        </p:column>
+                        <p:column styleClass="centrado" width="6%" headerText="#{msg['viu.tablero.grid.verifSms']}" style="font-size: 12px">
+                            <p:graphicImage style="width: 30px!important;" name="images/amextra/#{sol.idCliente.aproboVerificacionSms?'ok.jpg':'no.jpg'}"
+                                            library="icarus-layout"  />
+
+
+                        </p:column>
+                        <p:column styleClass="centrado" width="6%" headerText="Verificacion NIP" style="font-size: 12px">
+                            <p:graphicImage style="width: 30px!important;" name="images/amextra/#{sol.idCliente.aproboNip?'ok.jpg':'no.jpg'}"
+                                            library="icarus-layout"  />
+
+
+                        </p:column>
+                        <p:column styleClass="centrado" width="6%" headerText="#{msg['viu.tablero.grid.revolvente']}" style="font-size: 12px">
+
+                            <p:graphicImage style="width: 30px!important;" name="images/amextra/#{sol.revolvente?'ok.jpg':'no.jpg'}"
+                                            library="icarus-layout"  />
+
+                        </p:column>
+
+                        <p:column styleClass="centrado" width="100px" headerText="#{msg['viu.tablero.grid.estatus']}" style="font-size: 14px">
+                            <p:selectOneMenu value="#{sol.idEstatus}" style="width: 90px"
+
+                                             converter="listaConverter">
+                                <f:selectItems value="#{controllerTablero.listaEstatus}" var="prod" itemLabel="#{prod.nombre}"
+                                               itemValue="#{prod}" />
+
+                                <p:ajax event="change" listener="#{controllerTablero.cambiaEstatus(sol)}" update="formContenido:panelEstatusDialogo"  process="@this"/>
+                                
+
+                            </p:selectOneMenu>
+
+                        </p:column>
+                        <p:column styleClass="centrado" width="7%" headerText="#{msg['viu.tablero.grid.proyecion']}" style="font-size: 14px">
+                            <p:commandButton icon="fa fa-download" title="#{msg['viu.documentos.mensaje.proyeccion']}" ajax="false" actionListener="#{controllerTablero.generaProyeccion(sol)}" process="@this">
+
+
+
+                                <p:fileDownload  
+                                    value="#{controllerTablero.file}"
+                                    />
+
+
+                            </p:commandButton> 
+
+                        </p:column>
+
+
+                        <p:column styleClass="centrado" width="6%" headerText="#{msg['viu.generico.boton.ver']}" style="font-size: 14px">
+                            <p:commandLink 
+                                actionListener="#{controllerTablero.cambiaPaginaEdicion(sol)}"
+                                update="contenidoGeneral" >
+                                <p:graphicImage style="width: 30px!important;" name="images/editar.png"
+                                                library="icarus-layout"  title="editar"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+
+                <p:dialog header="#{msg['viu.generico.advertencia']}" resizable="false" widgetVar="dlgEstatus" minHeight="40" responsive="true"
+                          minimizable="false" maximizable="false" closable="false" modal="true" height="100">
+                    <h:panelGroup id="panelEstatusDialogo">
+                        <h:outputText style="font-weight: bold;" value="#{msg['viu.tablero.grid.cambioEstatus.confirmacion']} #{controllerTablero.cambioEstatus.idEstatus.nombre}?" />
+                        <br/>
+                        <br/>
+                        <p:panelGrid columns="2" 
+                                     style="margin-left: auto;margin-top: 7%;"
+                                     styleClass="sinBordes">
+                            <p:commandButton process="@this" oncomplete="PF('dlgEstatus').hide();"
+                                             update="contenidoGeneral"  value="#{msg['viu.generico.confirmar']}" actionListener="#{controllerTablero.guardarCambioEstatus()}"
+                                             styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" >
+
+                            </p:commandButton>
+                            <p:commandButton  oncomplete="PF('dlgEstatus').hide();"  process="@this"
+
+                                              value="#{msg['viu.generico.boton.cancelar']}"
+                                              styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" >
+
+                            </p:commandButton>
+
+                        </p:panelGrid>
+
+                    </h:panelGroup>
+
+                </p:dialog>
+            </div>
+        </div>
+
+
+        <h:outputStylesheet name="css/viu.css" library="icarus-layout" />
+    </h:body>
+</html>

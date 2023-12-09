@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <p:dataTable value="#{controllerClientes.nuevo.dtReferenciasPersonalesList}"
+                     var="ref"   >
+            <p:column headerText="Nombre">
+                <p:outputLabel styleClass="negrita" value="#{ref.nombreCompleto} #{ref.apellidoPaterno} #{ref.apellidoMaterno}"/>
+
+
+
+            </p:column>
+            <p:column headerText="#{msg['viu.generico.boton.ver']}" styleClass="centrado" width="6%">
+
+                <p:commandLink 
+                    actionListener="#{controllerClientes.verificaReferencia(ref)}" 
+                    update="formContenido:tabopciones:contenidoReferencia" >
+                    <p:graphicImage style="width: 30px!important;" name="images/editar.png"
+                                    library="icarus-layout"  title="#{msg['viu.generico.editar']}"/>
+                </p:commandLink>
+
+            </p:column>
+
+
+        </p:dataTable>
+        <h:panelGroup id="contenidoReferencia">
+            <p:panelGrid columns="3" rendered="#{controllerClientes.referencia ne null}" layout="grid" styleClass="sinBordes">
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.nombre']}"/>
+                    <p:inputText value="#{controllerClientes.referencia.nombreCompleto}"  />
+                </p:panelGrid>
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="Apellido Paterno"/>
+                    <p:inputText value="#{controllerClientes.referencia.apellidoPaterno}"  />
+                </p:panelGrid>
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="Apellido Materno"/>
+                    <p:inputText value="#{controllerClientes.referencia.apellidoMaterno}"  />
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.referencias.parentesco']}"/>
+                    <p:selectOneMenu value="#{controllerClientes.referencia.idParentesco}" style="width: 90px"
+                                     converter="listaConverter">
+                        <f:selectItems value="#{controllerClientes.listaParentescos}" var="pa" itemLabel="#{pa.nombre}"  
+                                       itemValue="#{pa}" />
+                    </p:selectOneMenu>
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.telefono']}"/>
+                    <p:inputText value="#{controllerClientes.referencia.telefono}"  />
+
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.calle']}"/>
+                    <p:inputText value="#{controllerClientes.referencia.idDireccion.calle}"  />
+
+                </p:panelGrid>
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.numExterior']}"/>
+                    <p:inputText value="#{controllerClientes.referencia.idDireccion.numeroExterior}"  />
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.numInterior']}"/>
+                    <p:inputText value="#{controllerClientes.referencia.idDireccion.numeroInterior}"  />
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.codigoPostal']}"/>
+                    <p:inputText value="#{controllerClientes.referencia.idDireccion.cp}"  />
+
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.estado']}"/>
+                    <p:selectOneMenu value="#{controllerClientes.referencia.idDireccion.idEstado}" style="width: 90px"
+                                     converter="listaConverter"
+                                     >
+                        <f:selectItems value="#{controllerClientes.listaEstados}" var="na" itemLabel="#{na.nombre}"
+                                       itemValue="#{na}" />
+
+                    </p:selectOneMenu>
+
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.municipio']}"/>
+                    <p:selectOneMenu value="#{controllerClientes.referencia.idDireccion.idMunicipio}" style="width: 90px"
+                                     converter="listaConverter"
+                                     >
+                        <f:selectItems value="#{controllerClientes.listaMunicipiosRef1}" var="na" itemLabel="#{na.nombre}"
+                                       itemValue="#{na}" />
+
+                    </p:selectOneMenu>
+
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.colonia']}"/>
+                    <p:selectOneMenu value="#{controllerClientes.referencia.idDireccion.idColonia}" style="width: 90px"
+                                     converter="listaConverter"
+                                     >
+                        <f:selectItems value="#{controllerClientes.listaColoniasRef1}" var="na" itemLabel="#{na.nombre}"
+                                       itemValue="#{na}" />
+
+                    </p:selectOneMenu>
+
+                </p:panelGrid>
+          
+
+            </p:panelGrid>
+
+        </h:panelGroup>
+
+
+
+
+
+
+
+    </h:body>
+</html>

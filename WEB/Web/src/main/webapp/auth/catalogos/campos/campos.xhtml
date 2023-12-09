@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerCampos.banderaEdicion?msg['viu.campos.editar']:msg['viu.campos.nuevo']}</h2>
+
+            <p:panelGrid id="viewCampos" columns="1" layout="grid" styleClass="sinBordes">
+
+                <p:panelGrid id="Campos" 
+                             columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2" 
+                             columns="5" layout="grid" styleClass="sinBordes">
+
+                    <p:column style="text-align: -webkit-center; width: 80px;">
+                            <p:commandButton  rendered="#{controllerCampos.verBotonDetalle==true}"
+                                              actionListener="#{controllerCampos.verDetalle()}"
+                                              update="contenidoGeneral" process="@this" title="Ver todos los campos cargados con anterioridad"
+                                              style="margin-left: 5%;" icon="fa fa-search Fs16 White"/>
+                    </p:column>
+
+                    <p:column>
+                        <p:panelGrid id="comboCategorias" columns="1" layout="grid" styleClass="sinBordes">
+                            <p:outputLabel value="#{msg['viu.campos.categoria.datos']}: *"/>
+                            <p:selectOneMenu style="width: 100%" value="#{controllerCampos.categoriaSelect}" required="true"
+                                             requiredMessage="#{msg['viu.categorias.seleccion']}"
+                                             filter="true" filterMatchMode="startsWith"
+                                             converter="listaConverter"> 
+                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{controllerCampos.listaCategorias}" var="categoria"
+                                               itemLabel="#{categoria.nombre}"
+                                               itemValue="#{categoria}" />
+                                <p:ajax event="change" process="@this" global="false"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:column>
+
+                    <p:column>
+                        <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                            <p:outputLabel value="#{msg['viu.campos.tipo']}: *"/>
+                            <p:selectOneMenu style="width: 100%" value="#{controllerCampos.tipoCampoSelect}" required="true"
+                                             requiredMessage="#{msg['viu.campos.seleccionar']}"
+                                             filter="true" filterMatchMode="startsWith"
+                                             converter="listaConverter">              
+                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{controllerCampos.listaTipoCampos}" var="tipoCampos"
+                                               itemLabel="#{msg[tipoCampos.nombre]}"
+                                               itemValue="#{tipoCampos}" />
+                                <p:ajax event="change" process="@this" update="formContenido:viewCampos" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:column>
+
+                    <p:column style="text-align: -webkit-center;">
+                        <h:panelGrid id="obligatorio" columns="1" styleClass="sinBordes">
+                            <p:outputLabel value="#{msg['viu.campos.obligatorio']}:"/>
+                            <h:panelGroup>
+                                <p:inputSwitch onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}" value="#{controllerCampos.campoNuevo.requerido}"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:column>
+
+                    <p:column style="text-align: -webkit-center;">
+                        <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                            <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                            <h:panelGroup>
+                                <p:toggleSwitch value="#{controllerCampos.campoNuevo.status}">
+                                    <p:ajax event="change" listener="#{controllerCampos.validaEstatus()}" process="@this"/>
+                                </p:toggleSwitch>
+                                <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:column>
+                </p:panelGrid>
+
+                <p:panelGrid id="captura" columns="5" styleClass="sinBordes" rendered="#{controllerCampos.tipoCampoSelect.idTipo==1}">
+
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"> 
+                        <p:selectOneRadio id="console" value="#{controllerCampos.radioB}" >
+                            <f:selectItem itemLabel="Texto Corto" itemValue="corto"/>
+                            <f:selectItem itemLabel="Texto Largo" itemValue="largo"/>
+                            <p:ajax event="change" process="@this" update="formContenido:captura"/>
+                        </p:selectOneRadio>
+                    </p:panelGrid>
+
+                    <p:panelGrid rendered="#{controllerCampos.radioB=='corto'}" columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.campos.campo']}: *" />
+                        <p:inputText value="#{controllerCampos.campoNuevo.nombre}" required="true" requiredMessage="#{msg['viu.campos.nombre.vacio']}" 
+                                     onkeyup="soloMayusculas(this)" maxlength="100">
+                        </p:inputText>
+                    </p:panelGrid>
+
+                    <p:panelGrid rendered="#{controllerCampos.radioB=='largo'}" columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.campos.campo']}: *" />
+                        <p:inputTextarea value="#{controllerCampos.campoNuevo.nombre}" cols="32" rows="4"
+                                         requiredMessage="#{msg['viu.campos.nombre.vacio']}" required="true"
+                                         onkeyup="soloMayusculas(this)" maxlength="250">
+                        </p:inputTextarea>
+                    </p:panelGrid>
+
+                    <p:column style="text-align: -webkit-center;">
+                        <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                            <p:outputLabel value="#{msg['viu.campos.tipo.dato']}: *"/>
+                            <p:selectOneMenu value="#{controllerCampos.tipoDatoSelect}" filter="true" filterMatchMode="startsWith" converter="listaConverter"
+                                             requiredMessage="#{msg['viu.campos.tipo.dato.seleccionar']}" required="true">              
+                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{controllerCampos.listaTipoDato}" var="tipoDato" itemLabel="#{msg[tipoDato.nombre]}" itemValue="#{tipoDato}" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:column>
+
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.campos.longitud']}: *" />
+                        <p:spinner value="#{controllerCampos.longitudMax}" required="true" requiredMessage="#{msg['viu.campos.longitud.vacio']}" 
+                                   onkeypress="return soloNumeros(event);" min="1" maxlength="100">
+                        </p:spinner>
+                    </p:panelGrid>
+
+                </p:panelGrid>
+
+
+                <h:panelGrid columns="3" id="lista" rendered="#{controllerCampos.tipoCampoSelect.idTipo==2 || controllerCampos.tipoCampoSelect.idTipo==3 || controllerCampos.tipoCampoSelect.idTipo==4}">
+
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"> 
+                        <p:outputLabel value="#{msg['viu.campos.campo']}: *" />
+                        <p:inputText value="#{controllerCampos.campoNuevo.nombre}" required="true" requiredMessage="#{msg['viu.campos.nombre.vacio']}" 
+                                     onkeyup="soloMayusculas(this)" maxlength="200">
+                        </p:inputText>
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"> 
+                        <div class="ui-g-12 ui-md-12 sinBordes">
+                            <cmp:botonesAltaBaja actionAgregar="#{controllerCampos.agregaRegistro()}" 
+                                                 processEliminar="formContenido:filas" actionEliminar="#{controllerCampos.eliminaRegistro()}" />
+                        </div>
+
+                        <div class="ui-g-12 ui-md-12 sinBordes">
+                            <h:panelGroup layout="grid" id="tablaItems">
+                                <p:dataTable id="filas" widgetVar="dtItems" var="item" value="#{controllerCampos.listaItems}" editable="true" editMode="cell"
+                                             selection="#{controllerCampos.selectedGridItem}" rowKey="#{item}" emptyMessage="#{msg['viu.generico.tabla.vacia']}">
+
+                                    <p:ajax event="cellEdit" listener="#{controllerCampos.onCellEdit}" update="formContenido:filas" resetValues="true"/>
+                                    <p:column selectionMode="multiple" exportable="false" styleClass="centrado fondoCheck"></p:column>
+                                    <p:ajax event="rowSelectCheckbox" process="formContenido:filas" />          
+                                    <p:ajax event="rowUnselectCheckbox"  process="formContenido:filas" />
+
+                                    <p:column headerText="#{msg['viu.campos.valor']}" >
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{item.item}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{item.item}" style="width:100%" required="true" requiredMessage="Campo vacio"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column headerText="#{msg['viu.campos.etiqueta']}">
+                                        <p:cellEditor >
+                                            <f:facet name="output">
+                                                <h:outputText value="#{item.label}" />
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{item.label}" style="width:100%" required="true" requiredMessage="Campo vacio"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGroup>    
+                        </div>
+
+                    </p:panelGrid>
+                </h:panelGrid>
+
+                <p:panelGrid id="fecha" columns="5" styleClass="sinBordes"
+                             rendered="#{controllerCampos.tipoCampoSelect.nombre eq 'viu.campos.tipo.fecha' or controllerCampos.tipoCampoSelect.nombre eq 'viu.campos.tipo.firma' }">
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.campos.campo']}: *" />
+                        <p:inputText value="#{controllerCampos.campoNuevo.nombre}" required="true" 
+                                     requiredMessage="#{msg['viu.campos.nombre.vacio']}" 
+                                     onkeyup="soloMayusculas(this)" maxlength="100">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+
+
+            </p:panelGrid>
+
+            <p:dialog header="" widgetVar="dlgDetalle" resizable="false" draggable="false" responsive="true" >
+                <h:panelGroup id="detalle">
+                    <p:dataTable  var="detalle" value="#{controllerCampos.listaDetalle}"
+                                  rowsPerPageTemplate="5,10,15" paginator="true"
+                                  filteredValue="#{controllerCampos.filtroDetalle}"
+                                  paginatorPosition="bottom" rows="10"                         
+                                  paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                  reflow="true"  emptyMessage="#{msg['viu.generico.tabla.vacia']}"  widgetVar="usu">
+
+                        <f:facet name="header" class="sinFondo">
+                            <div id="filtroTablaTareasGenerales">                       
+                                <p:inputText  id="globalFilter" onkeypress="return event.keyCode != 13" placeholder="#{msg['viu.generico.filtro.buscar']}" style="width: 25%;margin-left: 75%;">
+                                    <p:ajax event="keyup" oncomplete="PF('usu').filter();" delay="500" global="false" />
+                                </p:inputText>                     
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="#{msg['viu.campos.campo']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{detalle.nombre}">
+                            <p:outputLabel value="#{detalle.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.campos.categoria.datos']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{detalle.idCategoria.nombre}">
+                            <p:outputLabel value="#{detalle.idCategoria.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.campos.tipo']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{detalle.idTipoCampo.nombre}">
+                            <p:outputLabel value="#{msg[detalle.idTipoCampo.nombre]}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.campos.obligatorio']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{detalle.requerido ?'SI':'NO'}">
+                            <p:outputLabel value="#{detalle.requerido?msg['viu.generco.si']:msg['viu.generco.no']}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.generico.estatus']}" styleClass="centrado"  filterMatchMode="contains" filterBy="#{detalle.status ?'Activo':'Inactivo'}">
+                            <p:outputLabel value="#{detalle.status?msg['viu.generico.activo']:msg['viu.generico.inactivo']}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:dialog>
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerCampos.campoNuevo.status}"/>
+            <cmp:botonesFormulario actionCancelar="#{controllerCampos.cancelar()}" actionGuardar="#{controllerCampos.guardar()}" banderaEdicion="#{controllerCampos.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

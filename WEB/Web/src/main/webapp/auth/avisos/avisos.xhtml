@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerAvisos.banderaEdicion?msg['viu.avisos.editar']:msg['viu.avisos.nuevo']}</h2>
+            <p:panelGrid columns="5" layout="grid" styleClass="sinBordes">
+
+
+                <h:panelGroup>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.empresas.nombre']}*:" />
+                        <p:inputText value="#{controllerAvisos.avisoNuevo.nombre}" 
+                                     required="true" onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" maxlength="120">
+                        </p:inputText>
+                    </p:panelGrid>
+                </h:panelGroup>
+
+
+
+                <h:panelGroup>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerAvisos.avisoNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerAvisos.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:panelGrid  columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="aviso expira:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerAvisos.avisoNuevo.expira}">
+                                <p:ajax event="change" update="formContenido:fechaExpiracion" process="@this"/>
+                            </p:toggleSwitch>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:panelGrid  columns="1" styleClass="sinBordes"> 
+                        <h:panelGroup id="fechaExpiracion">
+
+                            <h:panelGrid  columns="1" styleClass="sinBordes">
+                                <p:outputLabel value="Fecha Expiracion:"  rendered="#{controllerAvisos.avisoNuevo.expira}"/>
+
+
+                                <p:calendar rendered="#{controllerAvisos.avisoNuevo.expira}" value="#{controllerAvisos.avisoNuevo.fechaExpiracion}"
+                                            required="true" requiredMessage="El campo fecha de expiracion es requerido"     locale="es" readonlyInput="true" showOn="button"
+                                            pattern="dd/MM/yyyy" mindate="#{controllerAvisos.fechaMinima}" >
+                                    <p:ajax event="dateSelect" process="@this" update="@this" />
+
+                                </p:calendar> 
+
+                            </h:panelGrid> 
+
+
+
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+
+
+            </p:panelGrid>
+
+            <p:panelGrid id="formato" columns="1" layout="grid" styleClass="sinBordes">
+
+
+                <p:panelGrid id="editor" columns="1" layout="grid" styleClass="sinBordes" >
+                    <p:outputLabel value="Contenido de aviso:"  />
+
+                    <p:textEditor secure="false" widgetVar="editor1" value="#{controllerAvisos.avisoNuevo.aviso}" height="300"
+                                  required="true" requiredMessage="El campo contenido de aviso es requerido"   >
+                        <f:facet name="toolbar">
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                                <button class="ql-strike"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-font"></select>
+                                <select class="ql-size"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-color" />
+                                <select class="ql-background" />
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-script" value="sub" />
+                                <button class="ql-script" value="super" />
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-header" value="1" />
+                                <button class="ql-header" value="2" />
+                                <button class="ql-blockquote" />
+                                <button class="ql-code-block" />
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-list" value="ordered" />
+                                <button class="ql-list" value="bullet" />
+                                <button class="ql-indent" value="-1" />
+                                <button class="ql-indent" value="+1" />
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-direction" value="rtl" />
+                                <select class="ql-align" />
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-link" />
+                                <button class="ql-image" />
+                                <button class="ql-formula" />
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-clean" />
+                            </span>
+                        </f:facet>
+                    </p:textEditor>
+                </p:panelGrid>
+            </p:panelGrid>
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" valorCheck="#{controllerAvisos.avisoNuevo.status}"/>
+            <cmp:botonesFormulario actionCancelar="#{controllerAvisos.cancelar()}" actionGuardar="#{controllerAvisos.guardar()}" banderaEdicion="#{controllerAvisos.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

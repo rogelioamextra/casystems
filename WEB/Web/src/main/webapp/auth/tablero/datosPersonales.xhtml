@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>     
+    <h:body>   
+        <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita"  value="#{msg['viu.cliente.nombre']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idCliente}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.nombre']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.nombres}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.apellido.pat']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.apellidoPaterno}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.apellido.mat']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.apellidoMaterno}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.telefono']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.telefono}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.genero']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idPersona.genero}" style="width: 90px"
+
+                                 >
+                    <f:selectItem  itemLabel="#{msg['viu.generico.genero.masculino']}" itemValue="1"/>
+                    <f:selectItem  itemLabel="#{msg['viu.generico.genero.femenino']}" itemValue="0"/>
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.nacionalidad']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idPersona.idNacionalidad}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaNacionalidades}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.estadoCivil']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idPersona.idEstadoCivil}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaEstadoCivil}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.lugarNacimiento']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idPersona.lugarNacimiento}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaEstados}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.fechaNacimiento']}"/>
+                <p:datePicker pattern="dd/MM/yyyy"  value="#{controllerTablero.solicitudEditar.idCliente.idPersona.fechaNacimiento}" >
+
+                </p:datePicker>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.rfc']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.rfc}"  />
+
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.curp']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.curp}"  />
+
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.gradoEstudios']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idPersona.idGradoMaximoEstudios}" 
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaGradoMaximo}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.correo']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.email}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.dependientesEconomicos']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idPersona.dependientesEconomicos}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.idTipoIdentificacion.idIdentificaciones eq 1}">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.codigoIne']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.noIdentificacion}"  />
+
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.idTipoIdentificacion.idIdentificaciones eq 1}">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.claveElector']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.claveElector}"  />
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.idTipoIdentificacion.idIdentificaciones eq 1}">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.ine.anioVencimiento']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.vigencia}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.idTipoIdentificacion.idIdentificaciones eq 1}">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.ine.anioEmision']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.emision}"  />
+            </p:panelGrid>
+
+            <p:commandButton rendered="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.idTipoIdentificacion.idIdentificaciones eq 1}" value="#{msg['viu.generico.boton.verImagen']}" actionListener="#{controllerTablero.buscarImagenesIne()}"
+                             update="formContenido:panelImagenesIne"        oncomplete="PF('imagenesIne').show();"/>
+
+
+
+
+
+
+
+            <h:panelGroup rendered="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.idTipoIdentificacion.idIdentificaciones ne 1}">
+                <p:panelGrid columns="2" layout="grid" styleClass="sinBordes" >
+
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.identificacion']}"/>
+                        <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDtIdentificacion.idTipoIdentificacion}"
+                                         style="width: 90px"
+                                         converter="listaConverter"
+                                         >
+                            <f:selectItems value="#{controllerTablero.listaIdentificaciones}" var="prod" itemLabel="#{prod.nombre}"
+                                           itemValue="#{prod}" />
+
+                        </p:selectOneMenu>
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg['viu.generico.boton.verImagen']}" actionListener="#{controllerTablero.buscarImagenesIdentificacion()}"
+                                     update="formContenido:panelImagenesIne"     
+                                     oncomplete="PF('imagenesIne').show();"/>
+
+
+                </p:panelGrid>
+
+
+            </h:panelGroup>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.sucursal']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idSucursal}" 
+                                 converter="listaConverter" 
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaSucursales}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Asesor:"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idAsesor}" 
+                                 style="width: 70%"       converter="listaConverter" 
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaAsesores}" var="prod" itemLabel="#{prod.idPersona.nombres} #{prod.idPersona.apellidoPaterno} #{prod.idPersona.apellidoMaterno}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes" rendered="#{controllerTablero.face ne null}">
+                <p:outputLabel styleClass="negrita" value="Face Match:#{controllerTablero.face.similitud eq null or controllerTablero.face.similitud eq '' ?'0.0':controllerTablero.face.similitud}%" />  
+
+
+                <p:commandButton value="#{msg['viu.generico.boton.verImagen']}" actionListener="#{controllerTablero.buscarImagenesSelfie()}"
+                                 update="formContenido:panelImagenesIne"     
+                                 oncomplete="PF('imagenesIne').show();"/>
+            </p:panelGrid>
+
+        </p:panelGrid>
+    </h:body>
+</html>

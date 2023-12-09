@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <link rel="stylesheet" href="resources/icarus-layout/css/animate.min.css"/>
+        </f:facet>
+        <title>APP NOUS</title>
+        <link rel="icon" href="resources/icarus-layout/images/Favicon-VIU.png" />
+
+    </h:head>
+
+    <h:body styleClass="containerLogin">
+        <div class="ui-g">
+            <p:panel styleClass="panel-login animate__animated animate__fadeIn">
+                <p:growl id="growlLogin" showDetail="false" sticky="false" life="10000"  />
+                <h:form id="formlogin">
+                    <h:graphicImage style="width: 190px; height: auto; margin-top: 0px;" styleClass="logoLogin" name="pima/logo-1.png" id="PageLogo" library="icarus-layout"/>
+                    <div class="ui-g-12" style="padding-top:0px;">
+                        <p:inputText styleClass="input-login" placeholder="#{msg['viu.login.usuario']}" 
+                                     required="true"
+                                     value="#{login.usuario}" requiredMessage="#{msg['viu.login.usuario.requerido']}"/><br/>
+                    </div>
+                    <div class="ui-g-12" style="padding-top:10px;">
+                        <p:password styleClass="input-login" placeholder="#{msg['viu.login.contrasena']}"
+                                    required="true"
+                                    value="#{login.password}" requiredMessage="#{msg['viu.login.contrasena.requerido']}"/>
+                    </div>
+                    <p:commandButton styleClass="button-login" actionListener="#{login.entrar()}" process="@form" update="growlLogin" id="loginButton"
+                                     value="#{msg['viu.generico.entrar']}" ></p:commandButton>
+                </h:form>
+            </p:panel>
+
+
+            <div class="ui-g-12 footer-login">
+                <span>Amextra</span><br/>
+                <span>All rights reserved.</span><br/>
+                <span>Compilacion : #{login.compilacion()} </span>
+            </div>
+            
+        </div>
+        <p:ajaxStatus>
+            <f:facet name="start">
+                <p:graphicImage name="images/preloader_blue.gif" library="icarus-layout" styleClass="loader"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+        <style type="text/css">
+            html {height: 100%;}
+            .ui-button-text, .ui-button-text-only .ui-button-text{padding:8px !important; transition:none !important;}
+            .ui-panel .ui-panel-title {font-size: 17px;}
+
+
+        </style>
+
+        <h:outputStylesheet name="css/layout-blue.css" library="icarus-layout" />
+        <h:outputStylesheet name="css/amextra49.css" library="icarus-layout" />
+    </h:body>
+
+</html>

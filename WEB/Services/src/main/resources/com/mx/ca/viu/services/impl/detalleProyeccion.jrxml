@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalleProyeccion" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="862d9d5f-f87c-4b0a-b7cb-d78a141d2017">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="no" class="java.lang.String"/>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="capital" class="java.lang.String"/>
+	<field name="interes" class="java.lang.String"/>
+	<field name="iva" class="java.lang.String"/>
+	<field name="cuota" class="java.lang.String"/>
+	<field name="saldo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<rectangle>
+				<reportElement x="40" y="0" width="70" height="30" uuid="8669a237-7aca-4115-b05d-89fdcaa5118f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="110" y="0" width="85" height="30" uuid="b7d883f3-406e-430f-adcd-a808e28d00a4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="195" y="0" width="90" height="30" uuid="0bff352e-6437-4783-98a8-3a442f58f582"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="285" y="0" width="79" height="30" uuid="6ab5c916-c84d-45da-b788-21dc3d888aea"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="364" y="0" width="91" height="30" uuid="26640c96-a77d-4c7c-9b6e-ca4b86e7bb73"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="0" width="95" height="30" uuid="1387c3c2-1ad3-4d12-90bd-b8808f860473"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="40" height="30" uuid="f58cbb71-be1b-4a28-b994-c4f66dd7bfbc"/>
+			</rectangle>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="0" y="0" width="40" height="30" uuid="8462f2ef-596c-4a9a-aa62-046e7f88ff69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="40" y="0" width="70" height="30" uuid="02edf155-9e9a-43e9-8ee7-f7bbeecc9243"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="110" y="0" width="85" height="30" uuid="066ce8f0-980c-43b7-99df-2b64aae9b9bf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{capital}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="195" y="0" width="85" height="30" uuid="a34ea27e-30d2-4815-841e-3beca627b347"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{interes}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="284" y="0" width="80" height="30" uuid="39991a58-a8bf-4e9d-a553-39fe142f9dbf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{iva}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="365" y="0" width="90" height="30" uuid="3d795bc7-5e13-44b5-9506-c6f673c1e751"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cuota}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="455" y="0" width="95" height="30" uuid="406bbda7-3434-4d92-b9ab-c8a0362e3fe1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags"
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+    
+    <h:head>
+        <h:outputStylesheet name="css/front.css" library="icarus-layout" /> 
+    </h:head>
+    
+    <h:body>            
+        <div class="divPrincipal">
+            <h:panelGroup class="ui-g" >
+             
+                <p:commandLink class="ui-g-12 ui-md-6 ui-lg-3" styleClass="myCardValDoc" 
+                                actionListener="#{controllerBancoValidaciones.cambiaPaginaDocumentos()}"
+                                update="contenidoGeneral">
+                    <div class="pdDiv">    
+                        <div>
+                            <h:graphicImage styleClass="imagenesTarjetas" name="images/VDC.svg" library="icarus-layout" rendered="true"/>
+                        </div>
+                        <div>
+                            <h3 class="pd">#{msg['viu.banco.validaciones.documentos']}</h3>
+                        </div>
+                    </div>
+                </p:commandLink>
+             
+                <p:commandLink class="ui-g-12 ui-md-6 ui-lg-3" styleClass="myCardValBio"
+                                actionListener="#{controllerBancoValidaciones.cambiaPaginaBiometricos()}" 
+                                update="contenidoGeneral">
+                    <div class="pdDiv"> 
+                        <div>
+                            <p:graphicImage styleClass="imagenesTarjetas" name="images/VB.svg" library="icarus-layout"/>
+                        </div>
+                        <div>
+                            <h3 class="pd">#{msg['viu.banco.validaciones.biometricos']}</h3>
+                        </div>
+                    </div>
+                </p:commandLink>
+
+<!--                <p:commandLink class="ui-g-12 ui-md-6 ui-lg-3" styleClass="myCardValGob"
+                                 
+                                update="contenidoGeneral">
+                    <div class="pdDiv">
+                        <div>
+                            <p:graphicImage styleClass="imagenesTarjetas" name="images/VGB.svg" library="icarus-layout"/>
+                        </div>
+                        <div>
+                            <h3 class="pd"># {msg['viu.banco.validaciones.gobierno']}</h3>
+                        </div>
+                    </div>
+                </p:commandLink>
+
+                <p:commandLink class="ui-g-12 ui-md-6 ui-lg-3" styleClass="myCardValDig"
+                                
+                                update="contenidoGeneral">
+                    <div class="pdDiv">
+                        <div>
+                            <p:graphicImage styleClass="imagenesTarjetas" name="images/VDG.svg" library="icarus-layout"/>
+                        </div>
+                        <div>
+                            <h3 class="pd"># {msg['viu.banco.validaciones.digitales']}</h3>
+                        </div>
+                    </div>
+                </p:commandLink>
+-->
+            </h:panelGroup>
+        </div>
+               
+    </h:body>
+</html>
+

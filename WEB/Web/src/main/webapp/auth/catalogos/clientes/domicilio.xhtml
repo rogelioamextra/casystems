@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Calle"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDireccion.calle}"  />
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="C.P."/>
+                <p:inputText value="#{controllerClientes.nuevo.idDireccion.cp}"  />
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Estado"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDireccion.idEstado}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaEstados}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Municipio"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDireccion.idMunicipio}" style="width: 90px"
+                                 filter="true"      converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaMunicipiosDireccion}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Colonia"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDireccion.idColonia}" style="width: 90px"
+                                 filter="true"     converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaColoniasDireccion}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel styleClass="negrita" value="No Exterior"/>
+                        <p:inputText value="#{controllerClientes.nuevo.idDireccion.numeroExterior}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel styleClass="negrita" value="No Interior"/>
+                        <p:inputText value="#{controllerClientes.nuevo.idDireccion.numeroInterior}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Tipo de residencia"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDireccion.idTipoResidencia}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listatiporesidencia}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Tipo de Vivienda"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDireccion.idTipoVivienda}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listatipovivienda}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Tiempo residencia actual"/>
+                
+                <p:panelGrid columns="2" layout="grid" styleClass="sinBordes">
+                    <p:inputText style="width: 40%" value="#{controllerClientes.nuevo.idDireccion.tiempoResidencia}" >
+                        <p:outputLabel styleClass="negrita" value="Años   "/>
+                    </p:inputText>
+                    <p:inputText style="width: 40%" value="#{controllerClientes.nuevo.idDireccion.tiempoResidenciaMeses}" >
+                        <p:outputLabel styleClass="negrita" value="Meses   "/>
+                    </p:inputText>
+                </p:panelGrid>
+            </p:panelGrid>
+            
+            
+            <p:commandButton value="Ver comprobante"
+                             actionListener="#{controllerClientes.buscarImagenesComprobanteDomicilio()}"
+                             update="formContenido:panelImagenesIne"  
+                              oncomplete="PF('imagenesIne').show();"/>
+
+
+
+
+
+
+
+
+
+
+        </p:panelGrid>
+
+
+
+    </h:body>
+</html>

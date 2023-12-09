@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+					    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+ 
+
+   
+    <context:annotation-config />
+
+    <!-- Enable component scanning -->
+
+    <context:component-scan base-package="com.mx.ca.viu" />
+
+    <!-- Data Source Declaration -->
+    
+      <bean id="beanCredenciales"
+          class="com.mx.ca.viu.commons.ViuProperties"  >
+    </bean>
+ 
+ 
+<!--    <bean id="dataSourceViu" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+ 
+        <property name="url" value="jdbc:postgresql://192.168.1.175:5432/viu" />             
+        <property name="username" value="postgres" />
+        <property name="password" value="postgres" />
+
+
+    </bean>-->
+    <bean id="dataSourceViu" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+ 
+        <property name="url" value="#{@beanCredenciales.BASE_DATOS_URL}" />             
+        <property name="username" value="#{@beanCredenciales.BASE_DATOS_USER}" />
+        <property name="password" value="#{@beanCredenciales.BASE_DATOS_PASS}" />
+
+
+    </bean>
+
+
+    <!-- Session Factory Declaration -->
+
+    <!-- 	<bean id="mySessionFactory"	class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
+
+    <!-- 		<property name="dataSource" ref="dataSourcePMM" /> -->
+
+    <!-- 		<property name="packagesToScan" value="com.mx.pmm.model" /> -->
+
+    <!-- 		<property name="hibernateProperties"> -->
+
+    <!-- 			<props> -->
+
+    <!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop> -->
+    <!-- 				<prop key="hibernate.show_sql">true</prop> -->
+    <!-- 				<prop key="hibernate.enable_lazy_load_no_trans">true</prop> -->
+    <!-- 				<prop key="hibernate.hbm2ddl.auto">validate</prop> -->
+
+    <!-- 			</props> -->
+
+    <!-- 		</property> -->
+
+    <!-- 	</bean> -->
+
+    <!-- Enable the configuration of transactional behavior based on annotations -->
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Transaction Manager is defined -->
+
+    <!-- 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> -->
+
+    <!-- 		<property name="sessionFactory" ref="mySessionFactory" /> -->
+
+    <!-- 	</bean> -->
+
+    <bean id="entityManagerFactory"  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSourceViu" />
+        <property name="packagesToScan" value="com.mx.ca.viu" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+                
+                             <property name="showSql" value="false"/>
+
+            </bean>
+                
+                
+                
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.connection.driver_class">org.postgresql.Driver</prop>
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>-->
+                <prop key="hibernate.dialect">com.mx.ca.viu.modelos.dtos.generico.JsonbPostgresDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.generate_statistics">false</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
+                <prop key="hibernate.jdbc.batch_size">20</prop>
+                <prop key="hibernate.id.new_generator_mappings">false</prop>
+            </props>
+        </property>
+    </bean>
+    
+		
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+		  
+    <bean id="persistenceExceptionTranslationPostProcessor"
+          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" /> 	
+    
+</beans>

@@ -1,0 +1,61 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <div id="top-bar-wrapper">
+        
+        <div id="top-bar">  
+            
+            <div class="top-bar-profile">
+            
+                <div class="profile-name">
+                    <span>#{administradorPaginas.nombreCompleto()}</span>
+<!--                    <br/>-->
+<!--                    # {administradorPaginas.infoEmpresa()}-->
+                </div>
+                <a href="#" id="profile-image">
+                    <h:graphicImage name="images/profile.png" library="icarus-layout" style="border: 0 none;"/>
+                </a>
+                <ul class="top-submenu animated flipInX">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-fw fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <p:commandLink actionListener="#{login.salir()}">
+                               <i class="top-submenu-icon fa fa-fw fa-close"></i>
+                            <span>Salir</span>
+                        </p:commandLink>
+                    </li>
+                </ul>
+            </div>
+
+            <div style="float: right; margin-right: 7em; margin-top: 2%; width:10%; height: 50% ">
+
+            <h:form style="font-weight: bolder; color: black;">
+                <h:panelGrid columns="2" style="background: transparent!important;">
+                    <p:outputLabel value="#{msg['viu.idioma']}"/>
+                    <p:selectOneMenu value="#{administradorPaginas.idioma}" 
+                                     valueChangeListener="#{administradorPaginas.changeLang}" onchange="submit();" >
+                        <f:selectItem itemValue="es_MX" itemLabel="#{msg['viu.idioma.es']}"/>
+                        <f:selectItem itemValue="en_US" itemLabel="#{msg['viu.idioma.en']}" />
+                        <p:ajax event="change" oncomplete="location.reload()" process="@this"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+            </h:form>
+        </div>
+            
+            <div class="top-menu">
+             
+              
+            </div>
+        </div>
+        
+    </div>
+
+</ui:composition>

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{msg['viu.enrolamiento.editar']}</h2>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+
+                <h:panelGroup>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.productos.nombre']}:"/>
+                        <h4 style="float: left; margin: 0; margin-left: 5px">#{controllerEnrolamiento.lblProducto}</h4>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </p:panelGrid>
+
+            <div class="card">
+                <p:tabView dynamic="true" id="tabs" activeIndex="#{controllerEnrolamiento.activeIndex}">
+                    <p:ajax event="tabChange" process="@this" update="formContenido:tabs" listener="#{controllerEnrolamiento.cambiaCampos}"/>
+                    <p:tab title="#{msg['viu.menu.categorias.campos']}" id="categorias">
+                        <p:pickList id="categoriaPickList" value="#{controllerEnrolamiento.listaCategoriasOrden}" var="cat"
+                                    itemValue="#{cat}" itemLabel="" showSourceControls="true"
+                                    showTargetControls="true" showCheckbox="true"
+                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
+                                    converter="entityConverter" responsive="true">
+
+                            <f:facet name="sourceCaption">#{msg['viu.menus.disponibles']}</f:facet>
+                            <f:facet name="targetCaption">#{msg['viu.enrolamiento.activas']}</f:facet>
+                            
+                            <p:ajax event="transfer" listener="#{controllerEnrolamiento.onTransferCategorias}" update="formContenido:tabs"/>
+                            <p:ajax event="reorder" listener="#{controllerEnrolamiento.onReorderCategorias}" update="formContenido:tabs"/>
+                            
+                            <p:column style="width:94%">
+                                <div class="p-d-flex p-ai-center">
+                                    <h:outputText value="#{cat.nombre}" />
+                                </div>
+                            </p:column>
+                        </p:pickList>
+
+                    </p:tab>
+                    <p:tab title="#{msg['viu.menu.campos']}" id="campos">
+
+                        <p:selectOneMenu value="#{controllerEnrolamiento.listaCategoriasSelect}" required="false" class="centrado"
+                                        filter="true" filterMatchMode="startsWith"
+                                         converter="listaConverter">
+                            <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>                 
+                            <f:selectItems value="#{controllerEnrolamiento.listaCategoriasCombo}" var="em" itemLabel="#{em.nombre}"
+                                           itemValue="#{em}" />
+                            <p:ajax event="change" global="false" listener="#{controllerEnrolamiento.cambiaCategoriaCampos()}" 
+                                    process="@this" update="formContenido:tabs"/>
+                        </p:selectOneMenu>
+                        <br/>
+                        <br/>
+                        <p:pickList id="camposPickList" value="#{controllerEnrolamiento.listaCamposCategorias}" var="campos"
+                                    itemValue="#{campos}" itemLabel="" showSourceControls="true"
+                                    showTargetControls="true" showCheckbox="true"
+                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
+                                    converter="entityConverter" responsive="true">
+
+                            <f:facet name="sourceCaption">#{msg['viu.menus.disponibles']}</f:facet>
+                            <f:facet name="targetCaption">#{msg['viu.enrolamiento.activas']}</f:facet>
+
+                            <p:ajax event="transfer" listener="#{controllerEnrolamiento.onTransferCampos}" update="formContenido:tabs"/>
+                            <p:ajax event="reorder" listener="#{controllerEnrolamiento.onReorderCampos}" update="formContenido:tabs"/>
+                            
+                            <p:column style="width:94%" id="camposColumn">
+                                <div class="p-d-flex p-ai-center">
+                                    <h:outputText id="campoNombre" value="#{campos.nombre}" title="#{msg[campos.tipo]}"/>
+                                </div>
+                            </p:column>
+                        </p:pickList>
+                    </p:tab>
+                </p:tabView>
+                <br/>
+                <cmp:botonRegresar actionRegresar="#{controllerEnrolamiento.cancelar()}"/>
+            </div>
+        </div>
+    </h:body>
+</html>

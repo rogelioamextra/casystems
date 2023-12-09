@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" 
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{msg['viu.enrolamiento.editar']}</h2>
+            <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+                <h:panelGroup rendered="#{controllerEnrolamiento.empresaUsuarioSesion.idEmpresas==1}">
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.empresa']}"/>
+                        <h4 style="float: left; margin: 0; margin-left: 5px">#{controllerEnrolamiento.lblEmpresa}</h4>
+                    </p:panelGrid>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.productos.nombre']}:"/>
+                        <h4 style="float: left; margin: 0; margin-left: 5px">#{controllerEnrolamiento.lblProducto}</h4>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </p:panelGrid>
+
+            <p:panelGrid id="comboCategorias" columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel value="#{msg['viu.campos.categoria.datos']}: *"/>
+                <p:selectOneMenu style="width: 100%" value="#{controllerEnrolamiento.categoriaSelect}" 
+                                 id="componenteCat"   
+                                 filter="true" filterMatchMode="startsWith"
+                                 converter="listaConverter"> 
+                    <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems value="#{controllerEnrolamiento.listaCategorias}" var="categoria"
+                                   itemLabel="#{categoria.nombre}"
+                                   itemValue="#{categoria}" />
+                    <p:ajax   event="change"  process="@this" global="false" 
+                            listener="#{controllerEnrolamiento.selectCategoria2()}"    />
+                </p:selectOneMenu>
+            </p:panelGrid>
+            <!--<p:remoteCommand name="cambio" actionListener="# {controllerEnrolamiento.selectCategoria2()}" update="formContenido:dash" process="" />-->
+            <h:panelGroup id="dash" >
+                
+                <p:dashboard id="board" rendered="#{controllerEnrolamiento.categoriaSelect ne null}" model="#{controllerEnrolamiento.model}"
+                        >
+<!--                <p:ajax event="reorder" listener="#{controllerEnrolamiento.handleReorder}"
+                        update="formContenido:growlLogin"/>
+                -->
+<!--                <ui:repeat value="#{controllerEnrolamiento.listaDasboard}" var="pan">
+                     <p:panel id="#{pan}" header="#{pan}">
+               
+                </p:panel>
+                </ui:repeat>                 -->
+
+            </p:dashboard>
+            </h:panelGroup>
+
+            
+            
+
+
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+<!--                <p:fieldset legend="#{msg['viu.enrolamiento.categorias']}">
+                    <p:dataTable value="#{controllerEnrolamiento.listaCategoriaDto}" var="cat"  emptyMessage="#{msg['viu.generico.tabla.vacia']}" 
+                                 rowsPerPageTemplate="5,10,15,20,30" paginator="true"
+                                 filteredValue="#{controllerEnrolamiento.listaCategoriaDtoFiltro}"
+                                 paginatorPosition="bottom" rows="5"                         
+                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                 draggableRows="true">
+                        <p:column headerText="#{msg['viu.menu.categorias.campos']}" class="centrado">
+                            <p:outputLabel value="#{cat.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.generico.estatus']}" class="centrado" width="10%">                                                       
+                            <p:inputSwitch class="centrado" value="#{cat.categoria.banderaStatus}"  style="width: 25px" onLabel="ON" offLabel="OFF">
+                                <p:ajax event="change"  process="@this"/>
+                            </p:inputSwitch>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.enrolamiento.campos']}" width="10%" class="centrado">                                                       
+                            <p:commandLink actionListener="#{controllerEnrolamiento.selectCategoria(cat.categoria)}"
+                                           update="@form" >
+                                <p:graphicImage style="width: 40px!important;" name="pima/verdetalle.png" library="icarus-layout"  title="ver"/>
+                            </p:commandLink>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:fieldset>-->
+                <br/>
+<!--                <cmp:botonesFormulario actionCancelar="#{controllerEnrolamiento.cancelar()}"
+                                       actionGuardar="#{controllerEnrolamiento.guardarCategorias()}" 
+                                       rendered="#{controllerEnrolamiento.listaCamposDocumentos eq null or controllerEnrolamiento.listaCamposDocumentos.size()==0 }"
+                                       banderaEdicion="#{controllerEnrolamiento.banderaEdicion}" />-->
+
+<!--                <p:fieldset legend="#{msg['viu.enrolamiento.camposcat']}: #{controllerEnrolamiento.categoriaSelect.nombre}" id="campos"
+                            rendered="#{controllerEnrolamiento.listaCamposDocumentos.size()>0 }">
+                    <p:dataTable value="#{controllerEnrolamiento.listaCamposDocumentos}" var="campoDoc" 
+                                 emptyMessage="#{msg['viu.generico.tabla.vacia']}" draggableRows="true"
+                                 rowsPerPageTemplate="5,10,15,20,30" paginator="true"
+                                 filteredValue="#{controllerEnrolamiento.listaCamposDocumentosFiltro}"
+                                 paginatorPosition="bottom" rows="5"                         
+                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" >
+                        <p:column headerText="#{msg['viu.generico.nombre']}" class="centrado">
+                            <p:outputLabel value="#{campoDoc.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.generico.estatus']}" width="10%" class="centrado">                                                       
+                            <p:inputSwitch class="centrado" value="#{campoDoc.campo.banderaStatus}" rendered="#{campoDoc.campo ne null}" style="width: 25px" onLabel="ON" offLabel="OFF"/>
+                            <p:inputSwitch class="centrado" value="#{campoDoc.documento.banderaStatus}" rendered="#{campoDoc.documento ne null}" style="width: 25px" onLabel="ON" offLabel="OFF"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:fieldset>-->
+
+            </p:panelGrid>
+            <!--<cmp:dialogConfirmarProduct update="formContenido:estatus" valorCheck="# {controllerEnrolamiento.estatus}"/>-->
+            <cmp:botonesFormulario actionCancelar="#{controllerEnrolamiento.cancelar()}"
+                                   actionGuardar="#{controllerEnrolamiento.guardarDatosDocumentos()}" 
+                                   rendered="#{controllerEnrolamiento.listaCamposDocumentos.size()>0 }"   
+                                   banderaEdicion="#{controllerEnrolamiento.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

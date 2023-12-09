@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
+    <h:body >        
+        <div class=" card card-w-title">
+
+            <h2 class="mbTitulo">#{msg['viu.banco.validaciones.documentos']}</h2>
+            <br/>
+
+            <div class="card card-w-title boxShadow">
+
+                <!--<h:panelGroup id="comboEmpresas"  rendered="# {controllerBancoValidaciones.empresaUsuarioSesion.idEmpresas==1}">
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="# {msg['viu.generico.empresa']}"/>
+                        <p:selectOneMenu   value="# {controllerBancoValidaciones.empresaSelect}" filter="true" filterMatchMode="startsWith"
+                                           converter="listaConverter">
+                            <f:selectItems value="# {controllerBancoValidaciones.listaEmpresas}" var="em" itemLabel="# {em.nombre}"
+                                           itemValue="#{em}" />
+                            <p:ajax event="change" listener="# {controllerBancoValidaciones.buscarTodosDocumentosXEmpresaFiltro()}"
+                                    process="@this" update="comboDocumentos: formContenido:tabla1" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>-->
+
+                <h:panelGroup id="comboDocumentos" rendered="true">
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.documentos.titulo.bandeja']}"/>
+                        <p:selectOneMenu   value="#{controllerBancoValidaciones.documentoSelect}" filter="true" filterMatchMode="startsWith" 
+                                           converter="listaConverter">
+                            <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{controllerBancoValidaciones.listaDoc}" var="doc" itemLabel="#{doc.nombre}"
+                                           itemValue="#{doc}" />
+                            <p:ajax event="change" listener="#{controllerBancoValidaciones.buscarTodasConfigValidacionXEmpresaYDocumentoFiltro()}" 
+                                    process="@this" update="formContenido:tabla1" resetValues="true"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>
+                <br/>
+
+<!--                <p:outputLabel style="font-size: medium; font-weight: bold" rendered="true" value="# {msg['viu.generico.empresa' ]}  # {controllerBancoValidaciones.empresaUsuarioSesion.nombre}"/><br/>-->
+                <h:panelGroup id="tabla1">
+                    <p:dataTable  id="tablaValidacionDocumentos" var="validaciones" value="#{controllerBancoValidaciones.listaAuxValidaciones}"
+                                  filteredValue="#{controllerBancoValidaciones.filtroAuxValidaciones}"
+                                  rowsPerPageTemplate="5,10,15" paginator="true" paginatorPosition="bottom" rows="5"                         
+                                  paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                  reflow="true" emptyMessage="#{msg['viu.generico.tabla.vacia']}"  widgetVar="usu">
+                        <f:facet name="header" class="sinFondo">
+                            <div id="filtroTablaTareasGenerales">                       
+                                <p:inputText  id="globalFilter" onkeypress="return event.keyCode != 13" placeholder="#{msg['viu.generico.filtro.buscar']}" style="width: 25%;margin-left: 75%;">
+                                    <p:ajax event="keyup" oncomplete="PF('usu').filter();" delay="500" global="false" />
+                                </p:inputText>                     
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="#{msg['viu.banco.validaciones.generico.validacion']}" styleClass="centrado " filterMatchMode="contains" filterBy="#{msg[validaciones.idValidaciones.nombre]}" >
+                            <p:outputLabel value="#{msg[validaciones.idValidaciones.nombre]}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.banco.validaciones.generico.descripcion']}" styleClass="centrado " filterMatchMode="contains" filterBy="#{msg[validaciones.idValidaciones.descripcion]}" >
+                            <p:outputLabel value="#{msg[validaciones.idValidaciones.descripcion]}"/>
+                        </p:column>
+
+                        <!--<p:column rendered="# {controllerBancoValidaciones.empresaUsuarioSesion.idEmpresas==1}" headerText="# {msg['viu.generico.empresa1']}" styleClass="centrado " filterMatchMode="contains" filterBy="# {validaciones.idEmpresas.nombre}" >
+                            <p:outputLabel value="# {validaciones.idEmpresas.nombre}"/>
+                        </p:column>-->
+
+                        <!--
+                                    <p:column headerText="# {msg['viu.banco.validaciones.generico.resultados']}" styleClass="centrado " filterMatchMode="contains" filterBy="# {validaciones.status}" >
+                                <p:outputLabel value="# {controllerBancoValidaciones.valorSelected.nombre}"/>
+                            </p:column>
+    
+                        -->
+
+                        <p:column width="250" headerText="#{msg['viu.banco.validaciones.generico.estatus']}" styleClass="centrado " 
+                                  filterMatchMode="contains" filterBy="#{validaciones.status}" >
+                            <p:inputSwitch value="#{validaciones.status}" style="width: 25px" onLabel="ON" offLabel="OFF">
+
+                            </p:inputSwitch>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGroup>
+                <br/>
+
+                <div>
+                    <div class="divFloat" style="float: right">
+                        <cmp:botonGuardar actionGuardar="#{controllerBancoValidaciones.guardar_valDoc()}" />
+                    </div>
+
+                    <div style="float: left">
+                        <p:commandButton value="#{msg['viu.generico.boton.regresar']}" icon="fa fa-arrow-left"
+                                         actionListener="#{controllerBancoValidaciones.cambiaPaginaBandeja()}"
+                                         update="contenidoGeneral" ></p:commandButton>    
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </h:body>
+
+</html>

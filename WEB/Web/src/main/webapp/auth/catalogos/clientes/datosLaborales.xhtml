@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Empresa o negocio"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDatosLaborales.idCaracteristicaNegocio}" style="width: 90px"
+                                 converter="listaConverter">
+                    <f:selectItems value="#{controllerClientes.listaCaracteristicaNegocios}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+            </p:panelGrid>
+
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Giro"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDatosLaborales.idGiroNegocio}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaGirosNegocio}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Puesto"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDatosLaborales.puesto}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Telefono"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDatosLaborales.telefono}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Calle"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDatosLaborales.idDireccion.calle}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="No Exterior"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDatosLaborales.idDireccion.numeroExterior}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="No Interior"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDatosLaborales.idDireccion.numeroInterior}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="C.P."/>
+                <p:inputText value="#{controllerClientes.nuevo.idDatosLaborales.idDireccion.cp}"  />
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Estado"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDatosLaborales.idDireccion.idEstado}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaEstados}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+
+
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Municipio"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDatosLaborales.idDireccion.idMunicipio}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaMunicipiosLaboral}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Colonia"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDatosLaborales.idDireccion.idColonia}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaColoniasLAboral}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="La empresa emite recibos nomina?"/>
+                <p:toggleSwitch value="#{controllerClientes.nuevo.idDatosLaborales.recibosNomina}">
+
+                </p:toggleSwitch>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Ingreso Mensual Fijo"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDatosLaborales.ingresoMensual}"  />
+
+
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Tiempo en el empleo actual"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idDatosLaborales.idTiempoEmpleoActual}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaTiemposEmpleoActaul}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Fecha de ingreso "/>
+                <p:datePicker value="#{controllerClientes.nuevo.idDatosLaborales.fechaIngreso}" >
+
+                </p:datePicker>
+            </p:panelGrid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </p:panelGrid>
+
+
+
+    </h:body>
+</html>

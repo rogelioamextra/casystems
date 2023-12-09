@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <!-- INTERFACE -->
+    <cc:interface>       
+
+        <cc:attribute name="update" type="java.lang.String" default="" required="true" /> 
+        <cc:attribute name="valorCheck" type="java.lang.Boolean" required="true" /> 
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+
+
+    <cc:implementation>
+        
+        <p:dialog header="#{msg['viu.generico.estatus']}" resizable="false" widgetVar="dlgEstatus" minHeight="40" responsive="true"
+                  minimizable="false" maximizable="false" closable="false" modal="true" height="100">
+            <h:outputText style="font-weight: bold;" value="#{msg['viu.generico.desactivar']}" />
+            <br/>
+            <br/>
+            <p:panelGrid columns="2" 
+                         style="margin-left: auto;margin-top: 7%;"
+                         styleClass="sinBordes">
+                <p:commandButton process="@this" oncomplete="PF('dlgEstatus').hide();"
+                                 update="#{cc.attrs.update}" value="#{msg['viu.generico.confirmar']}"
+                                 styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" >
+                    <f:setPropertyActionListener target="#{cc.attrs.valorCheck}" value="false"/>
+                </p:commandButton>
+                <p:commandButton  oncomplete="PF('dlgEstatus').hide();"  process="@this"
+                                  update="#{cc.attrs.update}" 
+                                  value="#{msg['viu.generico.boton.cancelar']}"
+                                  styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" >
+                    <f:setPropertyActionListener target="#{cc.attrs.valorCheck}" value="true"/>
+                </p:commandButton>
+
+            </p:panelGrid>
+        </p:dialog>
+        
+        <p:dialog header="#{msg['viu.generico.estatus']}" resizable="false" widgetVar="dlgUsuarioConfigurado" minHeight="40" responsive="true"
+                  minimizable="false" maximizable="false" closable="false" modal="true" height="120">
+            <h:outputText style="font-weight: bold;" value="#{msg['viu.empresas.desactivar']}" />
+            <br/>
+            <br/>
+            <p:panelGrid columns="2" style="margin-left: auto;margin-top: 7%;" styleClass="sinBordes">
+                <p:commandButton  oncomplete="PF('dlgUsuarioConfigurado').hide();"  process="@this"
+                                  update="#{cc.attrs.update}" 
+                                  value="#{msg['viu.generico.boton.atras']}"
+                                  styleClass="blue-button" icon="ui-icon-close fa fa-close Fs14 White" >
+
+                    <f:setPropertyActionListener target="#{cc.attrs.valorCheck}" value="true"/>
+                </p:commandButton>
+            </p:panelGrid>
+        </p:dialog>
+        
+        <p:dialog header="#{msg['viu.generico.estatus']}" resizable="false" widgetVar="dlgAdvertenciaProducto" minHeight="100" responsive="true"
+                  minimizable="false" maximizable="false" closable="false" modal="true" height="110">
+            <h:outputText style="font-weight: bold;" value="#{msg['viu.producto.desactiva']}"/>
+            <br/>
+            <p:panelGrid columns="2" 
+                         style="margin-left: auto;margin-top: 7%;"
+                         styleClass="sinBordes">
+                <p:commandButton process="@this" oncomplete="PF('dlgAdvertenciaProducto').hide();"
+                                 update="#{cc.attrs.update}" value="#{msg['viu.generico.confirmar']}"
+                                 styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" >
+                    <f:setPropertyActionListener target="#{cc.attrs.valorCheck}" value="false"/>
+                </p:commandButton>
+                <p:commandButton  oncomplete="PF('dlgAdvertenciaProducto').hide();"  process="@this"
+                                  update="#{cc.attrs.update}" 
+                                  value="#{msg['viu.generico.boton.cancelar']}"
+                                  styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" >
+
+                    <f:setPropertyActionListener target="#{cc.attrs.valorCheck}" value="true"/>
+                </p:commandButton>
+            </p:panelGrid>
+        </p:dialog>
+        
+        
+    </cc:implementation>
+</html>
+

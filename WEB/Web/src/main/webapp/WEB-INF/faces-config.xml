@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    
+    <name>primefaces_icarus</name>
+    
+    <application>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+         
+        <resource-bundle>
+            <base-name>messages.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+
+        <locale-config>
+            <default-locale>es_MX</default-locale>
+            <supported-locale>en_US</supported-locale>
+            <supported-locale>es_MX</supported-locale>
+        </locale-config>
+    </application>
+<!--    <factory>
+        <exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory>
+    </factory>-->
+    
+    <component>
+        <component-type>org.primefaces.component.IcarusMenu</component-type>
+        <component-class>org.primefaces.icarus.component.menu.IcarusMenu</component-class>
+    </component>
+    
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.IcarusMenuRenderer</renderer-type>
+            <renderer-class>org.primefaces.icarus.component.menu.IcarusMenuRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+ 
+</faces-config>

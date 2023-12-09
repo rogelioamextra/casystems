@@ -1,0 +1,109 @@
+.myCardValDoc{    
+    background-color: rgba(0,153,255,255);
+    text-align: center;
+    color: #ffffff;
+    padding: inherit;
+    width: 20em;
+    height: 20em;
+    text-decoration: none;
+    border-radius: 5%;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+.myCardValBio{    
+    background-color: rgba(0,214,154,255);
+    text-align: center;
+    color: #ffffff;
+    padding: inherit;
+    width: 20em;
+    height: 20em;
+    text-decoration: none;
+    border-radius: 5%;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.myCardValGob{    
+    background-color: rgba(206,141,255,255);
+    text-align: center;
+    color: #ffffff;
+    padding: inherit;
+    width: 17em;
+    height: 17em;
+    text-decoration: none;
+    border-radius: 5%;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.myCardValDig{    
+    background-color: rgba(252,174,72,255);
+    text-align: center;
+    color: #ffffff;
+    padding: inherit;
+    width: 17em;
+    height: 17em;
+    text-decoration: none;
+    border-radius: 5%;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.pd{
+padding-top: 1.5em;
+}
+
+.myIcon{
+    margin-top: 50px !important;
+    height: 70px !important;
+}
+
+.pdDiv{
+    padding-left: 5em !important; 
+    padding-right: 5em !important;
+}
+
+.myColumna{
+    background-color: rgba(243,242,242,255)!important;
+    border-color: #000000 !important;
+}
+.bc{
+    border-color: #000000 !important; 
+}
+.center{
+    text-align: center !important;
+}
+.divPrincipal{
+    align-items: center;
+    padding-top: 2%;
+    padding-bottom: 10em;
+    padding-left: 28%;
+}
+
+.mbTitulo{
+    margin-bottom:-.5em;
+}
+
+.boxShadow{
+    padding-left: 2.5em; 
+    padding-bottom: 3em !important; 
+    box-shadow: 1px 0px 5px 4px rgba(198,193,193,0.75);
+    -webkit-box-shadow: 1px 0px 5px 4px rgba(198,193,193,0.75);
+    -moz-box-shadow: 1px 0px 5px 4px rgba(198,193,193,0.75);
+}
+
+.divFloat{
+    float: right!important;
+}
+
+.botonWidth{
+    width: 15em !important;
+}
+
+.ui-inputswitch .ui-inputswitch-off{
+    background-color: red!important;
+}
+
+.ui-inputswitch .ui-inputswitch-on.ui-state-active{
+    background-color: green!important;
+}

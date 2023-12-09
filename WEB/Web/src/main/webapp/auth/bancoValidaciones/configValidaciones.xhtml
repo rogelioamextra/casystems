@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <h:body>        
+        <div class=" card card-w-title">
+
+            <h2 class="mbTitulo">#{msg['viu.banco.validaciones.biometricos']}</h2>
+            <br/>
+            <div class="card card-w-title boxShadow">
+
+                <!--<h:panelGroup id="comboEmpresas"  rendered="# {controllerBancoValidaciones.empresaUsuarioSesion.idEmpresas==1}">
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="# {msg['viu.generico.empresa']}"/>
+                        <p:selectOneMenu   value="# {controllerBancoValidaciones.empresaSelect}" filter="true" filterMatchMode="startsWith"
+                                   converter="listaConverter">
+                            <f:selectItems value="# {controllerBancoValidaciones.listaEmpresas}" var="em" itemLabel="# {em.nombre}"
+                                   itemValue="# {em}" />
+                            <p:ajax event="change" listener="# {controllerBancoValidaciones.buscarTodosServiciosValidacionesXEmpresaFiltro()}"
+                                    process="@this" update="tablaValidaciones" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>-->
+
+
+                
+<!--                <p:outputLabel style="font-size: medium; font-weight: bold" rendered="true" value="# {msg['viu.generico.empresa' ]}  # {controllerBancoValidaciones.empresaUsuarioSesion.nombre}"/><br/>-->
+                
+                <h:panelGroup id="tabla1">
+                    <p:dataTable id="tablaValidaciones" var="service" value="#{controllerBancoValidaciones.listaDVSE}" 
+                                 emptyMessage="#{msg['viu.generico.tabla.vacia']}" >
+
+                        <p:headerRow groupBy="#{service.idServicioValidacion.idTiposValidacionesDispoibles.idTiposValidaciones}" expandable="true" >
+                            <p:column colspan="3">
+                                <div style="float: left; margin-left:1em">
+                                    <h:outputText value="#{msg[service.idServicioValidacion.idTiposValidacionesDispoibles.nombre]}" />
+                                </div>
+                            </p:column>
+                        </p:headerRow>
+
+                        <p:column headerText="#{msg['viu.banco.validaciones.generico.validacion']}" class="centrado">
+                            <h:outputText value="#{msg[service.idServicioValidacion.nombre]}" class="centrado" />
+                        </p:column>
+
+                        <p:column headerText="#{msg['viu.banco.validaciones.generico.descripcion']}" class="centrado">
+                            <h:outputText value="#{msg[service.idServicioValidacion.descripcion]}" class="centrado" />
+                        </p:column>
+
+                        <!--<p:column headerText="# {msg['viu.generico.empresa1']}" class="centrado">
+                            <h:outputText value="# {service.idEmpresa.nombre}" class="centrado"/>
+                        </p:column>-->
+
+                    <!--
+                        <p:column headerText="#{msg['viu.banco.validaciones.generico.resultados']}" class="centrado">
+                            <h:outputText value="" class="centrado"/>
+                        </p:column>
+                    -->
+
+                        <p:column headerText="#{msg['viu.banco.validaciones.generico.estatus']}" >
+                            <p:inputSwitch class="centrado" value="#{service.status}" style="width: 25px" onLabel="ON" offLabel="OFF"/>
+                        </p:column>
+
+                    </p:dataTable>            
+                </h:panelGroup>           
+                <br/>
+
+                <div>
+                    <div style="float: right!important">
+                        <cmp:botonGuardar actionGuardar="#{controllerBancoValidaciones.guardar()}" />
+                    </div>
+
+                    <div style="float: left!important">
+                        <p:commandButton value="#{msg['viu.generico.boton.regresar']}" icon="fa fa-arrow-left"
+                                         actionListener="#{controllerBancoValidaciones.cambiaPaginaBandeja()}"
+                                         update="contenidoGeneral" ></p:commandButton>    
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </h:body>
+    
+</html>
+

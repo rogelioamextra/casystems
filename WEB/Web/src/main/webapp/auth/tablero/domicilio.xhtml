@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.calle']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.calle}"  />
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.codigoPostal']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.cp}"  />
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.estado']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.idEstado}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaEstados}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.municipio']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.idMunicipio}" style="width: 90px"
+                                 filter="true"      converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaMunicipios}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.colonia']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.idColonia}" style="width: 90px"
+                                 filter="true"     converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaColonias}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.numExterior']}"/>
+                        <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.numeroExterior}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.numInterior']}"/>
+                        <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.numeroInterior}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.domicilio.tipoResidencia']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.idTipoResidencia}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listatiporesidencia}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.domicilio.tipoVivienda']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.idTipoVivienda}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listatipovivienda}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.domicilio.tiempoResidencia']}"/>
+                <p:panelGrid columns="2" layout="grid" styleClass="sinBordes">
+                    <p:inputText style="width: 40%" value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.tiempoResidencia}" >
+                    </p:inputText>
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.anios']}"/>
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" layout="grid" styleClass="sinBordes">
+                    <p:inputText style="width: 40%" value="#{controllerTablero.solicitudEditar.idCliente.idDireccion.tiempoResidenciaMeses}" >
+                    </p:inputText>
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.meses']}"/>
+                </p:panelGrid>
+
+            </p:panelGrid>
+            
+            <p:commandButton value="#{msg['viu.generico.ver.comprobante']}" actionListener="#{controllerTablero.buscarImagenesComprobanteDomicilio()}"
+                      update="formContenido:panelImagenesIne"           oncomplete="PF('imagenesIne').show();"/>
+
+
+
+
+
+
+
+
+
+
+        </p:panelGrid>
+
+
+
+    </h:body>
+</html>

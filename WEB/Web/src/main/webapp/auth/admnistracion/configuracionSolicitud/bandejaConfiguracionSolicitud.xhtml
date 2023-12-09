@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <h:body>
+        <div class="card card-w-title containerFondo">
+            <h2>#{msg['viu.configuracionSolicitud.titulo']}</h2>
+            <div id="main-wrapper-content">  
+                <div class="ui-g" style="margin-bottom: -10px">
+                    <h:panelGroup id="tarjetaWizard" class="panelWizard">
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="tarjetaConfiguracionRiesgo estiloTarjeta">
+                                <h:graphicImage styleClass="imagenesTarjetas" name="images/CNR.svg" library="icarus-layout"/>
+                                <h3 class="letraTarjeta">#{msg['viu.configuracionSolicitud.cnr']}</h3>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="tarjetaAdministracionRiesgo estiloTarjeta">
+                                <h:graphicImage styleClass="imagenesTarjetas" name="images/ANR.svg" library="icarus-layout"/>
+                                <h3 class="letraTarjeta">#{msg['viu.configuracionSolicitud.anr']}</h3>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3 ">
+                            <div class="tarjetaConfiguracionMensajes estiloTarjeta">
+                                <h:graphicImage styleClass="imagenesTarjetas" name="images/CM.svg" library="icarus-layout"/>
+                                <h3 class="letraTarjeta">#{msg['viu.configuracionSolicitud.cm']}</h3>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="tarjetaConfiguracionTiempo estiloTarjeta">
+                                <h:graphicImage styleClass="imagenesTarjetas" name="images/CTV.svg" library="icarus-layout"/>
+                                <h3 class="letraTarjeta">#{msg['viu.configuracionSolicitud.ctv']}</h3>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <div class="card">                
+                <!--<h:panelGroup id="tablaEmpresas"  rendered="# {controllerConfiguracionSolicitud.empresaUsuarioSesion.idEmpresas==1}">
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="# {msg['viu.generico.empresa']}"/>
+                        <p:selectOneMenu   value="# {controllerConfiguracionSolicitud.empresaSelect}" filter="true" filterMatchMode="startsWith"
+                                           converter="listaConverter">
+                            <f:selectItems value="# {controllerConfiguracionSolicitud.listaEmpresas}" var="em" itemLabel="# {em.nombre}"
+                                           itemValue="#{em}" />
+                            <p:ajax event="change" listener="# {controllerConfiguracionSolicitud.buscarTodosProductosXEmpresaFiltro()}"
+                                    process="@this" oncomplete="PF('usu').filter();" update="tabla1 contenidoGeneral" resetValues="true"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>-->
+
+                <!--<h:panelGroup id="tablaNombreEmpresa"  >
+                    <h3># {msg['viu.generico.empresa']}  # { controllerConfiguracionSolicitud.empresaUsuarioSesion.nombre}</h3>
+                </h:panelGroup>-->
+
+                <h:panelGroup id="tabla1">
+                    <p:dataTable var="producto" id="tablaBandejaConfigSol" value="#{controllerConfiguracionSolicitud.listaSolicitudes}"
+                                 rowsPerPageTemplate="5,10,15" paginator="true"
+                                 filteredValue="#{controllerConfiguracionSolicitud.filtroConfigSolicitudes}"
+                                 paginatorPosition="bottom" rows="5"
+                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                 reflow="true" emptyMessage="#{msg['viu.generico.tabla.vacia']}" widgetVar="usu">
+                        <f:facet name="header" class="sinFondo">
+                            <div id="filtroTablaTareasGenerales">                       
+                                <p:inputText  id="globalFilter" onkeypress="return event.keyCode != 13" 
+                                              placeholder="#{msg['viu.generico.filtro.buscar']}" 
+                                              style="width: 25%;margin-left: 75%;">
+                                    <p:ajax event="keyup" oncomplete="PF('usu').filter();" delay="500" global="false" />
+                                </p:inputText>                     
+                            </div>
+                        </f:facet> 
+
+                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.producto']}"  filterBy="#{producto.idProducto.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{producto.idProducto.nombre}"/>
+                        </p:column>
+
+                        <!--<p:column rendered="#{controllerConfiguracionSolicitud.empresaUsuarioSesion.idEmpresas==1}" styleClass="centrado" headerText="#{msg['viu.generico.empresa1']}"  filterBy="#{producto.idProducto.idEmpresa.nombre}" filterMatchMode="contains" >
+                            <h:outputText value="#{producto.idProducto.idEmpresa.nombre}"/>
+                        </p:column>-->
+
+                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.cnr']}">
+                            <h:graphicImage style="width: 20px!important;" name="#{producto.mvConfigRiesgoList.size()>0 ?'images/check_good.svg':'images/check_atention.svg'}" library="icarus-layout"/>
+                        </p:column>
+
+                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.anr']}">
+                            <h:graphicImage style="width: 20px!important;" name="#{producto.mvAdminNivelRiesgoList.size()>0 ?'images/check_good.svg':'images/check_atention.svg'}" library="icarus-layout"/>
+                        </p:column>
+
+                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.cm']}">
+                            <h:graphicImage style="width: 20px!important;" name="#{producto.mvConfigMensajeList.size()>0 ?'images/check_good.svg':'images/check_atention.svg'}" library="icarus-layout"/>
+                        </p:column>
+
+                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.ctv']}">
+                            <h:graphicImage style="width: 20px!important;" name="#{producto.mvConfigTiempoVidaList.size()>0 ?'images/check_good.svg':'images/check_atention.svg'}" library="icarus-layout"/>
+                        </p:column>
+
+                        <p:column styleClass="centrado" headerText="#{msg['viu.generico.boton.configurar']}">
+                            <p:commandButton update="contenidoGeneral" immediate="true" styleClass="blue-button" icon="fa fa-cogs" 
+                                             actionListener="#{controllerConfiguracionSolicitud.cambiaPaginaEdicion(producto)}" title="#{msg['viu.generico.boton.configurar']}">
+                            </p:commandButton>
+                        </p:column>
+                        <p:column width="150" headerText="#{msg['viu.banco.validaciones.generico.estatus']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{bio.activo ?'Activo':'Inactivo'}" >
+                            <p:inputSwitch style="width: 25px" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}" value="#{producto.status}" >
+                                <p:ajax event="change" listener="#{controllerConfiguracionSolicitud.validaEstatus(producto)}" process="@this" />
+                            </p:inputSwitch>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
+            </div>
+        </div>
+        <h:outputStylesheet name="css/viu.css" library="icarus-layout" />
+    </h:body>
+</html>

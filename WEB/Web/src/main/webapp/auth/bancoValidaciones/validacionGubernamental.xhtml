@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags"
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+    
+    <h:head>
+        <h:outputStylesheet name="css/front.css" library="icarus-layout" /> 
+    </h:head>
+    
+    <h:body >        
+        <div class=" card card-w-title">
+                
+            <h2 class="mbTitulo">#{msg['viu.banco.validaciones.gobierno']}</h2>
+            <br/>
+            
+            <div class="card card-w-title boxShadow">
+                <h2 >#{msg['viu.banco.validaciones.gobierno.titulo']}</h2>                   
+                            
+                <p:dataTable  var="gob" value="#{controllerBancoValidaciones.listaGobierno}"
+                              filteredValue="#{controllerSubdirecciones.filtrolistaSubdirecciones}"
+                              rowsPerPageTemplate="5,10,15" paginator="true" paginatorPosition="bottom" rows="10"                         
+                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                              reflow="true"  emptyMessage="#{msg['viu.generico.tabla.vacia']}"  widgetVar="usu"
+                              rowStyleClass="myColumna">
+                    
+                    <f:facet name="header" class="sinFondo">
+                        <div id="filtroTablaTareasGenerales">                       
+                            <p:inputText  id="globalFilter" onkeypress="return event.keyCode != 13" placeholder="#{msg['viu.generico.filtro.buscar']}" style="width: 25%;margin-left: 75%;">
+                                <p:ajax event="keyup" oncomplete="PF('usu').filter();" delay="500" global="false" />
+                            </p:inputText>                     
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="#{msg['viu.banco.validaciones.generico.validacion']}" styleClass="centrado bc" filterMatchMode="contains" filterBy="#{gob.resultados}">
+                        <p:outputLabel value="#{gob.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['viu.banco.validaciones.generico.descripcion']}" styleClass="centrado bc" filterMatchMode="contains" filterBy="#{gob.descripcion}">
+                        <p:outputLabel value="#{gob.descripcion}"/>
+                    </p:column>
+
+                    <p:column width="250" headerText="#{msg['viu.banco.validaciones.generico.estatus']}" class="centrado bc"
+                              filterMatchMode="contains" filterBy="#{gob.status}">
+                        <p:inputSwitch style="width: 25px" onLabel="ON" offLabel="OFF"/>
+                    </p:column>
+
+                </p:dataTable>
+                
+                <br/>
+                
+                <div>
+                    <div class="divFloat">
+                        <p:commandButton value="#{msg['viu.generico.boton.edicion']}" icon="ui-icon-check fa fa-check White Fs14"
+                                         rendered="true" styleClass="green-button"></p:commandButton>    
+                    </div>
+                    
+                    <div style="float: left">
+                        <p:commandButton value="#{msg['viu.generico.boton.regresar']}" icon="fa fa-arrow-left"
+                                         actionListener="#{controllerBancoValidaciones.cambiaPaginaBandeja()}"
+                                         update="contenidoGeneral" ></p:commandButton>    
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </h:body>
+    
+</html>

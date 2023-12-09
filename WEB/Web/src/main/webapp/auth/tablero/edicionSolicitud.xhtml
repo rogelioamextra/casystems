@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <style>
+            .negrita{
+                font-weight: bolder;
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <p:tabView id="tabopciones">
+            <p:tab title="#{msg['viu.solicitud.datosPersonales']}">
+                <ui:include src="datosPersonales.xhtml"/>
+
+            </p:tab>
+            <p:tab title="#{msg['viu.solicitud.domicilio']}">
+                <ui:include src="domicilio.xhtml"/>
+
+            </p:tab>
+            <p:tab title="#{msg['viu.solicitud.datosLaborales']}">
+                <ui:include src="datosLaborales.xhtml"/>
+
+            </p:tab>
+            <p:tab title="#{msg['viu.solicitud.referencias']}" id="tabreferencias">
+                <ui:include src="referencias.xhtml"/>
+            </p:tab>
+            
+            <p:tab title="#{msg['viu.solicitud.datosSolicitud']}">
+                <ui:include src="solicitud.xhtml"/>
+
+            </p:tab>
+            <p:tab title="#{msg['viu.solicitud.buroCredito']}">
+                <ui:include src="buro.xhtml"/>
+
+            </p:tab>
+            <p:tab title="#{msg['viu.solicitud.ingresos']}">
+                <ui:include src="ingresos.xhtml"/>
+            </p:tab>
+            <p:tab title="#{msg['viu.solicitud.egresos']}">
+                <ui:include src="egresos.xhtml"/>
+
+            </p:tab>
+            <p:tab title="#{msg['viu.solicitud.patrimonio']}">
+                <ui:include src="patrimonios.xhtml"/>
+
+            </p:tab>
+
+        </p:tabView>
+        <p:dialog closable="true" header="#{msg['viu.solicitud.imagenCargada']}" closeOnEscape="true" 
+                  width="80%" height="630px" position="center"  modal="true" widgetVar="imagenesIne">
+            <h:panelGroup id="panelImagenesIne">
+                <p:carousel value="#{controllerTablero.streamListIne}" var="image" circular="true"
+
+                            >
+
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <p:graphicImage class="product-image" style="width:100%" value="#{image}"  stream="false"/>
+                        </div>
+                    </div>
+                </p:carousel>
+            </h:panelGroup>
+
+
+
+        </p:dialog>
+
+        <p:panelGrid columns="2" style="margin-left: auto;" styleClass="sinBordes">
+
+            <p:commandButton value="#{msg['viu.generico.boton.regresar']}" actionListener="#{controllerTablero.regresar()}" process="@this" update="contenidoGeneral" immediate="true"/>
+            <p:commandButton value="#{msg['viu.generico.boton.edicion']}" actionListener="#{controllerTablero.guaradarSolicitud()}"
+                             update="contenidoGeneral" process="@form" />
+
+        </p:panelGrid>
+
+
+
+
+
+
+    </h:body>
+</html>

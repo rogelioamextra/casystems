@@ -1,0 +1,251 @@
+.panel-login .button-login {
+    background-color: rgb(81,143, 68)!important;
+}
+
+#sidebar-header #logo {
+    margin: 0px !important;
+    height: 100px !important;
+    width: 100px !important;
+}
+
+/*95C11FFF*/
+.panel-login .button-login:hover {
+    background-color: rgb(149,193, 31)!important;
+}
+
+/*518F44FF*/
+.wrapper #sidebar-wrapper {
+    background-color: rgb(81,143,68)!important;
+}
+/*C3309AFF*/
+.tarjetaTableroRechazadas{
+    background-color: rgba(195,48,154,50)!important;
+}
+.tarjetaTableroRechazadasPie{
+    background-color: rgb(195,48,154)!important;
+}
+/*29265CFF*/
+.tarjetaTableroPendientes{
+    background-color: rgba(41,38,92,50)!important;
+}
+.tarjetaTableroPendientesPie{
+    background-color: rgb(41,38,92)!important;
+}
+/*FACF49FF*/
+.tarjetaTableroRecibidas{
+    background-color: rgba(250,207,73,50)!important;
+}
+.tarjetaTableroRecibidasPie{
+    background-color: rgb(250,207,73)!important;
+}
+
+.tarjetaTableroAprobadas{
+    background-color: rgba(149,193, 31,50)!important;
+}
+.tarjetaTableroAprobadasPie{
+    background-color: rgb(149,193, 31)!important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default{
+    background-color: rgb(149,193, 31)!important;
+    border-bottom: 5px solid #518F44FF !important;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger.ui-state-hover{
+    background-color: rgb(81,143,68)!important;
+    border-bottom: 5px solid #518F44FF !important;
+}
+
+/*sidebar*/
+.sidebar-nav .active-menu-parent {
+    background-color: #518F44FF !important;
+    color: #F39200FF !important;
+}
+.sidebar-nav .sidebar-menuitem {
+    border-bottom: 1px solid #95C11FFF;
+}
+.sidebar-nav .sidebar-menuitem .menuLink.active-menu span {
+    color: #29265CFF;
+}
+.sidebar-nav a:hover {
+    background-color: rgb(149,193, 31)!important;
+    border-color: #518F44FF;
+}
+
+/*botones*/
+.ui-button.ui-state-default {
+    background: rgb(81,143,68)!important;
+    border-bottom: 5px solid rgb(81,143,68)!important;
+}
+.ui-button.ui-state-hover {
+    background: #95C11FFF!important;
+    border-bottom: 5px solid rgb(81,143,68)!important;
+}
+.ui-button.ui-state-active {
+    background: #95C11FFF!important;
+    border-bottom: 5px solid rgb(81,143,68)!important;
+}
+.ui-button.ui-state-default.btn-cancelar {
+    background-color: rgb(195,48,154)!important;
+    border-bottom: 5px solid rgb(195,48,154)!important;
+}
+.ui-button.ui-state-hover.btn-cancelar {
+    background-color: rgba(195,48,154,0.7)!important;
+    border-bottom: 5px solid rgb(195,48,154)!important;
+}
+
+.ui-slider {
+    background-color: #95C11FFF;
+}
+.ui-button.gray-button.ui-button span.ui-button-text {
+    color: #fff;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid #9a9a9a;
+    background: #fff;
+    color: #4a4a4a;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
+    border: 1px solid #95C11FFF;
+    /*background: #518F44FF;*/
+    color: #95C11FFF;
+}
+.ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    border: 1px solid #95C11FFF;
+    color: #95C11FFF;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #518F44FF;
+    background: #518F44FF;
+    color: #518F44FF;
+}
+
+/*tablas*/
+.ui-datatable .ui-datatable-header.ui-widget-header {
+    background: rgb(81,143,68)!important;
+}
+.ui-paginator.ui-widget-header .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    border-bottom: 5px solid rgb(81,143,68)!important;
+}
+.ui-datatable tbody.ui-datatable-data tr.ui-widget-content.ui-datatable-selectable.ui-state-highlight {
+    background: #95C11FFF;
+    /*background: #518F44FF;*/
+}
+
+/*select logout*/
+#top-bar-wrapper #top-bar .top-submenu li a:hover {
+    background-color: rgb(81,143,68)!important;
+    border-left: 5px solid rgb(81,143,68)!important;
+}
+
+/*selects*/
+.ui-selectonemenu-panel .ui-selectonemenu-items-wrapper .ui-selectonemenu-items
+.ui-selectonemenu-item.ui-state-highlight {
+    background: rgba(81,143,68,70)!important;
+    border-color: rgb(81,143,68)!important;
+}
+.ui-selectonemenu-panel .ui-selectonemenu-items-wrapper .ui-selectonemenu-items
+.ui-selectonemenu-item.ui-state-hover {
+    background: rgb(149,193, 31)!important;
+    border-color: rgb(81,143,68)!important;
+}
+.ui-inputfield.ui-state-focus,
+.ui-widget-content .ui-inputfield.ui-state-focus,
+.ui-widget-header .ui-inputfield.ui-state-focus {
+    -moz-box-shadow: 0px 0px 5px #518F44FF;
+    -webkit-box-shadow: 0px 0px 5px #518F44FF;
+    box-shadow: 0px 0px 5px #518F44FF; }
+
+/*botones Check*/
+body .ui-toggleswitch.ui-toggleswitch-checked .ui-toggleswitch-slider {
+    border: 1px solid #518F44FF;
+    background: #518F44FF;
+}
+.ui-inputswitch .ui-inputswitch-off {
+    background-color: #C3309AFF!important;
+}
+
+.ui-datatable tbody.ui-datatable-data tr.ui-widget-content.ui-datatable-selectable.ui-state-highlight .ui-chkbox-box {
+    border-color: #95C11FFF;
+}
+.ui-chkbox .ui-chkbox-box.ui-state-active {
+    background-color: #518F44FF;
+}
+.ui-chkbox .ui-chkbox-box.ui-state-focus {
+    background-color: #95C11FFF;
+}
+
+/*tarjetas Card*/
+.tarjetaConfiguracionRiesgo {
+    background: #F39200FF;
+}
+.tarjetaAdministracionRiesgo {
+    background: #C3309AFF;
+}
+.tarjetaConfiguracionMensajes {
+    background: #FACF49FF;
+}
+.tarjetaConfiguracionTiempo {
+    background-color: rgba(41,38,92,0.7)!important;
+}
+/*Cards Documentos*/
+.myCardValDoc {
+    background-color: rgba(41,38,92,0.7)!important;
+}
+.myCardValBio {
+    background-color: rgb(243,146,0)!important;
+}
+
+/*acoordion tabs*/
+.ui-accordion .ui-accordion-header.ui-state-default {
+    background: #95C11FFF;
+}
+.ui-accordion .ui-accordion-header.ui-state-hover {
+    background: #518F44FF;
+}
+.ui-accordion .ui-accordion-header.ui-state-active {
+    background: #518F44FF;
+    border-color: #95C11FFF;
+}
+
+/*otros*/
+.ui-widget-header {
+    border: 1px solid #518F44FF;
+    background: #518F44FF;
+}
+.ui-tabs.ui-tabs-top .ui-tabs-nav.ui-widget-header .ui-state-default {
+    border-bottom: 5px solid #518F44FF;
+    background: #518F44FF;
+}
+
+.ui-tabs.ui-tabs-top .ui-tabs-nav.ui-widget-header .ui-state-default.ui-state-hover {
+    border-bottom: 5px solid #518F44FF;
+    background: #95C11FFF;
+}
+.ui-tabs.ui-tabs-top .ui-tabs-nav.ui-widget-header .ui-state-default.ui-tabs-selected {
+    background: #95C11FFF;
+    border-color: #518F44FF;
+}
+.ui-tabs.ui-tabs-top .ui-tabs-nav.ui-widget-header .ui-state-default.ui-tabs-selected.ui-state-hover {
+    background: #95C11FFF;
+    border-color: #518F44FF;
+}
+
+.ui-picklist .ui-picklist-list .ui-picklist-item.ui-state-highlight {
+    background: #518F44FF;
+    border-color: #518F44FF;
+}
+.ui-picklist .ui-picklist-list .ui-picklist-item.ui-state-hover {
+    background: #95C11FFF;
+    border-color: #518F44FF;
+}
+.ui-dialog .ui-dialog-titlebar.ui-widget-header {
+    border-bottom: 5px solid #518F44FF;
+}
+
+/*radio button*/
+.ui-radiobutton .ui-radiobutton-box.ui-state-active, .ui-radiobutton .ui-radiobutton-box.ui-state-focus {
+    background-color: #518F44FF;
+}
+#sidebar-header a i {
+    color: #518F44FF;
+}

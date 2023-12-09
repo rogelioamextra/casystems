@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+    <!-- INTERFACE -->
+    <cc:interface>       
+        <cc:attribute name="actionGuardar" method-signature="void action(javax.faces.event.AjaxBehaviorEvent)" required="true"/> 
+        <cc:attribute name="actionCancelar" method-signature="void action(javax.faces.event.AjaxBehaviorEvent)" required="true"/> 
+        
+        <cc:attribute name="banderaEdicion" type="java.lang.Boolean" default="false" /> 
+        
+      
+    </cc:interface>
+    
+        <!-- IMPLEMENTATION -->
+
+
+    <cc:implementation>
+          <br/>
+        <p:panelGrid columns="2" style="margin-left: auto;" styleClass="sinBordes">
+            <p:commandButton value="#{msg['viu.generico.boton.cancelar']}" action="#{cc.attrs.actionCancelar}" process="@this"
+                             update="contenidoGeneral" styleClass="red-button btn-cancelar" icon="fa fa-close"/>
+            <p:commandButton value="#{cc.attrs.banderaEdicion?msg['viu.generico.boton.edicion']:msg['viu.generico.boton.guardar']}"
+                          icon="ui-icon-check fa fa-check White Fs14"
+                          actionListener="#{cc.attrs.actionGuardar}" process="@form"
+                             update="contenidoGeneral"    styleClass="green-button"  />
+            
+        </p:panelGrid>
+    </cc:implementation>
+</html>
+

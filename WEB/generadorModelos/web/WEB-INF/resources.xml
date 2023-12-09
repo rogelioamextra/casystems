@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Resource id="VIU" type="javax.sql.DataSource">#Tue Apr 19 14:09:43 CDT 2022
+jdbcDriver=org.postgresql.Driver
+password=postgres
+userName=postgres
+jdbcUrl=jdbc\:postgresql\://192.168.1.242\:5432/viu
+</Resource>
+</resources>

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <p:fieldset legend="#{msg['viu.cliente.ingresos.diasTrabajo']}">
+
+            <p:panelGrid columns="4" layout="grid" styleClass="sinBordes">
+
+                <h:panelGroup/>
+                <h:panelGroup/>
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.montoPorDia']}"/>
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.totalSemanal']}"/>
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.dias.ventaAlta']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.diasVentaAlta}"  />
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.diasVentaAltaMontoDia}"  />
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.diasVentaAltaMontoSemanal}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.dias.ventaBaja']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.diasVentaBaja}"  />
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.diasVentaBajaMontoDia}"  />
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.diasVentaBajaMontoSemanal}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.total']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.totalDiasTrabajados}"  />
+                <h:panelGroup/>
+
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.totalMontoSemana}"  />
+
+
+            </p:panelGrid>
+            <!--<p:inputNumber value="# {controllerTablero.ingresosEditar.totalMontoDia}"  />-->
+
+            <p:panelGrid columns="2" layout="grid" styleClass="sinBordes">
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.montoPorMes']}"/>
+                    <p:outputLabel styleClass="negrita" value="(x 4.43)"/>
+
+                </p:panelGrid>
+
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.totalMontoMes}"  />
+
+
+
+            </p:panelGrid>
+
+
+        </p:fieldset>
+        <p:fieldset legend="#{msg['viu.cliente.ingresos.inversion']}">
+            <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.frecuencia']}"/>
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.montoPromedio']}"/>
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.montoMensual']}"/>
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.semanal']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.inversionSemanalMonto}"  />
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.inversionSemanalMontoMensual}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.quincenal']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.inversionQuincenalMonto}"  />
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.inversionQuincenalMontoMensual}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.mensual']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.inversionMensualMonto}"  />
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.inversionMensualMontoMensual}"  />
+
+
+            </p:panelGrid>
+            <p:panelGrid columns="2" style="width: 50%;margin-left: 38%"  styleClass="sinBordes">
+
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.total']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.inversionTotal}"  />
+            </p:panelGrid>
+
+
+
+        </p:fieldset>
+
+        <p:fieldset legend="#{msg['viu.cliente.ingresos.inversion']}">
+
+            <p:panelGrid columns="2" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.transporte']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.gastoTransporte}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.renta']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.gastoRenta}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.servicios']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.gastoServicios}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.ingresos.inversion.sueldos']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.gastoSueldos}"  />
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.total']}"/>
+                <p:inputNumber value="#{controllerTablero.ingresosEditar.gastoTotal}"  />
+
+
+            </p:panelGrid>
+
+
+        </p:fieldset>
+
+    </h:body>
+</html>
