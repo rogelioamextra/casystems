@@ -1,0 +1,52 @@
+2023-10-24 12:11:32.108  INFO 2765 --- [main] .m.c.v.m.s.ServicioConsultaCPApplication : Starting ServicioConsultaCPApplication v0.0.1-SNAPSHOT using Java 1.8.0_382 on svrback with PID 2765 (/home/appnous/microservicios/clientes/servicioClientes-0.0.1-SNAPSHOT.jar started by appnous in /home/appnous/microservicios)
+2023-10-24 12:11:32.300  INFO 2765 --- [main] .m.c.v.m.s.ServicioConsultaCPApplication : The following profiles are active: qa
+2023-10-24 12:11:42.755  INFO 2765 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-24 12:11:43.017  INFO 2765 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2023-10-24 12:11:44.587  INFO 2765 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$6351a17a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-10-24 12:11:45.189  INFO 2765 --- [main] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2023-10-24 12:11:46.989  INFO 2765 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9021 (http)
+2023-10-24 12:11:47.022  INFO 2765 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-10-24 12:11:47.028  INFO 2765 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.52]
+2023-10-24 12:11:47.031  INFO 2765 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-10-24 12:11:47.031  INFO 2765 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-10-24 12:11:47.031  INFO 2765 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-10-24 12:11:47.039  INFO 2765 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 3.0.2 15 Mar 2022]
+2023-10-24 12:11:47.180  INFO 2765 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-10-24 12:11:47.180  INFO 2765 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 14261 ms
+2023-10-24 12:11:48.159  INFO 2765 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-10-24 12:11:48.798  INFO 2765 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-10-24 12:11:49.443  INFO 2765 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-24 12:11:50.486  INFO 2765 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2023-10-24 12:11:53.322  INFO 2765 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-10-24 12:11:55.349  INFO 2765 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2023-10-24 12:11:57.333  INFO 2765 --- [main] Hibernate Types                          : This framework is proudly powered by:
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+At Hypersistence, we only build amazing tools, like Hibernate Types, Flexy Pool, or Hypersistence Optimizer.
+
+What if there were a tool that could automatically detect JPA and Hibernate performance issues?
+
+Hypersistence Optimizer is that tool! For more details, go to: 
+
+https://vladmihalcea.com/hypersistence-optimizer/
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+2023-10-24 12:11:59.789  INFO 2765 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-24 12:12:02.458  INFO 2765 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-24 12:12:04.233  WARN 2765 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-24 12:12:06.668  WARN 2765 --- [main] o.s.x.transform.TransformerFactoryUtils  : http://javax.xml.XMLConstants/property/accessExternalDTD property not supported by org.apache.xalan.processor.TransformerFactoryImpl
+2023-10-24 12:12:06.668  WARN 2765 --- [main] o.s.x.transform.TransformerFactoryUtils  : http://javax.xml.XMLConstants/property/accessExternalStylesheet property not supported by org.apache.xalan.processor.TransformerFactoryImpl
+2023-10-24 12:12:07.085  INFO 2765 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9021 (http) with context path ''
+2023-10-24 12:12:07.125  INFO 2765 --- [main] .m.c.v.m.s.ServicioConsultaCPApplication : Started ServicioConsultaCPApplication in 42.313 seconds (JVM running for 54.969)
+2023-10-24 12:31:16.110  INFO 2765 --- [http-nio-9021-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-24 12:31:16.111  INFO 2765 --- [http-nio-9021-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-10-24 12:31:16.112  INFO 2765 --- [http-nio-9021-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
