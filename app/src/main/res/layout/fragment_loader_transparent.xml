@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/contenedor_white"
+    tools:context="com.amextra.dialogs.LoaderTransparent">
+
+    <TextView
+        android:textColor="@color/BlueDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+
+        android:id="@+id/labelLoader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loaderCircular"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        app:indicatorDirectionCircular="clockwise"
+        android:indeterminate="true"
+        app:indicatorColor="#F7DC6F"
+        app:indicatorSize="50dp"
+        app:trackColor="#28B463"
+        app:trackCornerRadius="9dp"
+        app:trackThickness="11dp" />
+
+
+</LinearLayout>

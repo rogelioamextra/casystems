@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.amextra.AltaEdicionCliente.DatosPersonalesAddresB">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="15dp"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/frameHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/cardContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/contenedor_white"
+            android:elevation="@dimen/cardview_default_radius"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_above="@+id/buttonsLayout"
+                    android:fadeScrollbars="false"
+                    android:scrollbarThumbVertical="@drawable/scroll_bar_style"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tiempo en Residencia Actual"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/Morado"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/layoutAnios"
+                                    android:layout_weight="1"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:hint="Años"
+                                    app:counterEnabled="true"
+                                    app:counterMaxLength="2">
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/tiempoResAnios"
+                                        android:inputType="number"
+                                        android:maxLength="2"
+                                        android:maxLines="1"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/layMeses"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:hint="Meses">
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/tiempoResMeses"
+                                        android:inputType="number"
+                                        android:maxLines="1"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutTipoVivienda"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Tipo de vivienda"
+                            app:helperText="*Requerido"
+
+                            app:helperTextTextColor="@color/Rojo">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/spinTxtTipoVivienda"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none">
+
+                            </AutoCompleteTextView>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+                        <LinearLayout
+                            android:id="@+id/comprobanteContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/contenedor_bordered"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="300dp"
+                                    android:layout_height="48sp"
+                                    android:background="@drawable/etiqueta_naranja"
+                                    android:gravity="center_vertical"
+                                    android:inputType="textMultiLine"
+                                    android:paddingLeft="20dp"
+                                    android:text="Comprobante"
+                                    android:textColor="@color/white"
+                                    android:textSize="11sp" />
+
+                                <ImageButton
+                                    android:id="@+id/btnCamaraComprobante"
+                                    android:layout_width="100dp"
+                                    android:layout_height="52sp"
+                                    android:layout_gravity="end"
+                                    android:layout_marginTop="-48sp"
+                                    android:background="@drawable/purple_button"
+                                    android:elevation="10dp"
+                                    android:src="@drawable/icon_camera" />
+
+                                <ImageView
+                                    android:id="@+id/imgComprobanteDom"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:visibility="gone" />
+
+                                <com.google.android.material.progressindicator.CircularProgressIndicator
+                                    android:id="@+id/loaderCircular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="50dp"
+                                    app:indicatorDirectionCircular="clockwise"
+                                    android:indeterminate="true"
+                                    app:indicatorColor="#F7DC6F"
+                                    app:indicatorSize="50dp"
+                                    app:trackColor="#28B463"
+                                    app:trackCornerRadius="9dp"
+                                    app:trackThickness="11dp" />
+
+                                <TextView
+                                    android:id="@+id/labelImgComprobante"
+                                    android:layout_width="170dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="Toma una foto de tu comprobante de domicilio"
+                                    android:textColor="@color/PlaceHolderHint" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+<!--                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/contenedor_bordered"
+                            android:orientation="horizontal">
+
+&lt;!&ndash;                            <fragment
+                                android:id="@+id/mapa"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                map:cameraZoom="18" />&ndash;&gt;
+
+
+                        </LinearLayout>-->
+
+                    </LinearLayout>
+
+                </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/buttonsLayout"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="3dp">
+                    <Button
+                        android:id="@+id/btnSiguiente"
+                        android:layout_width="180dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/btn_siguiente"
+                        android:text="Siguiente"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/gradient_green_white"
+        />
+
+</RelativeLayout>

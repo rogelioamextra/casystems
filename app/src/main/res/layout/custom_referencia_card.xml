@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center|start"
+    android:layout_marginStart="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/referencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Referencia"
+        android:textAllCaps="true"
+        android:textColor="@color/Morado"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Nombre"
+        android:textAllCaps="true"
+        android:textColor="@color/BlueDark"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/telefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Telefono"
+        android:textAllCaps="true"
+        android:textColor="@color/BlueDark"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/direccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Direccion"
+        android:textAllCaps="true"
+        android:textColor="@color/BlueDark"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/parentescco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="parentesco"
+        android:textAllCaps="true"
+        android:textColor="@color/BlueDark"
+        android:textSize="15sp" />
+</LinearLayout>

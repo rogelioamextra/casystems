@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    tools:context=".EgresosFin">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="15dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/frameHeader"/>
+
+
+        <LinearLayout
+            android:id="@+id/cardContent"
+            android:layout_width="390dp"
+            android:layout_height="600dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:background="@drawable/contenedor_white"
+            android:elevation="@dimen/cardview_default_radius"
+            android:orientation="vertical">
+
+            <include layout="@layout/activity_menu_credito" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="390dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="375dp"
+                    android:layout_height="500dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+            <Button
+                android:id="@+id/btnSiguiente"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+
+                android:background="@drawable/btn_siguiente"
+                android:text="Siguiente"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/gradient_green_white" />
+
+
+</RelativeLayout>

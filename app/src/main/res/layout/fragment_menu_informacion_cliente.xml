@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    tools:context="com.amextra.Beans.MenuSeccion">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        android:gravity="center"
+        android:foregroundGravity="center">
+
+
+
+
+
+        <RadioGroup
+            android:id="@+id/grupoOpciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/contenedor_menu"
+            android:elevation="15dp"
+            android:gravity="center"
+            android:foregroundGravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioDatosPersonales"
+                android:layout_width="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"                android:layout_height="wrap_content"
+                android:background="@drawable/btn_active_state"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_person"
+                android:text="Personal"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/radioDireccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_active_state"
+                android:button="@android:color/transparent"
+                android:drawableStart="@drawable/ic_person_pin_circle"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"                android:text="Dirección"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/radioDatosLaborales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"                android:background="@drawable/btn_active_state"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="Laboral"
+                android:drawableStart="@drawable/ic_add_business"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/radioRefencias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:background="@drawable/btn_active_state"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="Ref."
+                android:drawableStart=
+                "@drawable/ic_people"
+
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+</RelativeLayout>

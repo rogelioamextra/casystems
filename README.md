@@ -1,12 +1,18 @@
 # Proyecto integral para AMEXTRA
 
-Este repositorio contiene un proyecto integral para AMEXTRA, con enfoque en tres ramas principales:
+Este proyecto se enfoca en el desarrollo de una aplicación móvil para AMEXTRA.
 
 ## Móvil
-- Fuente para una aplicación Android Nativa con API V33 o superior.
 
-## Web
-- Aplicación web para la gestión de los procesos del negocio.
+El proyecto consiste en la creación de una aplicación Android Nativa con API V33 o superior.
 
-## Microservicios
-- API REST que permite consumir el origen de datos generado por la aplicación web.
+### Notas de configuración
+
+Antes de comenzar, asegúrate de configurar correctamente el entorno:
+
+1. Abre el archivo `local.properties`.
+2. Apunta la línea 8 a la ruta de tu SDK de Android:
+3. Reemplaza `sdk.dir=C\:\\Users\\rzavaleta\\AppData\\Local\\Android\\Sdk` con la ruta correcta en tu sistema.
+
+Esto garantizará que el proyecto utilice el SDK de Android adecuado y funcione correctamente.
+

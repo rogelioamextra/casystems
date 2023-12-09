@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.amextra.SMS.ConfirmaSMS">
+
+    <ImageView
+        android:id="@+id/backSms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/back_sms" />
+
+    <ImageView
+        android:id="@+id/logoSMS"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logosms" />
+
+
+    <LinearLayout
+        android:id="@+id/etiquetaConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logoSMS"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/mensajero" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Verificar"
+            android:textColor="@color/Morado"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Notifique al cliente que recibio un SMS..."
+            android:textColor="#608D4D"
+            android:textSize="16dp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/scrollmsg"
+        android:layout_below="@id/etiquetaConfirm"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etiquetaConfirm"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingrese el codigo de verificaciòn"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#608D4D"
+                android:textSize="12dp"
+                android:textStyle="italic" />
+            <EditText
+                android:id="@+id/txtTkn1"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="60dp"
+                android:inputType="number"
+                android:maxLength="5"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
+                android:maxLines="1"
+                android:hint="CODIGO"
+                android:letterSpacing="1.5"
+                android:singleLine="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="#ABB2B9"
+                android:background="@drawable/contenedor_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingrese el codigo NIP"
+                android:layout_marginBottom="10dp"
+                android:textColor="#608D4D"
+                android:textSize="12dp"
+                android:textStyle="italic" />
+            <EditText
+                android:id="@+id/nip"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="60dp"
+                android:inputType="number"
+                android:maxLength="4"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
+                android:maxLines="1"
+                android:hint="NIP"
+                android:letterSpacing="1.5"
+                android:singleLine="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="#ABB2B9"
+                android:background="@drawable/contenedor_white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:textColor="@color/BlueDark"
+                android:textSize="14dp"
+                android:text="Por este conducto autorizamos a AMEXTRA SOFINCO, S.A. de C.V. S.F.C. para que por conducto de sus funcionarios facultados lleve a cabo investigaciones,  sobre  nuestros comportamientos  crediticios  en  Trans  Unión  de  México,  S.A.  SIC  y/o  círculo  de  crédito  S.A.  SIC  o  la  que  esta  disponga  para  tales  efectos.   Así  mismo  declaramos  que conocemos naturaleza y alcance de la información  que  se  solicitará,  del  uso  que  AMEXTRA  SOFINCO,  S.A.  DE  C.V.  S.F.C.  hará  que  de  tal  información  y  de  que  ésta  podrá realizar  consultas  periódicas  sobre  mi  historial  o  el  de  la  empresa  que  represento,  consintiendo  que  esta  autorización  se  encuentra  vigente  por  un  período  de  6 meses  contando a partir de  su  expedición  y  en  todo  caso  durante  el  tiempo  que  se  mantenga  relación  jurídica.  Estoy  de  acuerdo  y  acepto  que  este  documento  quede  bajo  propiedad  de AMEXTRA SOFINCO, S.A. DE C.V. S.F.C. y/o sociedad crediticia consultada para  efectos  de  control  y  cumplimiento  del  artículo  28 de  la  ley  que  regula  a  las  sociedades  de información crediticia; mismo  que  señala  que  las  sociedades  sólo  podrán  proporcionar  información  a  un  usuario,  cuando  este  cuente  con  la  autorización  expresa  del  cliente mediante su firma autógrafa"/>
+
+            <CheckBox
+                android:id="@+id/checkConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="Acepto"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/scrollmsg"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/noRecibeToken"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:text="¿No recibió el código?"
+                    android:textColor="@color/white"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/reenviaCodigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/noRecibeToken"
+                    android:layout_marginTop="20dp"
+                    android:autoLink="all"
+                    android:gravity="center"
+                    android:text="Reenviar"
+                    android:textColor="@color/white"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_width="250dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/boton_sesion"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Continuar"
+                    android:id="@+id/validaCodigo"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

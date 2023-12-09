@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.amextra.SMS.EnviaSMS">
+
+    <ImageView
+        android:id="@+id/backSms"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"
+        android:src="@drawable/back_sms" />
+
+    <ImageView
+        android:id="@+id/logoSMS"
+        android:layout_width="175dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/logosms" />
+
+    <LinearLayout
+        android:id="@+id/etiquetaConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logoSMS"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/confirmadatossms" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Confirmación de Datos"
+            android:textColor="@color/Morado"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_below="@+id/etiquetaConfirm"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="275dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/contenedor_round_corners"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Favor de avisar al cliente que recibirá un SMS al teléfono registrado, este código permitirá continuar con el proceso. " />
+
+            <TextView
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Si el teléfono no está disponible no será posible continuar con la solicitud."/>
+
+            <Button
+                android:layout_width="170dp"
+                android:layout_marginTop="50dp"
+                android:layout_height="38dp"
+                android:background="@drawable/btn_black"
+                android:text="Cancelar"
+                android:id="@+id/btnCancela"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="false"/>
+            <Button
+                android:layout_width="170dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="38dp"
+                android:background="@drawable/btn_siguiente"
+                android:id="@+id/btnContinua"
+                android:text="Continuar"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:id="@+id/loader"
+        android:layout_height="150dp"
+        android:visibility="visible"
+        app:trackColor="#ED73CE"
+        app:indicatorColor="#9EC042"
+        app:trackThickness="6dp"
+        app:showDelay="@integer/material_motion_duration_short_1"
+        tools:ignore="MissingConstraints"
+        android:indeterminate="true"/>
+</RelativeLayout>

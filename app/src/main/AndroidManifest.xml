@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ndroid="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:debuggable="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_amextra_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Amextra"
+        android:usesCleartextTraffic="true"
+        tools:ignore="HardcodedDebugMode"
+        tools:targetApi="31">
+        <activity
+            android:name="com.amextra.AvisosAsesor"
+            android:exported="false" />
+        <activity
+            android:name="com.amextra.cartera.SolicitudesCreditoCliente"
+            android:exported="false" />
+        <activity
+            android:name="com.amextra.cartera.ClientesAsesor"
+            android:exported="false" />
+        <activity
+            android:name="com.amextra.agenda.Agenda_clientes"
+            android:exported="false" />
+
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.ReferenciasAlta_dos"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAKP-qaGzlEEjz94qC52QN6XHAMa9kVHxU" />
+
+        <activity
+            android:name="com.amextra.SMS.ConfirmaSMS"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SMS.EnviaSMS"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.ConsultaInfoCliente.ConsultaReferencia"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.ConsultaInfoCliente.ConsultaEmpleo"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.ConsultaInfoCliente.ConsultaDireccion"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.ConsultaInfoCliente.ConsultaPersonal"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.Beans.MenuCredito"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.MenuScreen"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <!--
+       <activity
+            android:name="com.amextra.Beans.MenuSeccion"
+            android:exported="true" />
+        -->
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.ReferenciasAlta"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SolicitudCredito.ProyeccionCuotas"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SolicitudCredito.Patrimonios"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SolicitudCredito.Egresos"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SolicitudCredito.GastosMensuales"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SolicitudCredito.DatosAdicionalesInversion"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SolicitudCredito.DatosAdicionales"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.SolicitudCredito.SolicitudDeCredito"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.DatosClienteLaborales"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.DatosClienteLab"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".EgresosFin"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.DatosPersonalesAddresB"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.datos_personales_address"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.DatosPersonalesClientesD"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.DatosPersonalesClientesB"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.AltaEdicionCliente.DatosPersonalesClientes"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.ConsultaInfoCliente.ConsultaClientes"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.Security.ResetPass"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.Security.NewPass"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.MenuHomeScreen"
+            android:exported="false"
+            android:label="homeMenu"
+            android:parentActivityName="com.amextra.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.amextra.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.amextra.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>

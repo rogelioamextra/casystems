@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardContentListClients"
+    android:layout_width="390dp"
+    android:layout_height="700dp"
+    android:layout_centerHorizontal="true"
+    android:layout_gravity="center"
+    android:gravity="center"
+
+    android:layout_marginTop="10dp"
+    android:background="@drawable/contenedor_white"
+    android:elevation="@dimen/cardview_default_radius"
+    android:orientation="vertical">
+
+</LinearLayout>

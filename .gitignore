@@ -1,0 +1,24 @@
+# Archivos de construcción de Gradle
+.gradle/
+/build/
+/captures/
+
+# Archivos de respaldo generados por IDE
+/.idea/
+/.iml
+/.idea/workspace.xml
+
+# Archivos de construcción de Android Studio
+/app/build/
+/app/release/
+
+# Otros archivos y directorios generados
+.externalNativeBuild/
+/cmake-build/
+/.cxx/
+/.navigation/
+
+# Archivos generados por el sistema operativo
+.DS_Store
+.DS_Store?
+*.lock
