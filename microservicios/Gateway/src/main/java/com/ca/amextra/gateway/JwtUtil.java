@@ -22,7 +22,7 @@ public class JwtUtil {
 
     private String jwtSecret = "4m3xtr42023";
 
-    private long tokenValidity = 600000L;
+    private long tokenValidity = 1800000L;
 
     public Claims getClaims(final String token) {
         try {

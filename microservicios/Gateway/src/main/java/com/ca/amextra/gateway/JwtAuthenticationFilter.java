@@ -5,6 +5,7 @@
 package com.ca.amextra.gateway;
 
 import io.jsonwebtoken.Claims;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -29,7 +30,9 @@ public class JwtAuthenticationFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = (ServerHttpRequest) exchange.getRequest();
 
-        final List<String> apiEndpoints = List.of("/entrar");
+//        final List<String> apiEndpoints = List.of("/entrar");
+        List<String> apiEndpoints = new ArrayList<>();
+        apiEndpoints.add("/entrar");
 
         Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));
