@@ -1,0 +1,42 @@
+server:
+    port: 8000
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#      - id: login
+#        uri: http://127.0.0.1:9000/
+#        predicates:
+#        - Path=/login/**
+#      - id: catalogos
+#        uri: http://127.0.0.1:9020/
+#        predicates:
+#        - Path=/catalogos/**
+#      - id: agenda
+#        uri: http://127.0.0.1:9020/
+#        predicates:
+#        - Path=/agenda/**
+#      - id: clientes
+#        uri: http://127.0.0.1:9021/
+#        predicates:
+#        - Path=/clientes/**
+#      - id: consultacp
+#        uri: http://127.0.0.1:9012/
+#        predicates:
+#        - Path=/servicio/consultaCP/**
+#      - id: sms
+#        uri: http://127.0.0.1:9022/
+#        predicates:
+#        - Path=/envio/**
+#      - id: curp
+#        uri: http://127.0.0.1:9002/
+#        predicates:
+#        - Path=/valida/**
+#      - id: ocrine
+#        uri: http://127.0.0.1:9005/
+#        predicates:
+#        - Path=/ocr/**
+#      - id: solicitud
+#        uri: http://127.0.0.1:9023/
+#        predicates:
+#        - Path=/solicitud/**
