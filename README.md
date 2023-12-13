@@ -1,12 +1,12 @@
 # Proyecto integral para AMEXTRA
 
-Este repositorio contiene un proyecto integral para AMEXTRA, con enfoque en tres ramas principales:
+Este repositorio contiene un proyecto integral para AMEXTRA, con enfoque en tres carpetas principales:
 
-## Móvil
+## app-movil
 - Fuente para una aplicación Android Nativa con API V33 o superior.
 
-## Web
+## app-web
 - Aplicación web para la gestión de los procesos del negocio.
 
-## Microservicios
+## microservicios
 - API REST que permite consumir el origen de datos generado por la aplicación web.
