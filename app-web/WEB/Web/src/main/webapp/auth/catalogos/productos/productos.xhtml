@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerProductos.banderaEdicion? msg['viu.productos.editar']:msg['viu.productos.nuevo']}</h2>
+
+            <p:panelGrid columns="4" layout="grid" styleClass="sinBordes">
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.productos.nombre']}*:" />
+                        <p:inputText value="#{controllerProductos.nuevo.nombre}" 
+                                     required="true"   onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.productos.requerido.nombre']}"
+                                     >
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.productos.clave']}*:" />
+                        <p:inputText value="#{controllerProductos.nuevo.clave}" 
+                                     required="true" maxlength="10"  onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.productos.requerido.clave']}"
+                                     >
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+                  <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="Taza de interes*:" />
+                        <p:inputText value="#{controllerProductos.nuevo.tasaInteres}" 
+                                     required="true" maxlength="10"  
+                                     requiredMessage="El campo taza interes es requerido"
+                                     >
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+
+            
+                     <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.productos.tasaInteres']}*:" />
+                        <p:inputText value="#{controllerProductos.nuevo.tasaInteres}" 
+                                     required="true" maxlength="10"  onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.productos.requerido.tasaInteres']}"
+                                     >
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+         
+
+
+                <p:column>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerProductos.nuevo.status}">
+                                <p:ajax event="change" listener="#{controllerProductos.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+
+                    </h:panelGrid>
+                </p:column>
+
+
+
+
+            </p:panelGrid>
+
+            <p:dialog header="#{msg['viu.generico.estatus']}" widgetVar="dlgEstatus" minHeight="40" responsive="true" minimizable="false" maximizable="false" closable="false" height="100">
+                <h:outputText value="#{msg['viu.generico.desactivar']}" />
+                <br/>
+                <p:commandButton actionListener="#{controllerProductos.confirmaEstatus(false)}" update="" value="#{msg['viu.generico.confirmar']}" styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" />
+                <p:commandButton actionListener="#{controllerProductos.confirmaEstatus(true)}" update="" value="#{msg['viu.generico.boton.cancelar']}" styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" />
+            </p:dialog>
+
+            <p:dialog header="#{msg['viu.generico.estatus']}" widgetVar="dlgEstatus" minHeight="40" responsive="true" minimizable="false" maximizable="false" closable="false" height="100">
+                <h:outputText value="#{msg['viu.generico.desactivar']}" />
+                <br/>
+                <p:commandButton actionListener="#{controllerProductos.confirmaEstatus(false)}" update="estatus" value="#{msg['viu.generico.confirmar']}" styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" />
+                <p:commandButton actionListener="#{controllerProductos.confirmaEstatus(true)}" update="estatus" value="#{msg['viu.generico.boton.cancelar']}" styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" />
+            </p:dialog>
+
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerProductos.nuevo.status}"/>
+
+            <cmp:botonesFormulario actionCancelar="#{controllerProductos.cancelar()}" actionGuardar="#{controllerProductos.guardar()}" banderaEdicion="#{controllerProductos.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

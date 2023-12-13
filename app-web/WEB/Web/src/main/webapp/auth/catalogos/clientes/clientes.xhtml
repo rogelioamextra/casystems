@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+    </h:head>
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerClientes.banderaEdicion?'Modificar Cliente':'Modificar Cliente'}</h2>
+
+            <p:tabView id="tabopciones">
+                <p:tab title="Datos Personales">
+                    <ui:include src="datosPersonales.xhtml"/>
+
+                </p:tab>
+                <p:tab title="Domicilio">
+                    <ui:include src="domicilio.xhtml"/>
+
+                </p:tab>
+                <p:tab title="Datos laborales">
+                    <ui:include src="datosLaborales.xhtml"/>
+
+                </p:tab>
+                <p:tab title="Referencias">
+                    <ui:include src="referencias.xhtml"/>
+
+                </p:tab>
+    
+
+            </p:tabView>
+            <p:dialog closable="true" header="Imagen Cargada" closeOnEscape="true" width="80%" 
+                         height="630px" position="center"  modal="true" widgetVar="imagenesIne">
+                <h:panelGroup id="panelImagenesIne">
+                    <p:carousel value="#{controllerClientes.streamListIne}" var="image" circular="true"
+                                    
+                                >
+
+                        <div class="product-item">
+                            <div class="product-item-content">
+                                <p:graphicImage class="product-image" style="width:100%" value="#{image}"
+                                                stream="false"/>
+
+                            </div>
+                        </div>
+                    </p:carousel>
+                </h:panelGroup>
+
+
+
+            </p:dialog>
+
+            
+
+
+
+
+
+
+            <p:dialog header="#{msg['viu.generico.estatus']}" widgetVar="dlgEstatus" minHeight="40" responsive="true" minimizable="false" maximizable="false" closable="false" height="100">
+                <h:outputText value="#{msg['viu.generico.desactivar']}" />
+                <br/>
+                <p:commandButton actionListener="#{controllerFrecuenciasPago.confirmaEstatus(false)}" update="" value="#{msg['viu.generico.confirmar']}" styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" />
+                <p:commandButton actionListener="#{controllerFrecuenciasPago.confirmaEstatus(true)}" update="" value="#{msg['viu.generico.boton.cancelar']}" styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" />
+            </p:dialog>
+
+            <p:dialog header="#{msg['viu.generico.estatus']}" widgetVar="dlgEstatus" minHeight="40" responsive="true" minimizable="false" maximizable="false" closable="false" height="100">
+                <h:outputText value="#{msg['viu.generico.desactivar']}" />
+                <br/>
+                <p:commandButton actionListener="#{controllerFrecuenciasPago.confirmaEstatus(false)}" update="" value="#{msg['viu.generico.confirmar']}" styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" />
+                <p:commandButton actionListener="#{controllerFrecuenciasPago.confirmaEstatus(true)}" update="" value="#{msg['viu.generico.boton.cancelar']}" styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" />
+            </p:dialog>
+
+
+<!--            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerClientes.nuevo.status}"/>-->
+
+            <cmp:botonesFormulario actionCancelar="#{controllerClientes.cancelar()}" actionGuardar="#{controllerClientes.guardar()}" banderaEdicion="#{controllerClientes.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

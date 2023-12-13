@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+    <!-- INTERFACE -->
+    <cc:interface>       
+        <cc:attribute name="actionRegresar" method-signature="void action(javax.faces.event.AjaxBehaviorEvent)" required="false"/>       
+    </cc:interface>
+    
+        <!-- IMPLEMENTATION -->
+
+    <cc:implementation>
+            <p:commandButton value="#{msg['viu.generico.boton.regresar']}"
+                          icon="fa fa-mail-reply White Fs14"
+                          actionListener="#{cc.attrs.actionRegresar}" process="@form"
+                          update="contenidoGeneral" styleClass="blue-button"  />
+    </cc:implementation>
+</html>

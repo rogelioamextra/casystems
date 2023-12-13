@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags"
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <h:body>
+        <div class="card card-w-title" >
+            <h2>#{msg['viu.avisos.titulo.bandeja']}</h2>
+            <h:panelGroup>
+                <cmp:botonAgregarNuevo actionAgregar="#{controllerAvisos.cambiaPaginaNuevo()}"/>
+            </h:panelGroup>
+    
+            
+            <h:panelGroup id="tabla1">
+                <p:dataTable  var="avisos" value="#{controllerAvisos.listaConfiguracionAvisos}"
+                    rowsPerPageTemplate="5,10,15" paginator="true"
+                    filteredValue="#{controllerAvisos.filtroConfiguracionAvisos}"
+                    paginatorPosition="bottom" rows="5"                         
+                    paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                    reflow="true"  emptyMessage="#{msg['viu.generico.agregar']}"  widgetVar="usu">
+
+                    <f:facet name="header" class="sinFondo">
+                        <div id="filtroTablaTareasGenerales">                       
+                            <p:inputText  id="globalFilter" onkeypress="return event.keyCode != 13" placeholder="#{msg['viu.generico.filtro.buscar']}" style="width: 25%;margin-left: 75%;">
+                                <p:ajax event="keyup" oncomplete="PF('usu').filter();" delay="500" global="false" />
+                            </p:inputText>                     
+                        </div>
+                    </f:facet>  
+               
+                    <p:column headerText="#{msg['viu.generico.nombre']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{avisos.nombre}">
+                        <p:outputLabel value="#{avisos.nombre}"/>
+                    </p:column>
+                 
+                    
+                    <p:column headerText="#{msg['viu.generico.estatus']}" styleClass="centrado"  filterMatchMode="contains" filterBy="#{avisos.status ?'Activo':'Inactivo'}">
+                        <p:outputLabel value="#{avisos.status?msg['viu.generico.activo']:msg['viu.generico.inactivo']}"/>
+                    </p:column>
+                    <p:column headerText="#{msg['viu.generico.editar']}" styleClass="centrado">
+                        <p:commandLink actionListener="#{controllerAvisos.cambiaPaginaEdicion(avisos)}" update="contenidoGeneral" >
+                            <p:graphicImage style="width: 40px!important;" name="images/editar.png" library="icarus-layout"  title="editar"/>
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>

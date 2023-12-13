@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerZonas.banderaEdicion?msg['viu.zonas.editar']:msg['viu.zonas.nuevo']}</h2>
+
+            <p:panelGrid columns="4" layout="grid" styleClass="sinBordes">
+
+                <p:column>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.regional.nombre']}"/>
+                        <p:selectOneMenu id="cbRegiones" value="#{controllerZonas.regionSelect}" 
+                                         filter="true" filterMatchMode="startsWith"
+                                         converter="listaConverter">              
+                            <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{controllerZonas.listaRegiones}" var="region"
+                                           itemLabel="#{region.nombre}"
+                                           itemValue="#{region}" />
+                            <p:ajax event="change" process="@this" global="false"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </p:column>
+
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.zonas.numero']}*:" />
+                        <p:inputText value="#{controllerZonas.zonaNuevo.noZona}"
+                                     requiredMessage="#{msg['viu.zonas.mensaje.campo.numero']}"
+                                     required="true"
+                                     onkeyup="soloMayusculas(this)" maxlength="10">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.zonas.nombre']}*:" />
+                        <p:inputTextarea value="#{controllerZonas.zonaNuevo.nombre}"
+                                         
+                                         cols="30" rows="2"
+                                         requiredMessage="#{msg['viu.zonas.mensaje.campo.zona']}"
+                                         required="true"
+                                         onkeyup="soloMayusculas(this)"
+                                         maxlength="50">
+                        </p:inputTextarea>
+                    </p:panelGrid>
+                </p:column>
+
+                <p:column>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerZonas.zonaNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerZonas.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+                        
+                    </h:panelGrid>
+                </p:column>
+                
+            </p:panelGrid>
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" valorCheck="#{controllerZonas.zonaNuevo.status}"/>
+
+            <cmp:botonesFormulario actionCancelar="#{controllerZonas.cancelar()}" actionGuardar="#{controllerZonas.guardar()}" banderaEdicion="#{controllerZonas.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>
+

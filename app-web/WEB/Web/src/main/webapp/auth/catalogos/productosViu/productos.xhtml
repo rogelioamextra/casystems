@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerProductos.banderaEdicion?msg['viu.productos.editar']:msg['viu.productos.nuevo']}</h2>
+            <p:panelGrid columns="4" layout="grid" styleClass="sinBordes">
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.productos.nombre']}:" />
+                        <p:inputText value="#{controllerProductos.productoNuevo.nombre}"  required="true" requiredMessage="#{msg['viu.productos.nombre.vacio']}" 
+                                     onkeyup="soloMayusculas(this)" maxlength="80">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+
+                <p:column>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerProductos.productoNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerProductos.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+                        
+                    </h:panelGrid>
+                </p:column>
+
+            </p:panelGrid>
+         
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerProductos.productoNuevo.status}"/>
+            <cmp:botonesFormulario actionCancelar="#{controllerProductos.cancelar()}" actionGuardar="#{controllerProductos.guardar()}" banderaEdicion="#{controllerProductos.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>
+

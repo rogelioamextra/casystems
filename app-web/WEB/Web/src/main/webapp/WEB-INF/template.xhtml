@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <f:view locale="#{administradorPaginas.idioma}" >
+    
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+<!--        <link rel="icon" href="../resources/icarus-layout/images/Favicon-VIU.png" />-->
+        <title>APP NOUS</title>
+        <h:outputScript name="js/nanoscroller.js" library="icarus-layout" />
+        <h:outputScript name="js/layout.js" library="icarus-layout" />
+        <h:outputScript name="js/viuValidaciones.js" library="icarus-layout" />
+        <script src="https://kit.fontawesome.com/4ddd512fe2.js" crossorigin="anonymous"></script>
+
+
+        <ui:insert name="head"/>
+    </h:head>
+
+    <h:body onload="#{login.consultaNuevo()}">
+
+        <h:form id="formTemplate">
+
+            <p:remoteCommand name="initZonas" actionListener="#{controllerZonas.init()}" immediate="true"/>
+            <p:remoteCommand name="initUsuarios" actionListener="#{controllerUsuarios.init()}" immediate="true"/>
+            <p:remoteCommand name="initRoles" actionListener="#{controllerRoles.init()}" immediate="true"/>
+            <p:remoteCommand name="initSubdirecciones" actionListener="#{controllerSubdirecciones.init()}" immediate="true"/>
+            <p:remoteCommand name="initSucursales" actionListener="#{controllerSucursales.init()}" immediate="true"/>
+            <p:remoteCommand name="initRegiones" actionListener="#{controllerRegiones.init()}" immediate="true"/>
+            <p:remoteCommand name="initEmpresas" actionListener="#{controllerEmpresas.init()}" immediate="true"/>
+            <p:remoteCommand name="initDocumentos" actionListener="#{controllerDocumentos.init()}" immediate="true"/>
+            <p:remoteCommand name="initProductos" actionListener="#{controllerProductos.init()}" immediate="true"/>
+            <p:remoteCommand name="initEmpresas" actionListener="#{controllerEmpresas.init()}" immediate="true"/>
+            <p:remoteCommand name="initConfiguracionSolicitud" actionListener="#{controllerConfiguracionSolicitud.init()}" immediate="true"/>
+            <p:remoteCommand name="initBancoValidaciones" actionListener="#{controllerBancoValidaciones.init()}" immediate="true" />
+            <p:remoteCommand name="initCampos" actionListener="#{controllerCampos.init()}" immediate="true" />
+            <p:remoteCommand name="initEnrolamiento" actionListener="#{controllerEnrolamiento.init()}" immediate="true" />
+            <p:remoteCommand name="initTablero" actionListener="#{controllerTablero.init()}" immediate="true" />
+            <p:remoteCommand name="initAvisos" actionListener="#{controllerAvisos.init()}" immediate="true" />
+            <p:remoteCommand name="initFolios" actionListener="#{controllerFolios.init()}" immediate="true" />
+            <p:remoteCommand name="initCategoriasCampos" actionListener="#{controllerCategoriasCampos.init()}" immediate="true" />
+            <p:remoteCommand name="initTiempoVida" actionListener="#{controllerTiempoVida.init()}" immediate="true" />
+        </h:form>
+
+        <div class="wrapper" >
+
+            <div id="sidebar-wrapper">
+                <ui:include src="sidebarheader.xhtml" />
+
+                <div class="sidebar-nav nano">
+                    <div class="nano-content sidebar-scroll-content">
+                        <ui:include src="layoutmenu.xhtml" />
+                    </div>
+                </div>
+            </div>   
+
+            <h:form>
+                <ui:include src="topbar.xhtml" />         
+            </h:form>
+
+            <div id="main-wrapper">
+                <div class="main-content" style="height: auto">
+                    <ui:insert name="content"></ui:insert>
+                </div>
+
+                <ui:include src="footer.xhtml" />
+            </div>
+        </div>
+        <p:dialog styleClass="dialogo-contrasena" position="center" showEffect="fade"
+                  hideEffect="fade" header="#{msg['viu.contrasena.nueva.titulo']}" closable="false" 
+                  resizable="false" widgetVar="dlgContrasena" modal="true" height="300" width="350" responsive="true">
+            <h:form>
+                <p:growl id="mensajesPass" showDetail="false" sticky="false" life="10000"  />
+
+                <div class="ui-g-12">
+                    <p:outputLabel  value="#{msg['viu.contrasena.nueva.texto']}:" />
+                </div>
+                <div class="ui-g-12">
+                    <p:outputLabel  value="#{msg['viu.contrasena.nueva.campo']}:*" />
+                </div>
+                <p:password size="35" id="pwd" maxlength="12" value="#{login.password1}"
+                            required="true" feedback="true" inline="true"
+                            match="pwd2" 
+                            validatorMessage="#{msg['viu.contrasena.nueva.coinciden']}"
+                            strongLabel="#{msg['viu.contrasena.nueva.fuerte']}" 
+                            weakLabel="#{msg['viu.contrasena.nueva.debil']}" 
+                            goodLabel="#{msg['viu.contrasena.nueva.buena']}"
+                            requiredMessage="#{msg['viu.contrasena.nueva.requerido']}"/>
+                <div class="ui-g-12">
+                    <p:outputLabel  value="#{msg['viu.contrasena.nueva.confirmar']}:*" />
+                </div>
+                <p:password size="35" id="pwd2" maxlength="12" value="#{login.password2}" required="true" 
+                            requiredMessage="#{msg['viu.contrasena.nueva.requerido']}"/>
+                <br/>
+                <div class="ui-g-12">
+                    <p:commandButton styleClass="button-login" style="float: right" 
+                                     actionListener="#{login.actualizaContrasena()}"
+                                     process="@form" update="mensajesPass"
+                                     value="#{msg['viu.generico.boton.guardar']}"/>
+                </div>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="WV_SinSesion" header="Cierre de Sesión" modal="true" 
+                  width="30%" draggable="false" closable="false" >
+            <h:form>
+
+                <p:panelGrid columns="1" styleClass="sinBordes">
+                    <p:outputLabel value="Estimado usuario por inactividad se a cerrado su sesión, por favor volver a ingresar"/>
+
+
+                </p:panelGrid>
+
+                <p:panelGrid columns="2" style="margin-left: 70%;" styleClass="sinBordes">
+                    <p:commandButton value="Aceptar"
+                                     actionListener="#{login.salir()}" process="@form"
+                                     styleClass="GreenButton ripplelink"/>
+
+
+
+                </p:panelGrid>
+            </h:form>
+
+        </p:dialog>
+
+        <p:ajaxStatus   >
+            <f:facet name="start" >
+                <p:graphicImage name="images/preloader_blue.gif" library="icarus-layout" styleClass="loader"/>
+            </f:facet>
+
+            <f:facet name="success">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <h:form>
+            <p:idleMonitor timeout="1800000" >
+                <p:ajax event="idle" global="false" listener="#{login.cierreSesion()}" process="@this"/>
+            </p:idleMonitor>
+        </h:form>
+
+
+        <h:outputStylesheet name="css/animate.css" library="icarus-layout" />
+        <h:outputStylesheet name="css/nanoscroller.css" library="icarus-layout" />
+        <h:outputStylesheet name="css/layout-blue.css" library="icarus-layout" />
+        <h:outputStylesheet name="css/viu.css" library="icarus-layout" />
+        <h:outputStylesheet name="css/amextra49.css" library="icarus-layout" />
+    </h:body>
+
+
+    </f:view>
+
+</html>
+
+    

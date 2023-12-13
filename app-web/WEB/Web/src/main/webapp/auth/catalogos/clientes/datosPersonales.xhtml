@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <p:panelGrid columns="3" layout="grid" styleClass="sinBordes"> 
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita"  value="Cliente"/>
+                <p:inputText value="#{controllerClientes.nuevo.idCliente}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Nombre"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.nombres}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Apellido Paterno"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.apellidoPaterno}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Apellido Materno"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.apellidoMaterno}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Telefono"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.telefono}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Genero"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idPersona.genero}" style="width: 90px"
+
+                                 >
+                    <f:selectItem  itemLabel="HOMBRE" itemValue="1"/>
+                    <f:selectItem  itemLabel="MUJER" itemValue="0"/>
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Nacionalidad"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idPersona.idNacionalidad}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaNacionalidades}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Estado Civil"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idPersona.idEstadoCivil}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaEstadoCivil}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Lugar de nacimiento"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idPersona.lugarNacimiento}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaEstados}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Fecha de Nacimiento"/>
+                <p:datePicker pattern="dd/MM/yyyy"  value="#{controllerClientes.nuevo.idPersona.fechaNacimiento}" >
+
+                </p:datePicker>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="RFC"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.rfc}"  />
+
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="CURP"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.curp}"  />
+
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Grado maximo de estudios"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idPersona.idGradoMaximoEstudios}" 
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaGradoMaximo}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Correo electrónico"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.email}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Dependientes económicos"/>
+                <p:inputText value="#{controllerClientes.nuevo.idPersona.dependientesEconomicos}"  />
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.sucursal']}"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idSucursal}" 
+                                 converter="listaConverter" 
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaSucursales}" var="prod" itemLabel="#{prod.nombre}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="Asesor:"/>
+                <p:selectOneMenu value="#{controllerClientes.nuevo.idAsesor}" style="width: 250px!important;"
+                                 converter="listaConverter" 
+                                 >
+                    <f:selectItems value="#{controllerClientes.listaAsesores}" var="prod" itemLabel="#{prod.idPersona.nombres} #{prod.idPersona.apellidoPaterno} #{prod.idPersona.apellidoMaterno}"
+                                   itemValue="#{prod}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerClientes.verificarIdentificacion()}">
+                <p:outputLabel styleClass="negrita" value="codigo INE"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDtIdentificacion.noIdentificacion}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerClientes.verificarIdentificacion()}">
+                <p:outputLabel styleClass="negrita" value="Clave Elector"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDtIdentificacion.claveElector}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerClientes.verificarIdentificacion()}">
+                <p:outputLabel styleClass="negrita" value="Año Vencimiento"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDtIdentificacion.vigencia}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes"
+                         rendered="#{controllerClientes.verificarIdentificacion()}">
+                <p:outputLabel styleClass="negrita" value="Año de Emisión"/>
+                <p:inputText value="#{controllerClientes.nuevo.idDtIdentificacion.emision}"  />
+            </p:panelGrid>
+
+            <p:commandButton value="Ver imagen" actionListener="#{controllerClientes.buscarImagenesIne()}"
+                          rendered="#{controllerClientes.verificarIdentificacion()}"     update="formContenido:panelImagenesIne"     
+                             oncomplete="PF('imagenesIne').show();"/>
+
+
+            <h:panelGroup rendered="#{!controllerClientes.verificarIdentificacion()}">
+                <p:panelGrid columns="2" layout="grid" styleClass="sinBordes" >
+
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel styleClass="negrita" value="Identificacion"/>
+                        <p:selectOneMenu value="#{controllerClientes.nuevo.idDtIdentificacion.idTipoIdentificacion}"
+                                         style="width: 90px"
+                                         converter="listaConverter"
+                                         >
+                            <f:selectItems value="#{controllerClientes.listaIdentificaciones}" var="prod" itemLabel="#{prod.nombre}"
+                                           itemValue="#{prod}" />
+
+                        </p:selectOneMenu>
+
+                    </p:panelGrid>
+                    <p:commandButton value="Ver imagen" process="@this"
+                                     actionListener="#{controllerClientes.buscarImagenesIdentificacion()}"
+                                     update="formContenido:panelImagenesIne"  
+                                     oncomplete="PF('imagenesIne').show();"/>
+
+
+                </p:panelGrid>
+
+
+            </h:panelGroup>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes" rendered="#{controllerClientes.face ne null}">
+                <p:outputLabel styleClass="negrita" value="Face Match:#{controllerClientes.face.similitud eq null or controllerClientes.face.similitud eq '' ?'0.0':controllerClientes.face.similitud}%" />
+
+                <p:commandButton value="#{msg['viu.generico.boton.verImagen']}"
+                                 actionListener="#{controllerClientes.buscarImagenesSelfie()}"
+                                 update="formContenido:panelImagenesIne"     
+                                 oncomplete="PF('imagenesIne').show();"/>
+            </p:panelGrid>
+
+
+
+        </p:panelGrid>
+
+
+
+
+
+
+    </h:body>
+</html>

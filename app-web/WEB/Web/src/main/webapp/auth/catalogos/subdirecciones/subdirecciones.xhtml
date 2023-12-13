@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerSubdirecciones.banderaEdicion?msg['viu.subdirecciones.editar']:msg['viu.subdirecciones.nuevo']}</h2>
+
+            <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.subdirecciones.numero']}:" />
+                        <p:inputText value="#{controllerSubdirecciones.subdireccionNuevo.noSubdireccion}"  
+                                     onkeyup="soloMayusculas(this)" maxlength="10">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+
+
+                <p:column>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerSubdirecciones.subdireccionNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerSubdirecciones.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="margin:1%"/>
+                        </h:panelGroup>
+                        
+                    </h:panelGrid>
+                </p:column>
+                
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.subdirecciones.nombre']}*:" />
+                        <p:inputTextarea value="#{controllerSubdirecciones.subdireccionNuevo.nombre}" 
+                                         cols="25" rows="2" requiredMessage="#{msg['viu.subdirecciones.mensaje.campo.nombre.vacioviu.sucursales.editar']}"
+                                         required="true" onkeyup="soloMayusculas(this)" maxlength="50">
+                        </p:inputTextarea>
+                    </p:panelGrid>
+                </p:column>
+            </p:panelGrid>
+          
+
+         
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerSubdirecciones.subdireccionNuevo.status}"/>
+
+
+
+            <cmp:botonesFormulario actionCancelar="#{controllerSubdirecciones.cancelar()}" actionGuardar="#{controllerSubdirecciones.guardar()}" banderaEdicion="#{controllerSubdirecciones.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+
+    <h:body>
+        <div class="card card-w-title containerFondo" id="conf">
+            <h2>#{msg['viu.configuracionSolicitud.titulo']}</h2>
+            <p:growl id="msgCS"/>
+            <div class="ui-g" style="margin-bottom: -10px">
+                <h:panelGroup id="tarjetaWizard" class="panelWizard">
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="#{controllerConfiguracionSolicitud.estiloCNR} estiloTarjeta">
+                            <h:graphicImage styleClass="imagenesTarjetas" name="images/CNR.svg" library="icarus-layout"/>
+                            <h3>#{msg['viu.configuracionSolicitud.cnr']}</h3>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="#{controllerConfiguracionSolicitud.estiloANR} estiloTarjeta">
+                            <h:graphicImage styleClass="imagenesTarjetas" name="images/ANR.svg" library="icarus-layout"/>
+                            <h3>#{msg['viu.configuracionSolicitud.anr']}</h3>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3 ">
+                        <div class="#{controllerConfiguracionSolicitud.estiloCM} estiloTarjeta">
+                            <h:graphicImage styleClass="imagenesTarjetas" name="images/CM.svg" library="icarus-layout"/>
+                            <h3>#{msg['viu.configuracionSolicitud.cm']}</h3>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <div class="#{controllerConfiguracionSolicitud.estiloCTV} estiloTarjeta">
+                            <h:graphicImage styleClass="imagenesTarjetas" name="images/CTV.svg" library="icarus-layout"/>
+                            <h3>#{msg['viu.configuracionSolicitud.ctv']}</h3>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </div>
+
+            <div class="card">
+                <br/>
+                <div class="ui-gl">
+                    <h4 style="float: left; margin: 0;">#{msg['viu.configuracionSolicitud.producto']}:</h4>
+                    <h4 style="float: left; margin: 0; margin-left: 5px">#{controllerConfiguracionSolicitud.selectedProducts.idProducto.nombre}</h4>
+                </div>
+                <p:wizard flowListener="#{controllerConfiguracionSolicitud.onFlowProcess}" widgetVar="wizardwv" nextLabel="#{msg['viu.generico.boton.siguiente']}" backLabel="#{msg['viu.generico.boton.atras']}">
+                    <p:tab id="CNR">
+                        <p:panel styleClass="sinBordes">
+                            <div class="ui-g-12 ui-md-12 sinBordes">
+                                <cmp:botonesAltaBaja actionAgregar="#{controllerConfiguracionSolicitud.agregaRegistro(1)}" 
+                                                     processEliminar="formContenido:dt-products" actionEliminar="#{controllerConfiguracionSolicitud.eliminaRegistro(1)}" />
+                            </div>
+                            <div class="ui-g-12 ui-md-12 sinBordes">
+                                <h:panelGroup layout="grid">
+                                    <p:dataTable id="dt-products" widgetVar="dtProducts" var="solicitud" value="#{controllerConfiguracionSolicitud.listaConfigRiesgo}"
+                                                 rowsPerPageTemplate="10,20,30" paginator="true" rowSelectMode="checkbox" 
+                                                 paginatorPosition="bottom" rows="10" lazy="false"
+                                                 selection="#{controllerConfiguracionSolicitud.selectedProductsGrid}"  
+                                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                                 rowKey="#{solicitud}" emptyMessage="#{msg['viu.generico.tabla.vacia']}">
+                                        <f:facet name="header">
+                                            <div style="height: 25px;"></div>
+                                        </f:facet>
+                                        
+                                        <p:ajax event="toggleSelect" process="formContenido:dt-products" listener="#{controllerConfiguracionSolicitud.toggleSelectAll}"/>
+                                        <p:ajax event="rowSelectCheckbox" process="formContenido:dt-products" listener="#{controllerConfiguracionSolicitud.seleccionarProducto}"/>          
+                                        <p:ajax event="rowUnselectCheckbox"  process="formContenido:dt-products" listener="#{controllerConfiguracionSolicitud.deseleccionarProducto}"/>       
+                                        <p:column selectionMode="multiple"  exportable="false" styleClass="centrado fondoCheck"></p:column>
+                                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.fuente']}">
+                                            <p:selectOneMenu value="#{solicitud.idDocumento}" filter="true" filterMatchMode="startsWith" converter="listaConverter" style="width:90%">
+                                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItems value="#{controllerConfiguracionSolicitud.listaDocumentos}" var="doc" itemValue="#{doc}" itemLabel="#{doc.nombre}" />
+                                                <p:ajax event="change" listener="#{controllerConfiguracionSolicitud.llenarComboValidaciones(solicitud)}"
+                                                        process="@this" update="option2" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+
+                                        <p:column id="columnVal" styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.validacion']}">
+                                            <p:selectOneMenu  value="#{solicitud.idValidacion}" id="option2" filter="true" filterMatchMode="startsWith" converter="listaConverter" style="width:90%">
+                                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItems value="#{solicitud.listaValidacionesNueva}" var="val" itemValue="#{val}" itemLabel="#{msg[val.nombre]}"/>
+                                                <p:ajax event="change" listener="#{controllerConfiguracionSolicitud.llenarComboValores(solicitud)}"
+                                                        process="@this" update="option3, @this,formContenido:msgCS" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+
+                                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.valor']}">
+                                            <p:selectOneMenu id="option3" value="#{solicitud.idValor}" filter="true" filterMatchMode="startsWith" converter="listaConverter" style="width:90%">
+                                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItems value="#{solicitud.listaValoresNueva}" var="valor" itemValue="#{valor}" itemLabel="#{msg[valor.nombre]}"/>
+                                                <p:ajax event="change" listener="#{controllerConfiguracionSolicitud.validarComboValores(solicitud)}"
+                                                        process="@this" update="@this ,formContenido:msgCS" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+
+                                        <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.resultado']}">
+                                            <p:selectOneMenu value="#{solicitud.resultado}" filter="true" filterMatchMode="startsWith" style="width:90%" >
+                                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItem itemLabel="#{msg['viu.generico.aprobada']}"   itemValue="#{controllerConfiguracionSolicitud.aprobada}" />
+                                                <f:selectItem itemLabel="#{msg['viu.generico.rechazada']}"  itemValue="#{controllerConfiguracionSolicitud.rechazada}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column width="130" headerText="#{msg['viu.banco.validaciones.detener']}" styleClass="centrado">
+                                            <h:panelGrid id="detener" columns="1" styleClass="sinBordes centrado">
+                                                <h:panelGroup>
+                                                    <p:inputSwitch style="width: 25px" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}" value="#{solicitud.detenerProceso}">
+                                                    </p:inputSwitch>
+                                                </h:panelGroup>
+                                            </h:panelGrid>
+                                        </p:column>
+                                        <p:column width="130" headerText="#{msg['viu.banco.validaciones.generico.estatus']}" styleClass="centrado">
+                                            <h:panelGrid id="estatus" columns="1" styleClass="sinBordes centrado">
+                                                <h:panelGroup>
+                                                    <p:inputSwitch style="width: 25px" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}"  value="#{solicitud.status}">
+                                                        <p:ajax event="change" process="@this"/>
+                                                    </p:inputSwitch>
+                                                </h:panelGroup>
+                                            </h:panelGrid>
+                                        </p:column>
+
+                                        <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                                                   valorCheck="#{controllerConfiguracionSolicitud.configNivelRiesgoNuevo.status}"/>
+                                    </p:dataTable>
+                                </h:panelGroup>    
+                            </div>
+                            <div style="float: left">
+                                <p:commandButton value="#{msg['viu.generico.boton.inicio']}" icon="fa fa-reply-all"
+                                                 actionListener="#{controllerConfiguracionSolicitud.volverInicio()}"
+                                                 update="contenidoGeneral" ></p:commandButton>    
+                            </div>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="ANR">
+                        <p:panel styleClass="sinBordes">
+                            <div>
+                                <div class="ui-g-12 ui-md-12 sinBordes">
+                                    <h:panelGroup layout="grid">
+                                        <p:dataTable var="config" value="#{controllerConfiguracionSolicitud.listaConfigVal}"
+                                                     filteredValue="#{controllerConfiguracionSolicitud.listaConfigVal}"
+                                                     rendered="true"
+                                                     reflow="true" emptyMessage="#{msg['viu.generico.tabla.vacia']}" widgetVar="anr"
+                                                     styleClass="tablaCentro">
+                                            <f:facet name="header">
+                                                <div style="height: 25px;"></div>
+                                            </f:facet>
+
+                                            <p:column width="150" styleClass="centrado" headerText="#{msg['viu.generico.configuracion']}">
+                                                <p:inputSwitch value="#{config.status}" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}">
+                                                    <p:ajax event="change" listener="#{controllerConfiguracionSolicitud.validaEstatusConfigVal(config)}" update="@this,formContenido:msgCS" process="@this"/>
+                                                </p:inputSwitch>
+                                            </p:column>
+
+                                            <p:column headerText="#{msg['viu.configuracionSolicitud.validacion']}" filterBy="#{config.nombre}">
+                                                <h:outputText value="#{msg[config.nombre]}" />
+                                            </p:column>
+
+                                            <p:column styleClass="centrado" headerText="#{msg['viu.generico.boton.configurar']}">
+                                                <p:inputText id="txt" value="#{config.porcentaje}" rendered="#{config.coincidencia==true}"/>
+                                                <p:slider for="txt" range="false" rendered="#{config.coincidencia==true}"/>
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="CM">
+                        <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                            <p:accordionPanel widgetVar="multiple" multiple="true" class="enrolamiento">
+                                <p:tab title="#{msg['viu.generico.aprobada']}">
+                                    <h:panelGroup id="tabla1">
+                                        <p:panelGrid columns="2" layout="grid" styleClass="sinBordes" columnClasses="ui-grid-col-6,ui-grid-col-6">
+                                            <p:column>
+                                                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                                                    <p:outputLabel value="#{msg['viu.configuracionSolicitud.mensaje']}: *"/>
+                                                    <p:inputTextarea value="#{controllerConfiguracionSolicitud.mensajeAprobado.mensaje}" cols="40" required="true" onkeyup="soloMayusculas(this)"
+                                                                     requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" maxlength="120">
+                                                    </p:inputTextarea>
+                                                </p:panelGrid>
+                                            </p:column>
+                                            <p:column>
+                                                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                                                    <p:outputLabel value="#{msg['viu.banco.validaciones.generico.estatus']}"/>
+                                                    <p:inputSwitch value="#{controllerConfiguracionSolicitud.mensajeAprobado.status}" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}"/>
+                                                </p:panelGrid>
+                                            </p:column>  
+                                        </p:panelGrid>
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p:dataTable widgetVar="aprob" var="configAprobado" value="#{controllerConfiguracionSolicitud.listaValidacionesActivasAprob}"
+                                                         rendered="true" reflow="true" emptyMessage="#{msg['viu.generico.tabla.vacia']}">
+                                                <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.validacion']}">
+                                                    <h:outputText value="#{msg[configAprobado.idServicioValidacion.nombre]}"/>
+                                                </p:column>
+
+                                                <p:column width="150" styleClass="centrado" headerText="#{msg['viu.generico.indistinto']}">
+                                                    <p:inputSwitch style="width: 25px" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}" value="#{configAprobado.indistinto}" />
+                                                </p:column>
+
+                                                <p:column width="150" styleClass="centrado" headerText="#{msg['viu.generico.aprobada']}">
+                                                    <p:inputSwitch style="width: 25px" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}" value="#{configAprobado.status}" />
+                                                </p:column> 
+                                            </p:dataTable>
+                                        </div>
+                                    </h:panelGroup>
+                                </p:tab>
+                                <p:tab title="#{msg['viu.generico.pendiente']}">
+                                    <h:panelGroup id="tabla2">
+                                        <p:panelGrid columns="2" layout="grid" styleClass="sinBordes" columnClasses="ui-grid-col-6,ui-grid-col-6">
+                                            <p:column>
+                                                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                                                    <p:outputLabel value="#{msg['viu.configuracionSolicitud.mensaje']}: *"/>
+                                                    <p:inputTextarea value="#{controllerConfiguracionSolicitud.mensajePendiente.mensaje}" cols="40" required="true" onkeyup="soloMayusculas(this)"
+                                                                     requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" maxlength="120">
+                                                    </p:inputTextarea>
+                                                </p:panelGrid>
+                                            </p:column>
+                                            <p:column>
+                                                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                                                    <p:outputLabel value="#{msg['viu.banco.validaciones.generico.estatus']}"/>
+                                                    <p:inputSwitch value="#{controllerConfiguracionSolicitud.mensajePendiente.status}" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}"/>
+                                                </p:panelGrid>
+                                            </p:column>  
+                                        </p:panelGrid>
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p:dataTable widgetVar="pend" var="configPen" value="#{controllerConfiguracionSolicitud.listaValidacionesActivasPen}"
+                                                         rendered="true" reflow="true" emptyMessage="#{msg['viu.generico.tabla.vacia']}">
+                                                <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.validacion']}">
+                                                    <h:outputText value="#{msg[configPen.idServicioValidacion.nombre]}"/>
+                                                </p:column>
+
+                                                <p:column width="150" styleClass="centrado" headerText="#{msg['viu.generico.indistinto']}">
+                                                    <p:inputSwitch style="width: 25px" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}" value="#{configPen.indistinto}" />
+                                                </p:column>
+
+                                                <p:column width="150" styleClass="centrado" headerText="#{msg['viu.generico.aprobada']}">
+                                                    <p:inputSwitch value="#{configPen.status}" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}"/>
+                                                </p:column> 
+                                            </p:dataTable>
+                                        </div>
+                                    </h:panelGroup>
+                                </p:tab>
+                                <p:tab title="#{msg['viu.generico.rechazada']}">
+                                    <h:panelGroup id="tabla3">
+                                        <p:panelGrid columns="2" layout="grid" styleClass="sinBordes" columnClasses="ui-grid-col-6,ui-grid-col-6">
+                                            <p:column>
+                                                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                                                    <p:outputLabel value="#{msg['viu.configuracionSolicitud.mensaje']}: *"/>
+                                                    <p:inputTextarea value="#{controllerConfiguracionSolicitud.mensajeRechazado.mensaje}" cols="40" required="true" onkeyup="soloMayusculas(this)"
+                                                                     requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" maxlength="120">
+                                                    </p:inputTextarea>
+                                                </p:panelGrid>
+                                            </p:column>
+                                            <p:column>
+                                                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                                                    <p:outputLabel value="#{msg['viu.banco.validaciones.generico.estatus']}"/>
+                                                    <p:inputSwitch value="#{controllerConfiguracionSolicitud.mensajeRechazado.status}" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}"/>
+                                                </p:panelGrid>
+                                            </p:column>  
+                                        </p:panelGrid>
+                                        <div class="ui-g-12 ui-md-12">
+                                            <p:dataTable widgetVar="rech" var="configRech" value="#{controllerConfiguracionSolicitud.listaValidacionesActivasRech}"
+                                                         rendered="true" reflow="true" emptyMessage="#{msg['viu.generico.tabla.vacia']}">
+                                                <p:column styleClass="centrado" headerText="#{msg['viu.configuracionSolicitud.validacion']}">
+                                                    <h:outputText value="#{msg[configRech.idServicioValidacion.nombre]}"/>
+                                                </p:column>
+
+                                                <p:column width="150" styleClass="centrado" headerText="#{msg['viu.generico.indistinto']}">
+                                                    <p:inputSwitch style="width: 25px" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}" value="#{configRech.indistinto}" />
+                                                </p:column>
+
+                                                <p:column width="150" styleClass="centrado" headerText="#{msg['viu.generico.aprobada']}">
+                                                    <p:inputSwitch value="#{configRech.status}" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}"/>
+                                                </p:column> 
+                                            </p:dataTable>
+                                        </div>
+                                    </h:panelGroup>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </p:panelGrid>
+                    </p:tab>
+
+                    <p:tab id="CTV">
+                        <p:panel styleClass="sinBordes">
+                            <div class="ui-grid">
+                                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                                    <div style="text-align: right;">
+                                        <h:outputText class="letraTiempoVida" value="*#{msg['viu.configuracionSolicitud.atv']}: "/>
+                                        <p:inputSwitch value="#{controllerConfiguracionSolicitud.mvConfigTiempoVida.status}" onLabel="#{msg['viu.generco.si']}" offLabel="#{msg['viu.generco.no']}">
+                                        </p:inputSwitch>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                                    <div style="text-align: center;">
+                                        <h:outputText class="letraTiempoVida" value="#{msg['viu.configuracionSolicitud.tiempo']}: "/>
+                                        <p:selectOneMenu id="tiempo" value="#{controllerConfiguracionSolicitud.mvConfigTiempoVida.idValoresTiempoVida}" converter="listaConverter" 
+                                                         required="true" requiredMessage="#{msg['viu.mensaje.tiempo.vida']}" style="width:90%">
+                                            <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{controllerConfiguracionSolicitud.listaValoresTiempoVida}" var="tiempoVida" 
+                                                           itemLabel="#{tiempoVida.nombre}" itemValue="#{tiempoVida}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-4 ui-lg-4">
+                                    <div>
+                                        <p:commandButton value="#{msg['viu.generico.finalizar']}" actionListener="#{controllerConfiguracionSolicitud.finaliza()}" update="contenidoGeneral" process="@form"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:panel>
+                    </p:tab>
+
+                </p:wizard>
+            </div>
+        </div>
+        <h:outputStylesheet name="css/viu.css" library="icarus-layout"/>
+    </h:body>
+</html>

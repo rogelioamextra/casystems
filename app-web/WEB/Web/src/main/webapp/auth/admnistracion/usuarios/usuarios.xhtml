@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+
+    <h2>#{controllerUsuarios.banderaEdicion?msg['viu.usuario.editar']:msg['viu.usuario.nuevo']}</h2>
+
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+            <!-- Left Side -->
+            <div class="card">
+
+                <h:body>
+                    <!--<p:fieldset legend="Datos Persona">-->
+                    <p:panelGrid columns="4" layout="grid" style="margin-bottom: 30px" 
+                                 columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+                                 styleClass="ui-panelgrid-blank">
+                        <h:panelGroup>
+                            <p:outputLabel for="nombre" style="font-size: medium" value="#{msg['viu.persona.nombre']}"/>
+                            <p:inputText id="nombre" value="#{controllerUsuarios.usuarioNuevo.idPersona.nombres}"  placeholder="#{msg['viu.persona.nombre']}"
+                                         onkeyup="soloMayusculas(this)"
+                                         requiredMessage="#{msg['viu.persona.requerido.nombres']}" required="true" maxlength="20"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <p:outputLabel for="apellidoP" style="font-size: medium" value="#{msg['viu.persona.apellido.pat']}"/>
+                            <p:inputText id="apellidoP" value="#{controllerUsuarios.usuarioNuevo.idPersona.apellidoPaterno}"  placeholder="#{msg['viu.persona.apellido.pat']}"
+                                         onkeyup="soloMayusculas(this)"
+                                         requiredMessage="#{msg['viu.persona.requerido.app']}" required="true" maxlength="20"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <p:outputLabel for="apellidoM" style="font-size: medium" value="#{msg['viu.persona.apellido.mat']}"/>
+                            <p:inputText id="apellidoM" value="#{controllerUsuarios.usuarioNuevo.idPersona.apellidoMaterno}"  placeholder="#{msg['viu.persona.apellido.mat']}" 
+                                         onkeyup="soloMayusculas(this)"
+                                         requiredMessage="#{msg['viu.persona.requerido.apm']}" required="true" maxlength="30"/>
+                        </h:panelGroup>
+
+
+                        <h:panelGroup>
+                            <p:outputLabel for="correo" style="font-size: medium" value="#{msg['viu.persona.correo']}"/>
+                            <p:inputText id="correo" value="#{controllerUsuarios.usuarioNuevo.idPersona.email}"  placeholder="#{msg['viu.usuarios.correo.placeholder']}" 
+                                         requiredMessage="#{msg['viu.usuarios.correo.vacio']}" required="true" validatorMessage="#{msg['viu.persona.requerido.correo']}">
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                            </p:inputText>
+                        </h:panelGroup>
+
+
+                    </p:panelGrid>
+
+                    <!--                    </p:fieldset>
+                                        <p:fieldset legend="Datos Usuario">-->
+                    <p:panelGrid columns="4" layout="grid" id="datosUsuario"
+                                 columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+                                 styleClass="ui-panelgrid-blank">
+                        <h:panelGroup>
+                            <p:outputLabel for="usuario" style="font-size: medium" value="#{msg['viu.usuarios.nombre']}"/>
+                            <p:inputText id="usuario" value="#{controllerUsuarios.usuarioNuevo.username}"  placeholder="#{msg['viu.usuarios.nombre']}"
+                                         requiredMessage="#{msg['viu.login.usuario.requerido']}" required="true" maxlength="20"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{!controllerUsuarios.banderaContraseña}">
+                            <p:outputLabel  style="font-size: medium" value="#{msg['viu.usuarios.contrasena.temporal']} *"/>
+                            <p:inputText  value="#{controllerUsuarios.usuarioNuevo.password}"  placeholder="#{msg['viu.usuarios.contrasena.temporal']}"
+                                          requiredMessage="#{msg['viu.usuarios.contrasena.temporal']}" required="true" maxlength="20"/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{controllerUsuarios.banderaContraseña}">
+                            <p:outputLabel  style="font-size: medium" value="#{msg['viu.usuarios.contrasena.reestablecer']}"/>
+
+                            <p:commandButton value="#{msg['viu.usuarios.contrasena.reestablecer']}" actionListener="#{controllerUsuarios.reestablecer()}" process="@this" 
+                                             update="formContenido:datosUsuario" >
+                                <p:confirm header="#{msg['viu.usuarios.contrasena.reestablecer']}" message="#{msg['viu.usuarios.contrasena.confirmacion']}" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </h:panelGroup>
+
+
+                        <h:panelGroup>
+                            <p:outputLabel for="optionIdioma" style="font-size: medium" value="#{msg['viu.usuarios.idioma']}"/>
+                            <p:outputPanel>
+                                <p:selectOneMenu id="optionIdioma" value="español">
+                                    <f:selectItem itemLabel="#{msg['viu.usuarios.espanol']}" itemValue="español"/>
+                                    <f:selectItem itemLabel="#{msg['viu.usuarios.ingles']}" itemValue="ingles"/>
+                                </p:selectOneMenu>
+                            </p:outputPanel>
+                        </h:panelGroup>
+
+                        <p:column>
+                            <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                                <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                                <h:panelGroup>
+                                    <p:toggleSwitch value="#{controllerUsuarios.usuarioNuevo.status}">
+                                        <p:ajax event="change" listener="#{controllerUsuarios.validaEstatus()}" process="@this"/>
+                                    </p:toggleSwitch>
+                                    <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+                        </p:column>
+
+
+
+
+
+                    </p:panelGrid>
+
+                
+                    <p:panelGrid columns="4" layout="grid" id="tablaCombos"
+                                 columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+                                 styleClass="ui-panelgrid-blank">
+
+                        <h:panelGroup>
+                            <p:outputLabel style="font-size: medium" value="#{msg['viu.perfil.nombre']} *"/>
+                            <p:outputPanel>
+                                <p:selectOneMenu value="#{controllerUsuarios.usuarioNuevo.idRol}"
+                                                 requiredMessage="#{msg['viu.roles.seleccionar']}"  filter="true" filterMatchMode="startsWith"
+                                                 required="true" converter="listaConverter">
+                                    <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>                 
+                                    <f:selectItems value="#{controllerUsuarios.listaRoles}" var="em" itemLabel="#{em.nombre}" itemValue="#{em}" />
+                                    <p:ajax event="change"  process="@this"/>
+                                </p:selectOneMenu>
+                            </p:outputPanel>
+                        </h:panelGroup>
+
+
+
+                        <h:panelGroup  rendered="#{controllerUsuarios.listaSucursales.size()>0}">
+                            <p:outputLabel style="font-size: medium" value="#{msg['viu.sucursal.nombre']}"/>
+                            <p:outputPanel>
+                                <p:selectOneMenu value="#{controllerUsuarios.usuarioNuevo.idConfiguracionEmpresa.idSucursal}"
+                                                 requiredMessage="#{msg['viu.sucursales.seleccionar']}"  filter="true" filterMatchMode="startsWith"
+                                                 converter="listaConverter">
+                                    <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{controllerUsuarios.listaSucursales}" var="em2"
+                                                   itemLabel="#{em2.nombre}" itemValue="#{em2}" />
+                                    <p:ajax event="change"  process="@this"/>
+
+                                </p:selectOneMenu>
+                            </p:outputPanel>
+                        </h:panelGroup>
+
+
+
+                    </p:panelGrid>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:panelGrid columns="2" 
+                                     style="margin-left: auto;margin-top: 7%;"
+                                     styleClass="sinBordes">
+                            <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes green-button" icon="ui-icon-check fa fa-check Fs14 White" />
+                            <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no red-button" icon="ui-icon-close fa fa-close Fs14 White" />
+
+                        </p:panelGrid>
+
+                    </p:confirmDialog>
+
+
+                    <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                               valorCheck="#{controllerUsuarios.usuarioNuevo.status}"/>
+
+
+
+                    <cmp:botonesFormulario actionCancelar="#{controllerUsuarios.cancelar()}"
+                                           actionGuardar="#{controllerUsuarios.guardar()}"
+                                           banderaEdicion="#{controllerUsuarios.banderaEdicion}"
+                                           />
+                </h:body>
+            </div>
+        </div>
+    </div>
+
+</html>
+

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags"
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <h:body>
+        <div class="card card-w-title" >
+            <h2>#{msg['viu.folio.titulo.bandeja']}</h2>
+            <br/>
+            <h:panelGroup>
+                <cmp:botonAgregarNuevo actionAgregar="#{controllerFolios.cambiaPaginaNuevo()}"/>
+            </h:panelGroup>
+
+            <!--<h:panelGroup id="tabla"  rendered="# {controllerFolios.empresaUsuarioSesion.idEmpresas==1}">
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel value="# {msg['viu.generico.empresa']}"/>
+                    <p:selectOneMenu   value="# {controllerFolios.empresaSelect}" filter="true" filterMatchMode="startsWith"
+                                   converter="listaConverter">
+                        <f:selectItems value="# {controllerFolios.listaEmpresas}" var="em" itemLabel="# {em.nombre}"
+                                   itemValue="# {em}" />
+                        <p:ajax event="change" listener="# {controllerFolios.buscarTodosXEmpresaFiltro()}"
+                                process="@this" update="tabla1"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+            </h:panelGroup>-->
+
+            <h:panelGroup id="tabla1">
+                <p:dataTable  var="datos" value="#{controllerFolios.listaFolios}"
+                              rowsPerPageTemplate="5,10,15" paginator="true"
+                              filteredValue="#{controllerFolios.filtroFolios}"
+                              paginatorPosition="bottom" rows="5"                         
+                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                              reflow="true"  emptyMessage="#{msg['viu.generico.tabla.vacia']}"  widgetVar="usu">
+                    <f:facet name="header" class="sinFondo">
+                        <div id="filtroTablaTareasGenerales">                       
+                            <p:inputText  id="globalFilter" onkeypress="return event.keyCode != 13" placeholder="#{msg['viu.generico.filtro.buscar']}" style="width: 25%;margin-left: 75%;">
+                                <p:ajax event="keyup" oncomplete="PF('usu').filter();" delay="500" global="false" />
+                            </p:inputText>                     
+                        </div>
+                    </f:facet>
+                    
+                    <p:column headerText="#{msg['viu.folio']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{datos.folio}">
+                        <p:outputLabel value="#{datos.folio}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['viu.generico.nombre']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{datos.nombre}">
+                        <p:outputLabel value="#{datos.nombre}"/>
+                    </p:column>
+
+                    <!--<p:column headerText="# {msg['viu.generico.empresa1']}" styleClass="centrado" filterMatchMode="contains"  filterBy="# {datos.idEmpresa.nombre}">
+                        <p:outputLabel value="# {datos.idEmpresa.nombre}"/>
+                    </p:column>-->
+                    
+                    <p:column headerText="#{msg['viu.productos.nombre']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{datos.idProducto.nombre}">
+                        <p:outputLabel value="#{datos.idProducto.nombre}"/>
+                    </p:column>
+                    
+                    <p:column headerText="#{msg['viu.folio.fechavigencia']}" styleClass="centrado" filterMatchMode="contains" filterBy="#{datos.fechaVigencia}">
+                        <p:outputLabel value="#{datos.fechaVigencia}"/>
+                    </p:column>
+                    
+                    <p:column headerText="#{msg['viu.folio.fechageneracion']}" styleClass="centrado" filterMatchMode="contains" filterBy="#{datos.fechaGeneracion}">
+                        <p:outputLabel value="#{datos.fechaGeneracion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['viu.generico.estatus']}" styleClass="centrado"  filterMatchMode="contains" filterBy="#{datos.status ?'Activo':'Inactivo'}">
+                        <p:outputLabel value="#{datos.status?msg['viu.generico.activo']:msg['viu.generico.inactivo']}"/>
+                    </p:column>
+                    
+                    <p:column headerText="#{msg['viu.folio.qr']}" styleClass="centrado">
+                        <p:commandLink actionListener="#{controllerFolios.verQR(datos)}" ajax="false">
+                            <p:graphicImage style="width: 30px!important;" name="images/qr-code.png"
+                                            library="icarus-layout" title="#{msg['viu.folio.qr.ver']}"/>
+                            <p:fileDownload value="#{controllerFolios.file}"/>
+                        </p:commandLink>
+                    </p:column>
+                    
+                    <p:column headerText="#{msg['viu.generico.editar']}" styleClass="centrado">
+                        <p:commandLink actionListener="#{controllerFolios.cambiaPaginaEdicion(datos)}" update="contenidoGeneral" >
+                            <p:graphicImage style="width: 30px!important;" name="images/editar.png" library="icarus-layout" title="#{msg['viu.generico.editar']}"/>
+
+                        </p:commandLink>
+                    </p:column>
+   
+                </p:dataTable>
+                
+                <p:dialog styleClass="dialogo-contrasena" position="center" showEffect="fade"
+                          hideEffect="fade" header="#{msg['viu.folio.qr']}" closable="true" 
+                          resizable="false" widgetVar="dlgQr" modal="true" height="400" width="400" responsive="true">
+                    <h:form>
+                        <div class="ui-g-12">
+                            <p:barcode value="#{controllerFolios.folioNuevo.folio}" type="qr" width="360" />
+                        </div>
+                    </h:form>
+                </p:dialog>
+
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>

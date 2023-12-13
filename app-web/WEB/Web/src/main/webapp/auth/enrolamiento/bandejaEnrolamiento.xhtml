@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags"
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <h:body>
+        <div class="card card-w-title" >
+            <h2>#{msg['viu.menu.gestion.datos.solicitud']}</h2>
+
+            <!--<h:panelGroup id="tabla"  rendered="# {controllerEnrolamiento.empresaUsuarioSesion.idEmpresas==1}">
+                <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                    <p:outputLabel value="# {msg['viu.generico.empresa']}"/>
+                    <p:selectOneMenu   value="# {controllerEnrolamiento.empresaSelect}" filter="true" filterMatchMode="startsWith"
+                                   converter="listaConverter">            
+                        <f:selectItems value="# {controllerEnrolamiento.listaEmpresas}" var="em" itemLabel="#{em.nombre}"
+                                   itemValue="# {em}" />
+                        <p:ajax event="change" listener="# {controllerEnrolamiento.buscarTodosXEmpresaFiltro()}"
+                                process="@this" oncomplete="PF('usu').filter();" update="tabla1 contenidoGeneral" resetValues="true"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+            </h:panelGroup>-->
+             
+
+            <h:panelGroup id="tabla1">
+                <p:dataTable  var="productos" value="#{controllerEnrolamiento.listaProductos}"
+                              rowsPerPageTemplate="5,10,15" paginator="true"
+                              filteredValue="#{controllerEnrolamiento.filtroProductos}"
+                              paginatorPosition="bottom" rows="5"                         
+                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                              reflow="true"  emptyMessage="#{msg['viu.generico.tabla.vacia']}"  widgetVar="usu">
+                    <f:facet name="header" class="sinFondo">
+                        <div id="filtroTablaTareasGenerales">                       
+                            <p:inputText  id="globalFilter" onkeypress="return event.keyCode != 13" placeholder="#{msg['viu.generico.filtro.buscar']}" style="width: 25%;margin-left: 75%;">
+                                <p:ajax event="keyup" oncomplete="PF('usu').filter();" delay="500" global="false" />
+                            </p:inputText>                     
+                        </div>
+                    </f:facet>
+
+                    <!--<p:column headerText="# {msg['viu.generico.empresa1']}" styleClass="centrado" filterMatchMode="contains"  filterBy="# {productos.idEmpresa.nombre}">
+                        <p:outputLabel value="# {productos.idEmpresa.nombre}"/>
+                    </p:column>-->
+                    
+                    <p:column headerText="#{msg['viu.productos.nombre']}" styleClass="centrado" filterMatchMode="contains"  filterBy="#{productos.idProducto.nombre}">
+                        <p:outputLabel value="#{productos.idProducto.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['viu.generico.estatus']}" styleClass="centrado"  filterMatchMode="contains" filterBy="#{productos.status ?'Activo':'Inactivo'}">
+                        <p:outputLabel value="#{productos.status ? msg['viu.generico.activo']:msg['viu.generico.inactivo']}"/>
+                    </p:column>
+                    
+                    <p:column styleClass="centrado" headerText="#{msg['viu.generico.boton.ordenar']}">
+                        
+                        <p:commandLink update="contenidoGeneral" immediate="true" 
+                                         actionListener="#{controllerEnrolamiento.cambiaPaginaConfigurar(productos)}" title="#{msg['viu.generico.boton.configurar']}">
+                            
+                             <p:graphicImage style="width: 40px!important;" name="images/icono_ordenar.png"
+                                            library="icarus-layout"  title="ordenamiento de categorias/campos"/>
+                        </p:commandLink>
+
+                    </p:column>
+                   <!-- <p:column styleClass="centrado" headerText="#Ver Proceso">
+                        
+                        <p:commandButton update="contenidoGeneral" immediate="true" styleClass="blue-button" icon="fa fa-cogs" 
+                                         actionListener="#{controllerEnrolamiento.cambiaPaginaConfigurar(productos)}" title="#{msg['viu.generico.boton.configurar']}">
+                        </p:commandButton>
+
+                    </p:column>-->
+                </p:dataTable>
+
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>

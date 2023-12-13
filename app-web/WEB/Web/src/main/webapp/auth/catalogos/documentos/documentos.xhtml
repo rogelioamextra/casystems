@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerDocumentos.banderaEdicion?msg['viu.documentos.editar']:msg['viu.documentos.nuevo']}</h2>
+            
+            <p:panelGrid columns="4" layout="grid" styleClass="sinBordes">
+                
+                <p:column>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.nombre']}*:" />
+<!--                        <p:inputTextarea disabled="# {controllerDocumentos.documentoNuevo.idEmpresa.idEmpresas==1 and controllerDocumentos.empresaUsuarioSesion.idEmpresas!=1}" value="# {controllerDocumentos.documentoNuevo.nombre}" -->
+                        <p:inputTextarea value="#{controllerDocumentos.documentoNuevo.nombre}"
+                                         required="true" maxlength="80"
+                                         rows="1" onkeyup="soloMayusculas(this)"
+                                         requiredMessage="#{msg['viu.documentos.mensaje.campo.nombre']}">
+                        </p:inputTextarea>
+                    </p:panelGrid>
+                </p:column>
+                
+                <p:column style="text-align: -webkit-center;">
+                    <h:panelGrid columns="1" id="estatus"  styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+<!--                            <p:toggleSwitch disabled="# {controllerDocumentos.documentoNuevo.idEmpresa.idEmpresas==1 and controllerDocumentos.empresaUsuarioSesion.idEmpresas!=1}" value="# {controllerDocumentos.documentoNuevo.status}">-->
+                            <p:toggleSwitch value="#{controllerDocumentos.documentoNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerDocumentos.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:column>
+                
+                 <h:panelGroup>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.tipo.documento']} *"/>
+                        <p:selectOneMenu value="#{controllerDocumentos.tipoDocumentoSelect}" required="true"
+                                           requiredMessage="#{msg['viu.tipo.documento.seleccion']}"  filter="true" filterMatchMode="startsWith"
+                                           converter="listaConverter">
+                            <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>     
+                            <f:selectItems value="#{controllerDocumentos.listaTipoDocumento}" var="tipoDoc" itemLabel="#{msg[tipoDoc.nombre]}"
+                                           itemValue="#{tipoDoc}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.menu.categorias.campos']} *"/>
+                        <p:selectOneMenu value="#{controllerDocumentos.categoriaSelect}" required="true"
+                                           requiredMessage="#{msg['viu.categorias.seleccion']}"  filter="true" filterMatchMode="startsWith"
+                                           converter="listaConverter">
+                            <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>                 
+                            <f:selectItems value="#{controllerDocumentos.listaCategorias}" var="cat" itemLabel="#{cat.nombre}"
+                                           itemValue="#{cat}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>
+
+                <p:column>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.descripcion']}:" />
+<!--                        <p:inputTextarea disabled="# {controllerDocumentos.documentoNuevo.idEmpresa.idEmpresas==1 and controllerDocumentos.empresaUsuarioSesion.idEmpresas!=1}" value="# {controllerDocumentos.documentoNuevo.descripcion}" -->
+                        <p:inputTextarea value="#{controllerDocumentos.documentoNuevo.descripcion}"
+                                         required="false" maxlength="50"
+                                         cols="30" rows="2"  onkeyup="soloMayusculas(this)">
+                        </p:inputTextarea>
+                    </p:panelGrid>
+                </p:column>
+            </p:panelGrid>
+            
+            <br/>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes" rendered="#{controllerDocumentos.empresaUsuarioSesion.idEmpresas==1}">
+                <p:outputLabel value="#{msg['viu.validaciones.titulo']}*:"/>
+                <p:pickList id="PojoPickList" disabled="#{controllerDocumentos.empresaUsuarioSesion.idEmpresas!=1}" value="#{controllerDocumentos.listaValidaciones}" var="val"
+                            itemValue="#{val}" itemLabel="#{msg[val.nombre]}" showSourceControls="true"
+                            showTargetControls="true" showCheckbox="true"
+                            showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"
+                            converter="entityConverter" responsive="true"
+                            required="true" requiredMessage="#{msg['viu.documentos.mensaje.seleccion']}">
+                    <f:facet name="sourceCaption">#{msg['viu.menus.disponibles']}</f:facet>
+                    <f:facet name="targetCaption">#{msg['viu.menus.seleecionados']}</f:facet>
+                    <p:column style="width:94%">
+                        <div class="p-d-flex p-ai-center">
+                            <h:outputText value="#{msg[val.nombre]}"/>
+                        </div>
+                    </p:column>
+                </p:pickList>
+            </p:panelGrid>
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" valorCheck="#{controllerDocumentos.documentoNuevo.status}"/>
+            
+            <h:panelGroup>
+                <cmp:botonesFormulario actionCancelar="#{controllerDocumentos.cancelar()}" actionGuardar="#{controllerDocumentos.guardar()}" banderaEdicion="#{controllerDocumentos.banderaEdicion}" />
+            </h:panelGroup>
+            
+            <!--<h:panelGroup rendered="# {controllerDocumentos.empresaUsuarioSesion.idEmpresas!=1 and controllerDocumentos.documentoNuevo.idEmpresa.idEmpresas!=1}">
+                <cmp:botonesFormulario actionCancelar="# {controllerDocumentos.cancelar()}" actionGuardar="# {controllerDocumentos.guardar()}" banderaEdicion="# {controllerDocumentos.banderaEdicion}" />
+            </h:panelGroup>
+            
+            <h:panelGroup style="margin-right: auto" styleClass="sinBordes" rendered="# {controllerDocumentos.empresaUsuarioSesion.idEmpresas!=1 and controllerDocumentos.documentoNuevo.idEmpresa.idEmpresas==1}">
+                <p:commandButton update="contenidoGeneral" value="# {msg['viu.generico.boton.atras']}" action="# {controllerDocumentos.cancelar()}" process="@this" styleClass="green-button" icon="fa fa-close"/>
+            </h:panelGroup>-->
+        </div>
+    </h:body>
+</html>

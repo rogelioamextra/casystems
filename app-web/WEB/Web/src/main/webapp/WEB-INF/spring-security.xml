@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http pattern="/javax.faces.resource/****" security="none" />
+    <http auto-config="true" use-expressions="true">
+        <headers>
+            <content-type-options />
+            <frame-options policy="SAMEORIGIN" />
+            <xss-protection enabled="true" block="true"/>
+        </headers>
+      
+<!--        <intercept-url pattern="/**" access="permitAll" />-->
+      
+        <intercept-url pattern="/auth/**" access="isAuthenticated()" />
+                 <intercept-url pattern="/auth/usuarios/altaUsuario.xhtml" access="hasRole('ROLE_ADMIN_USU')" />
+        <intercept-url pattern="/auth/usuarios/contenedor.xhtml" access="hasRole('ROLE_ADMIN_USU')" />
+        <intercept-url pattern="/login.viu" access="permitAll" />
+        <intercept-url pattern="/*" access="isAnonymous()"/>
+        <intercept-url pattern="/error.viu" access="permitAll" />
+          
+      
+        <form-login login-page="/login.viu"  />
+        <logout invalidate-session="true" logout-success-url="/login.viu" />
+        
+        <csrf disabled="true" />
+    </http>
+
+
+    <beans:bean id="aigpAuthenticationProvider"	
+                class="com.mx.ca.viu.web.security.AIGPAuthenticationProvider">
+    </beans:bean>
+    <authentication-manager>
+        <authentication-provider ref="aigpAuthenticationProvider" />
+    </authentication-manager>
+    
+
+</beans:beans>

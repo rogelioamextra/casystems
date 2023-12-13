@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerRegiones.banderaEdicion?msg['viu.regiones.editar']:msg['viu.regiones.nuevo']}</h2>
+
+            <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.regional.numero']}*:" />
+                        <p:inputText value="#{controllerRegiones.regionNuevo.descripcion}" 
+                                     required="true" maxlength="10"  onkeyup="soloMayusculas(this)"
+                                     requiredMessage="#{msg['viu.regional.mensaje.numero']}"
+                                   >
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+
+                
+                <p:column>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerRegiones.regionNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerRegiones.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+                        
+                    </h:panelGrid>
+                </p:column>
+
+
+                
+                <p:column >
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.regional.nombre']}*:" />
+                        <p:inputTextarea value="#{controllerRegiones.regionNuevo.nombre}" 
+                                         required="true" maxlength="50"
+                                         cols="30" rows="2"  onkeyup="soloMayusculas(this)"
+                                         requiredMessage="#{msg['viu.regional.mensaje.nombre']}"
+                                     >
+                        </p:inputTextarea>
+                    </p:panelGrid>
+                </p:column>
+
+
+
+              
+            </p:panelGrid>
+            
+            <p:dialog header="#{msg['viu.generico.estatus']}" widgetVar="dlgEstatus" minHeight="40" responsive="true" minimizable="false" maximizable="false" closable="false" height="100">
+                <h:outputText value="#{msg['viu.generico.desactivar']}" />
+                <br/>
+                <p:commandButton actionListener="#{controllerRegiones.confirmaEstatus(false)}" update="" value="#{msg['viu.generico.confirmar']}" styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" />
+                <p:commandButton actionListener="#{controllerRegiones.confirmaEstatus(true)}" update="" value="#{msg['viu.generico.boton.cancelar']}" styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" />
+            </p:dialog>
+            
+            <p:dialog header="#{msg['viu.generico.estatus']}" widgetVar="dlgEstatus" minHeight="40" responsive="true" minimizable="false" maximizable="false" closable="false" height="100">
+                <h:outputText value="#{msg['viu.generico.desactivar']}" />
+                <br/>
+                <p:commandButton actionListener="#{controllerRegiones.confirmaEstatus(false)}" update="estatus" value="#{msg['viu.generico.confirmar']}" styleClass="green-button" icon="ui-icon-check fa fa-check Fs14 White" />
+                <p:commandButton actionListener="#{controllerRegiones.confirmaEstatus(true)}" update="estatus" value="#{msg['viu.generico.boton.cancelar']}" styleClass="red-button" icon="ui-icon-close fa fa-close Fs14 White" />
+            </p:dialog>
+
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerRegiones.regionNuevo.status}"/>
+
+            <cmp:botonesFormulario actionCancelar="#{controllerRegiones.cancelar()}" actionGuardar="#{controllerRegiones.guardar()}" banderaEdicion="#{controllerRegiones.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags" 
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp" >
+
+    <h:body>
+        <div class="card card-w-title">
+            <h2>#{controllerFolios.banderaEdicion?msg['viu.folio.editar']:msg['viu.folio.nuevo']}</h2>
+
+            <p:panelGrid columns="4" layout="grid" styleClass="sinBordes">
+                
+                <h:panelGroup id="cmbProductos">
+                    <p:column>
+                        <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                            <p:outputLabel value="#{msg['viu.productos.nombre']}:" />
+                            <p:selectOneMenu   value="#{controllerFolios.productoSelect}" required="true" disabled="#{controllerFolios.banderaEdicion}" 
+                                               requiredMessage="#{msg['viu.productos.nombre.vacio']}"  filter="true" filterMatchMode="startsWith"
+                                               converter="listaConverter">
+                                <f:selectItem itemLabel="#{msg['viu.generico.seleccion']}" itemValue="" noSelectionOption="true"/>                 
+                                <f:selectItems value="#{controllerFolios.listaProductos}" var="prod" itemLabel="#{prod.nombre}"
+                                               itemValue="#{prod}" />
+                                <p:ajax event="change" global="false" process="@this" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:column>
+                </h:panelGroup>
+
+                <p:column>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.nombre']}:" />
+                        <p:inputText value="#{controllerFolios.folioNuevo.nombre}"  required="true" requiredMessage="#{msg['viu.generico.mensaje.campo.nombre']}" 
+                                     onkeyup="soloMayusculas(this)" maxlength="80">
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:column>
+                
+                <p:column>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.folio.fechavigencia']}:" />
+                        <p:datePicker id="navigator" value="#{controllerFolios.folioNuevo.fechaVigencia}" monthNavigator="true" yearNavigator="true"
+                                      required="true" requiredMessage="#{msg['viu.productos.fecha.caducidad']}"/>
+                        
+                    </p:panelGrid>
+                </p:column>
+
+                <p:column>
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="No. veces a utilizar:"/>
+                        <p:spinner value="#{controllerFolios.folioNuevo.noConsumoQr}" required="true" requiredMessage="#{msg['viu.campos.longitud.vacio']}" 
+                                   onkeypress="return soloNumeros(event);" maxlength="100" min="1">
+                        </p:spinner>
+                    </p:panelGrid>
+                </p:column>
+
+                <p:column>
+                    <h:panelGrid id="estatus" columns="1" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.estatus']}:"/>
+                        <h:panelGroup>
+                            <p:toggleSwitch value="#{controllerFolios.folioNuevo.status}">
+                                <p:ajax event="change" listener="#{controllerFolios.validaEstatus()}" process="@this"/>
+                            </p:toggleSwitch>
+                            <p:outputLabel value="#{msg['viu.generico.activo']}" style="padding: 1%"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:column>
+                
+            </p:panelGrid>
+
+            <cmp:dialogConfirmarStatus update="formContenido:estatus" 
+                                       valorCheck="#{controllerFolios.folioNuevo.status}"/>
+            <cmp:botonesFormulario actionCancelar="#{controllerFolios.cancelar()}" actionGuardar="#{controllerFolios.guardar()}" banderaEdicion="#{controllerFolios.banderaEdicion}" />
+        </div>
+    </h:body>
+</html>

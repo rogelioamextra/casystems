@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <p:panelGrid columns="3" layout="grid" styleClass="sinBordes">
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.empresa']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idCaracteristicaNegocio}" style="width: 90px"
+                                 converter="listaConverter">
+                    <f:selectItems value="#{controllerTablero.listacaracteristicasnegocio}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+            </p:panelGrid>
+
+
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.giro']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idGiroNegocio}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaGirosNegocio}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.puesto']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.puesto}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.telefono']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.telefono}"  />
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.calle']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idDireccion.calle}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.numExterior']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idDireccion.numeroExterior}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.numInterior']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idDireccion.numeroInterior}"  />
+            </p:panelGrid>
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.codigoPostal']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idDireccion.cp}"  />
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.estado']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idDireccion.idEstado}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaEstados}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+
+
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.municipio']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idDireccion.idMunicipio}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaMunicipiosDatosLaborales}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.generico.direccion.colonia']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idDireccion.idColonia}" style="width: 90px"
+                                 converter="listaConverter"
+                                 >
+                    <f:selectItems value="#{controllerTablero.listaColoniasDatosLaborales}" var="na" itemLabel="#{na.nombre}"
+                                   itemValue="#{na}" />
+
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.reciboNomina']}"/>
+                <p:toggleSwitch value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.recibosNomina}">
+
+                </p:toggleSwitch>
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.ingresoMensual']}"/>
+                <p:inputText value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.ingresoMensual}"  />
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.tiempoEmpleoActual']}"/>
+                <p:selectOneMenu value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.idTiempoEmpleoActual}" style="width: 90px"
+                                 converter="listaConverter">
+                    <f:selectItems value="#{controllerTablero.listaTiempoEmpleoActual}" var="ta" itemLabel="#{ta.nombre}"
+                                   itemValue="#{ta}" />
+
+                </p:selectOneMenu>
+            </p:panelGrid>
+            
+            
+            <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.datosLaborales.fechaIngreso']}"/>
+                <p:datePicker value="#{controllerTablero.solicitudEditar.idCliente.idDatosLaborales.fechaIngreso}" >
+
+                </p:datePicker>
+            </p:panelGrid>
+        </p:panelGrid>
+
+    </h:body>
+</html>

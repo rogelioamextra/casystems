@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:sec="http://www.springframework.org/security/tags"
+       xmlns:cmp="http://xmlns.jcp.org/jsf/composite/cmp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
+    <h:head>
+        <h:outputStylesheet name="css/front.css" library="icarus-layout" /> 
+    </h:head>
+
+    <h:body >        
+        <div class=" card card-w-title">
+
+            <h2>#{msg['viu.banco.validaciones.biometricos']}</h2>
+            <br/>
+
+            <div class="card card-w-title boxShadow">
+<!--                <h2>#{msg['viu.banco.validaciones.biometricos.fotografia']}</h2>                   -->
+                <h:panelGroup id="comboEmpresas"  rendered="#{controllerBancoValidaciones.empresaUsuarioSesion.idEmpresas==1}">
+                    <p:panelGrid columns="1" layout="grid" styleClass="sinBordes">
+                        <p:outputLabel value="#{msg['viu.generico.empresa']}"/>
+                        <p:selectOneMenu   value="#{controllerBancoValidaciones.empresaSelect}" filter="true" filterMatchMode="startsWith" 
+                                           converter="listaConverter">
+                            <f:selectItems value="#{controllerBancoValidaciones.listaEmpresas}" var="em" itemLabel="#{em.nombre}"
+                                           itemValue="#{em}" />
+                            <p:ajax event="change" listener="#{controllerBancoValidaciones.buscarTodosBiometricosXEmpresaFiltro()}" 
+                                    process="@this" update="@form" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </h:panelGroup>
+
+                <p:dataTable  var="bio" value="#{controllerBancoValidaciones.listaBiometricos}"
+                            
+                              rowsPerPageTemplate="5,10,15" paginator="true" paginatorPosition="bottom" rows="10"                         
+                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                              reflow="true"  emptyMessage="#{msg['viu.generico.tabla.vacia']}"  widgetVar="usu"
+                              rowStyleClass="myColumna" tableStyleClass="myColumna">
+
+              
+
+                    <p:column headerText="#{msg['viu.banco.validaciones.generico.validacion']}" styleClass="centrado bc" filterMatchMode="contains"  filterBy="#{bio.validacion}"   >
+                        <p:outputLabel value="#{bio.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg['viu.banco.validaciones.generico.descripcion']}" styleClass="centrado bc" filterMatchMode="contains"  filterBy="#{bio.descripcion}" >
+                        <p:outputLabel value="#{bio.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column width="250" headerText="#{msg['viu.banco.validaciones.generico.estatus']}" styleClass="centrado bc"
+                              filterMatchMode="contains"  filterBy="#{bio.status}"   >
+                        <p:inputSwitch style="width: 25px" onLabel="ON"  offLabel="OFF"></p:inputSwitch>
+                    </p:column>
+
+                </p:dataTable>
+
+                <br/>
+                <div>
+                    <div class="divFloat">
+                        <p:commandButton value="#{msg['viu.generico.boton.edicion']}" icon="ui-icon-check fa fa-check White Fs14"
+                                         rendered="true" actionListener="#{controllerBancoValidaciones.guardarBiometricos()}" styleClass="green-button"></p:commandButton>    
+                    </div>
+                    <div style="float: left">
+                        <p:commandButton value="#{msg['viu.generico.boton.regresar']}" icon="fa fa-arrow-left"
+                                         actionListener="#{controllerBancoValidaciones.cambiaPaginaBandeja()}"
+                                         update="contenidoGeneral" ></p:commandButton>    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </h:body>
+
+</html>

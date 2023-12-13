@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <p:panelGrid columns="2" layout="grid" styleClass="sinBordes">
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.alimentos']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.alimentos}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.renta']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.renta}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.gastosEscolares']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.gastosEscolares}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.persona.telefono']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.telefono}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.electricidad']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.luz}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.agua']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.agua}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.gas']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.gas}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.transporte']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.transporteGasolina}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.vestido']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.vestido}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.esparcimiento']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.esparcimiento}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.mantenimiento']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.mantenimientoReparaciones}"  />
+            <p:outputLabel styleClass="negrita" value="#{msg['viu.cliente.egresos.total']}"/>
+            <p:inputNumber value="#{controllerTablero.egresosEditar.totalMensual}"  />
+
+
+        </p:panelGrid>
+
+    </h:body>
+</html>
