@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Gray shadow. -->
+    <item
+        android:left="3dp"
+        android:top="2dp">
+        <shape>
+            <solid android:color="#F3D061" />
+            <corners android:radius="120dp" />
+        </shape>
+    </item>
+    <!-- White foreground. -->
+    <item
+        android:bottom="3dp"
+        android:right="3dp">
+        <shape>
+            <gradient
+                android:endColor="#7A913E"
+                android:startColor="#9EC043"
+                android:angle="270"/>
+            <corners android:radius="120dp" />
+        </shape>
+    </item>
+</layer-list>

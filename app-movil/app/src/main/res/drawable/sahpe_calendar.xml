@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Gray shadow. -->
+    <item
+        >
+        <shape>
+            <solid android:color="#717D7E" />
+            <corners android:topRightRadius="180dp" android:bottomRightRadius="180dp"  />
+        </shape>
+    </item>
+    <!-- White foreground. -->
+    <item>
+        <shape>
+            <solid android:color="#ffff"/>
+            <stroke android:color="#0000006A" android:width="1dp"/>
+            <corners android:topRightRadius="180dp" android:bottomRightRadius="180dp"  />
+            <padding
+                android:bottom="5dp"
+                android:left="10dp"
+                android:right="10dp"
+                android:top="5dp" />
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:gravity="end"
+            android:src="@drawable/icon_awesome_calendar_day" />
+    </item>
+
+</layer-list>

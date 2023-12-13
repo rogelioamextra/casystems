@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="385dp"
+        android:layout_height="500dp"
+        app:cardElevation="10dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/franja_menu"
+            android:text="Mónica Bello Rosales"
+            android:textAllCaps="false"
+            android:textColor="#FFFF"
+            android:textSize="20dp" />
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/btn_style_yellow_outline"
+            android:text="none"
+            android:textColor="#FFFFFF" />
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="37dp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            android:src="@drawable/icon_pink_user" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="105dp">
+
+            <FrameLayout
+                android:layout_width="128dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnConsultaClientes"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/green_circle"
+                    android:drawableLeft="@drawable/persons_icon"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="90dp"
+                    android:gravity="center_horizontal"
+                    android:text="Mis clientes"
+                    android:textColor="@color/BlueDark"
+                    android:textSize="14sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="440dp"
+            android:background="@color/BlueDark"
+            android:text="Cerrar Sesión"
+            android:textAllCaps="false"
+            android:id="@+id/btnMenuCerrarSesion"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="455dp"
+            android:layout_weight="1"
+            android:elevation="10dp"
+            android:src="@drawable/arrow_logout" />
+        />
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

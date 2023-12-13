@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    tools:context="com.amextra.AltaEdicionCliente.DatosClienteLab">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="15dp"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/frameHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/cardContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/contenedor_white"
+            android:elevation="@dimen/cardview_default_radius"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_above="@+id/buttonsLayout"
+                    android:fadeScrollbars="false"
+                    android:scrollbarThumbVertical="@drawable/scroll_bar_style"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="600dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutCodigoPostal"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Codigo postal"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="5"
+                            app:helperText="*Requerido"
+                            app:helperTextTextColor="@color/Rojo"
+                            app:startIconDrawable="@drawable/ic_house">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editCP"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="phone"
+                                android:maxLength="5"
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutEstado"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Estado"
+                            app:helperText="*Requerido"
+
+                            app:helperTextTextColor="@color/Rojo">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/spinnTxtEstado"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none">
+
+                            </AutoCompleteTextView>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutMunicipio"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Municipio"
+                            app:helperText="*Requerido"
+
+                            app:helperTextTextColor="@color/Rojo">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/spinTxtMunicipio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none">
+
+                            </AutoCompleteTextView>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutColonia"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Colonia"
+                            app:helperText="*Requerido"
+
+                            app:helperTextTextColor="@color/Rojo">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/spinnTxtColonia"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none">
+
+                            </AutoCompleteTextView>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutCalle"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Calle"
+
+                            app:helperText="*Requerido"
+                            app:helperTextTextColor="@color/Rojo"
+                            >
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/txtCalle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textCapCharacters"
+
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/layoutNoExt"
+                                android:layout_weight="1"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_marginBottom="10dp"
+                                app:helperText="*Requerido"
+                                android:layout_marginEnd="10dp"
+                                android:hint="No Exterior">
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/txtNumExt"
+                                    android:inputType="text"
+                                    android:maxLines="1"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/layOutNoInt"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:hint="No Interior">
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/txtNumInt"
+                                    android:inputType="text"
+                                    android:maxLines="1"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutIngresos"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Ingreso mensual fijo"
+
+                            app:helperText="*Requerido"
+                            app:helperTextTextColor="@color/Rojo"
+                            >
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/ingresoMnsual"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layOutTiempoEmpleo"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:hint="Tiempo en el empleo actual"
+                            app:helperText="*Requerido"
+
+                            app:helperTextTextColor="@color/Rojo">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/spinnTxtTiempoEmpleo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none">
+
+                            </AutoCompleteTextView>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/buttonsLayout"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="3dp">
+                    <Button
+                        android:id="@+id/siguiente"
+                        android:layout_width="180dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/btn_siguiente"
+                        android:text="Siguiente"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/gradient_green_white"
+        />
+</RelativeLayout>

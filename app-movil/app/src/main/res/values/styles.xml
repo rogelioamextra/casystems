@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="datePickerTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">#282358</item>
+    </style>
+
+    <style name="MyCustomTheme" parent="@android:style/Theme.Panel">
+        <item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
+    </style>
+
+    <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_out</item>
+    </style>
+
+    <style name="SlideToTopAnimation">
+        <item name="android:windowExitAnimation">@anim/slide_to_top</item>
+        <item name="android:windowEnterAnimation">@anim/slide_from_top</item>
+
+    </style>
+
+
+    <style
+        name="dialog_animation_fade" >
+        <item name="android:windowEnterAnimation">@anim/fade_in_dialog</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_dialog</item>
+    </style>
+
+
+    <style name="dialog_slide_animation">
+        <item name="android:windowEnterAnimation">@anim/slidestart</item>
+        <item name="android:windowExitAnimation">@anim/slideend</item>
+    </style>
+
+    <style name="rigth_left">
+        <item name="android:windowEnterAnimation">@anim/anim_rigth</item>
+        <item name="android:windowExitAnimation">@anim/anim_rigth</item>
+    </style>
+</resources>
