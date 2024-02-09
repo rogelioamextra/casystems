@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,14 +10,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints"
+        android:foregroundGravity="center"
         android:gravity="center"
-        android:foregroundGravity="center">
-
-
-
-
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
         <RadioGroup
             android:id="@+id/grupoOpciones"
@@ -27,22 +22,24 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/contenedor_menu"
             android:elevation="15dp"
-            android:gravity="center"
             android:foregroundGravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioDatosPersonales"
                 android:layout_width="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="5dp"
-                android:paddingStart="5dp"                android:layout_height="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/btn_active_state"
                 android:button="@android:color/transparent"
-                android:gravity="center"
-                android:layout_gravity="center"
                 android:drawableStart="@drawable/ic_person"
+                android:enabled="false"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="10dp"
                 android:text="Personal"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -54,11 +51,13 @@
                 android:background="@drawable/btn_active_state"
                 android:button="@android:color/transparent"
                 android:drawableStart="@drawable/ic_person_pin_circle"
+                android:enabled="false"
                 android:gravity="center"
-                android:paddingBottom="10dp"
+                android:paddingStart="5dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="5dp"
-                android:paddingStart="5dp"                android:text="Dirección"
+                android:paddingBottom="10dp"
+                android:text="Dirección"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -66,14 +65,16 @@
                 android:id="@+id/radioDatosLaborales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
+                android:background="@drawable/btn_active_state"
+                android:button="@android:color/transparent"
+                android:drawableStart="@drawable/ic_add_business"
+                android:enabled="false"
+                android:gravity="center"
+                android:paddingStart="5dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="5dp"
-                android:paddingStart="5dp"                android:background="@drawable/btn_active_state"
-                android:button="@android:color/transparent"
-                android:gravity="center"
+                android:paddingBottom="10dp"
                 android:text="Laboral"
-                android:drawableStart="@drawable/ic_add_business"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -81,17 +82,16 @@
                 android:id="@+id/radioRefencias"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="5dp"
-                android:paddingStart="5dp"
                 android:background="@drawable/btn_active_state"
                 android:button="@android:color/transparent"
+                android:drawableStart="@drawable/ic_people"
+                android:enabled="false"
                 android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="10dp"
                 android:text="Ref."
-                android:drawableStart=
-                "@drawable/ic_people"
-
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </RadioGroup>

@@ -41,7 +41,8 @@
                 android:paddingBottom="10dp"
                 android:text="Ingresos"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:enabled="false"/>
 
             <RadioButton
                 android:id="@+id/radioEgresos"
@@ -58,7 +59,8 @@
                 android:paddingBottom="10dp"
                 android:text="Egresos"
                 android:textColor="@color/white"
-                android:textSize="12sp"  />
+                android:textSize="12sp"
+                android:enabled="false"/>
 
             <RadioButton
                 android:id="@+id/radioPatrimonios"
@@ -75,7 +77,8 @@
                 android:paddingBottom="10dp"
                 android:text="Patrimonios"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:enabled="false"/>
 
 
         </RadioGroup>

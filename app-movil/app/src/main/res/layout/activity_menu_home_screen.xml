@@ -1,368 +1,369 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout3"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.amextra.MenuHomeScreen">
-
-    <ImageView
-        android:id="@+id/imgHomeHeader"
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:elevation="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/header_home"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="15dp"
-        android:elevation="200dp"
-        android:src="@drawable/whitelogo3x"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/ImgHomeScreen"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="-12dp"
-        android:elevation="10dp"
-        android:layout_below="@id/imgHomeHeader"
-        android:scaleType="centerCrop"
-        android:src="@drawable/imagen_home_screen"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgHomeHeader" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/contentCardName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:padding="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_below="@id/ImgHomeScreen"
-        android:layout_marginTop="-75dp"
-        app:cardCornerRadius="14dp"
-        app:cardElevation="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ImgHomeScreen">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="10dp"
-            android:id="@+id/greetings"
-            android:orientation="vertical">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:shadowColor="@color/text_shadow"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="1"
-                android:text="Bienvenido"
-                android:textColor="@color/GreenDark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/labelSaludoName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:shadowColor="@color/text_shadow"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="1"
-                android:text=""
-                android:textColor="@color/GreenDark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="¿Qué deseas hacer?"
-                android:textColor="@color/BlueDark"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#28214d">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_below="@id/contentCardName"
-        android:id="@+id/contentMenu"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:cardCornerRadius="14dp"
-        app:cardElevation="10dp"
-        android:elevation="10dp"
-
-        android:background="@drawable/white_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contentCardName">
-
-        <Button
-            android:id="@+id/btnMenu"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/franja_menu"
-            android:text="Menú"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btnMenu"
-            android:gravity="center"
-            android:id="@+id/contenMenu_a"
-            android:orientation="horizontal">
-
-            <FrameLayout
-
-                android:layout_width="128dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center">
-
-                <ImageButton
-                    android:id="@+id/btnConsultaClientes"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/green_circle"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/persons_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="90dp"
-                    android:gravity="center_horizontal"
-                    android:text="Mis clientes"
-                    android:textColor="@color/BlueDark"
-                    android:textSize="14sp" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="128dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                >
-
-                <ImageButton
-                    android:id="@+id/btnSolicitudCredito"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/green_circle"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/icon_file_invoice_dollar" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="90dp"
-                    android:gravity="center_horizontal"
-                    android:text="Solicitud De Crédito"
-                    android:textColor="@color/BlueDark"
-                    android:textSize="14sp" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="128dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                >
-
-                <ImageButton
-                    android:id="@+id/btnAvisos"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/green_circle"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/awesome_volume_up" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="90dp"
-                    android:gravity="center_horizontal"
-                    android:text="Avisos"
-                    android:textColor="@color/BlueDark"
-                    android:textSize="14sp" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_below="@id/contenMenu_a"
-           >
-
-            <FrameLayout
-
-                android:layout_width="128dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center">
-
-                <ImageButton
-                    android:id="@+id/btnClienteNuevo"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/green_circle"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/awesome_user_plus" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
-                    android:gravity="center_horizontal"
-                    android:text="Cliente Nuevo"
-                    android:textColor="@color/BlueDark"
-                    android:textSize="14sp" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="128dp"
-                android:foregroundGravity="center"
-                android:layout_height="match_parent"
-                android:layout_gravity="center">
-
-                <ImageButton
-                    android:id="@+id/btnCartera"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/green_circle"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/arrow_up_chart" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
-                    android:gravity="center_horizontal"
-                    android:text="Cartera"
-                    android:textColor="@color/BlueDark"
-                    android:textSize="14sp" />
-            </FrameLayout>
-
-            <FrameLayout
-
-                android:layout_width="128dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                >
-
-                <ImageButton
-                    android:id="@+id/btnAgenda"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/green_circle"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/awesome_calendar_day" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
-                    android:gravity="center_horizontal"
-                    android:text="Agenda"
-                    android:textColor="@color/BlueDark"
-                    android:textSize="14sp" />
-            </FrameLayout>
-        </LinearLayout>
-
-
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/contentMenu"
-        android:layout_margin="20dp"
-        android:elevation="200dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cerrar sesión"
-            android:elevation="200dp"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:id="@+id/cerrarSesion"
-            android:drawablePadding="10dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-
-
-    <View
+        android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_green_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ImgHomeScreen" />
+        android:fitsSystemWindows="true"
+        tools:context="com.amextra.MenuHomeScreen">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/imgHomeHeader"
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:elevation="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/header_home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            android:elevation="200dp"
+            android:src="@drawable/whitelogo3x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/ImgHomeScreen"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/imgHomeHeader"
+            android:layout_marginTop="-12dp"
+            android:elevation="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/imagen_home_screen"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgHomeHeader" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/contentCardName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ImgHomeScreen"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-75dp"
+            android:layout_marginEnd="20dp"
+            android:padding="20dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ImgHomeScreen">
+
+            <LinearLayout
+                android:id="@+id/greetings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"
+                    android:text="Bienvenido"
+                    android:textColor="@color/GreenDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/labelSaludoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="1"
+                    android:text=""
+                    android:textColor="@color/GreenDark"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="¿Qué deseas hacer?"
+                    android:textColor="@color/BlueDark"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/contentMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contentCardName"
+            android:layout_margin="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/white_content"
+            android:elevation="10dp"
+            app:cardCornerRadius="14dp"
+
+            app:cardElevation="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contentCardName">
+
+            <Button
+                android:id="@+id/btnMenu"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/franja_menu"
+                android:text="Menú"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/contenMenu_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnMenu"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <FrameLayout
+
+                    android:layout_width="128dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/btnConsultaClientes"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/green_circle"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/persons_icon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="90dp"
+                        android:gravity="center_horizontal"
+                        android:text="Mis clientes"
+                        android:textColor="@color/BlueDark"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="128dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/btnSolicitudCredito"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/green_circle"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/icon_file_invoice_dollar" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="90dp"
+                        android:gravity="center_horizontal"
+                        android:text="Solicitud De Crédito"
+                        android:textColor="@color/BlueDark"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="128dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/btnAvisos"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/green_circle"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/awesome_volume_up" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="90dp"
+                        android:gravity="center_horizontal"
+                        android:text="Avisos"
+                        android:textColor="@color/BlueDark"
+                        android:textSize="14sp" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contenMenu_a"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <FrameLayout
+
+                    android:layout_width="128dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/btnClienteNuevo"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/green_circle"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/awesome_user_plus" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:gravity="center_horizontal"
+                        android:text="Cliente Nuevo"
+                        android:textColor="@color/BlueDark"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="128dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:foregroundGravity="center">
+
+                    <ImageButton
+                        android:id="@+id/btnCartera"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/green_circle"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/arrow_up_chart" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:gravity="center_horizontal"
+                        android:text="Cartera"
+                        android:textColor="@color/BlueDark"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:layout_width="128dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/btnAgenda"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/green_circle"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        android:src="@drawable/awesome_calendar_day" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:gravity="center_horizontal"
+                        android:text="Agenda"
+                        android:textColor="@color/BlueDark"
+                        android:textSize="14sp" />
+                </FrameLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contentMenu"
+            android:layout_margin="20dp"
+            android:elevation="200dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cerrarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="10dp"
+                android:elevation="200dp"
+                android:gravity="center"
+                android:text="Cerrar sesión"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_green_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ImgHomeScreen" />
+
+    </RelativeLayout>
+</ScrollView>

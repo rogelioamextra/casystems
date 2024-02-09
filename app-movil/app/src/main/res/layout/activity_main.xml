@@ -44,6 +44,7 @@
         app:layout_constraintTop_toBottomOf="@id/img_view_amextraLogo" />
 
     <EditText
+        android:text="rzavaleta"
         android:id="@+id/texInputEmail"
         android:layout_width="320dp"
         android:layout_height="48dp"
@@ -67,6 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/img_view_nous_logo" />
 
     <EditText
+        android:text="123"
         android:id="@+id/texInputPassword"
         android:layout_width="320dp"
         android:layout_height="48dp"
@@ -120,39 +122,9 @@
         android:text="Iniciar Sesión"
         android:textColor="@color/white"
         android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewFp" />
-
-    <TextView
-        android:id="@+id/labelOr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="O"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnIniciaSesion" />
-
-    <Button
-        android:id="@+id/btnLogInHuella"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/buton_green"
-        android:drawableLeft="@drawable/icon_ionic_ios_finger_print"
-        android:drawablePadding="-65dp"
-        android:paddingLeft="100dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:text="Huella"
-        android:textColor="@color/BlueDark"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelOr" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

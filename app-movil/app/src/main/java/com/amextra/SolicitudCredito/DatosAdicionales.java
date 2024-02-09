@@ -324,7 +324,11 @@ public class DatosAdicionales extends AppCompatActivity implements MenuSolicitud
     }
 
     private boolean validaDiasSemana(){
-        return totalDiasSemana <= 7 && totalDiasSemana >0;
+        /*
+        TODO: Se requiere que la validación de la venta alta/baja se retire, es decir si los campos se encuentran vacíos desde atrás se coloque automáticamente 0, ya que en ocasiones esto no es necesario.
+        TODO: Por otro lado, si se coloca algún dato en venta alta/baja la suma de estos si debe ser igual o menor a 7 días.
+         */
+        return totalDiasSemana <= 7 && totalDiasSemana >= 0;
     }
 
 

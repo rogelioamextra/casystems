@@ -1,6 +1,7 @@
 package com.amextra.utils;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,7 @@ public class ListAvisosAdapter extends ArrayAdapter<Aviso> {
         result.startAnimation(animation);
         lastPosition = position;
 
-        holder.contenidoAviso.setText(contenidoAviso);
+        holder.contenidoAviso.setText(Html.fromHtml(contenidoAviso));
         holder.tituloAviso.setText(tituloAviso);
 
 
