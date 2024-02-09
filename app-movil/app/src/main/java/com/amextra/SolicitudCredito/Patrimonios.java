@@ -191,8 +191,8 @@ public class Patrimonios extends AppCompatActivity
         generaSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment dialogFragment =  LoaderTransparent.loaderTransparent("Generando Solicitud de Credito");
-                if( newPatrimonios.size()>0 && requestSolicitudCredito.data != null){
+                if(requestSolicitudCredito.data != null){
+                    DialogFragment dialogFragment =  LoaderTransparent.loaderTransparent("Generando Solicitud de Credito");
                     dialogFragment.show(getSupportFragmentManager(),"LoaderTransparent");
                     replacePathToBase64();
                     requestSolicitudCredito.getData().setPatrimonios(newPatrimonios);
@@ -246,7 +246,7 @@ public class Patrimonios extends AppCompatActivity
                         }
                     });
                 }else{
-                    dialogFragment.dismiss();
+
                     new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.WARNING_TYPE)
                             .setContentText("Se debe capturar almenos un patrimonio, por favor realice esta captura")
                             .setTitleText("Advertencia")
