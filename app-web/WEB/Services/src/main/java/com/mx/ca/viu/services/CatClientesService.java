@@ -4,14 +4,12 @@
  */
 package com.mx.ca.viu.services;
 
-import com.mx.ca.viu.modelos.CatClientes;
 import com.mx.ca.viu.modelos.dtos.request.CatClientesRequest;
 import com.mx.ca.viu.modelos.dtos.request.ClienteByCurpResponse;
 import com.mx.ca.viu.modelos.dtos.request.ClienteByIdResponse;
 import com.mx.ca.viu.modelos.dtos.request.ClienteResponse;
 import com.mx.ca.viu.modelos.dtos.request.ClientesResponse;
 import com.mx.ca.viu.modelos.dtos.request.ImagenesClienteByIdResponse;
-import java.util.List;
 
 /**
  *
@@ -28,8 +26,11 @@ public interface CatClientesService {
     public ClienteByIdResponse obtenerClienteId(Long id);
     
     public ClienteByCurpResponse obtenerClienteCurp(String curp);
-     public ClientesResponse obtenerClienteIdAsesor(Long id);
-     public ClientesResponse validarTelefono(String telefonos);
-      public ImagenesClienteByIdResponse obtenerImagenesClienteId(Long id);
+    
+    public ClientesResponse obtenerClienteIdAsesor(Long id);
+    
+    public ClientesResponse validarTelefono(String telefonos);
+    
+    public ImagenesClienteByIdResponse obtenerImagenesClienteId(Long id);
      
 }

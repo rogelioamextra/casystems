@@ -27,6 +27,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.amextra.MainActivity;
+import com.amextra.SMS.EnviaSMS;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
@@ -92,7 +93,6 @@ public class SolicitudDeCredito extends AppCompatActivity {
 
     String INFO_USER = "infoLogIn";
     private EditText et;
-
 
     TextInputLayout layOutTeditTxtFechaSolicitud, layoutPlazo, layoutFrecuencia, layOutDestinoCredito, layOutProductosCredito, layOutTxtCurp;
 
@@ -205,6 +205,24 @@ public class SolicitudDeCredito extends AppCompatActivity {
                     if (datos.response.codigo == 200) {
                         nombreCliente.setText(datos.data.nombres.toUpperCase() + " " + datos.data.apellidoPaterno.toUpperCase() + " " + datos.data.apellidoMaterno.toUpperCase());
                         noCliente.setText(String.valueOf(datos.data.idCliente));
+
+                        if (!datos.data.isAproboVerificacionSms()) {
+                            validaSmsBtn.setVisibility(View.VISIBLE);
+
+                            validaSmsBtn.setOnClickListener(v -> {
+                                Intent reenviaSms = new Intent(SolicitudDeCredito.this, EnviaSMS.class);
+                                Bundle sender = new Bundle();
+                                sender.clear();
+                                sender.putSerializable("infoLogIn",responseLogIn);
+                                sender.putSerializable("telefono", datos.data.telefono);
+                                sender.putSerializable("curp", curp);
+                                reenviaSms.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                reenviaSms.putExtras(sender);
+                                startActivity(reenviaSms);
+                                finish();
+                            });
+                        }
+
                         dialogFragment.dismiss();
                     } else {
                         noCliente.setText("Cliente no encontrado");

@@ -34,6 +34,12 @@ public class ClienteByCurpResponse extends GenericResponse implements Serializab
         
         @JsonProperty("apellidoMaterno")
         private String apellidoMaterno;
+        
+        @JsonProperty("aproboVerificacionSms")
+        private boolean aproboVerificacionSms;
+        
+        @JsonProperty("telefono")
+        private String telefono;
 
         public Long getIdCliente() {
             return idCliente;
@@ -67,6 +73,21 @@ public class ClienteByCurpResponse extends GenericResponse implements Serializab
             this.apellidoMaterno = apellidoMaterno;
         }
 
+        public boolean isAproboVerificacionSms() {
+            return aproboVerificacionSms;
+        }
+
+        public void setAproboVerificacionSms(boolean aproboVerificacionSms) {
+            this.aproboVerificacionSms = aproboVerificacionSms;
+        }
+
+        public String getTelefono() {
+            return telefono;
+        }
+
+        public void setTelefono(String telefono) {
+            this.telefono = telefono;
+        }
         
     }
 

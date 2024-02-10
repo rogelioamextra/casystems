@@ -21,13 +21,9 @@ import com.mx.ca.viu.modelos.CatTiemposEmpleoActual;
 import com.mx.ca.viu.modelos.CatTiposResidencias;
 import com.mx.ca.viu.modelos.CatTiposViviendas;
 import com.mx.ca.viu.modelos.CatUsuarios;
-import com.mx.ca.viu.modelos.Ciudad;
-import com.mx.ca.viu.modelos.Colonia;
 import com.mx.ca.viu.modelos.DtDatosLaborales;
 import com.mx.ca.viu.modelos.DtIdentificaciones;
 import com.mx.ca.viu.modelos.DtReferenciasPersonales;
-import com.mx.ca.viu.modelos.Estado;
-import com.mx.ca.viu.modelos.Municipio;
 import com.mx.ca.viu.modelos.dtos.request.CatClientesRequest;
 import com.mx.ca.viu.modelos.dtos.request.ClienteByCurpResponse;
 import com.mx.ca.viu.modelos.dtos.request.ClienteByIdResponse;
@@ -41,18 +37,11 @@ import com.mx.ca.viu.repositorys.CatEstadoRepository;
 import com.mx.ca.viu.repositorys.CatServiciosValidacionesExternosRepository;
 import com.mx.ca.viu.repositorys.GenericoRepository;
 import com.mx.ca.viu.services.CatClientesService;
-import com.mx.ca.viu.services.CatEstadoService;
 import com.mx.ca.viu.services.FTPService;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -268,10 +257,7 @@ public class CatClientesServiceImpl implements CatClientesService {
                 if (!direccion.getComprobante().isEmpty() && direccion.isBanderaCambioImagen()) {
                     byte[] img1 = org.apache.commons.codec.binary.Base64.decodeBase64(direccion.getComprobante());
                     img1 = UtilGenerico.encriptarDesencriptarBytes(img1);
-//                    ftp.connect();
-//                    InputStream is = new ByteArrayInputStream(img1);
-//                    direccion.setComprobante("");
-//                    ftp.uploadFiles(nuevo.getIdPersona().getCurp() + "/comDir", nuevo.getIdCliente().toString() + "-" + nuevo.getIdDireccion().getIdDireccion().toString(), is);
+
                     if (ftp.sendFileSFTP(img1, nuevo.getIdCliente().toString() + "-" + nuevo.getIdDireccion().getIdDireccion().toString(),
                             obtenpropiedades(nuevo.getIdPersona().getCurp() + "/comDir"))) {
                         nuevo.getIdDireccion().setNombreArchivo(nuevo.getIdCliente().toString() + "-" + nuevo.getIdDireccion().getIdDireccion().toString());
@@ -283,10 +269,7 @@ public class CatClientesServiceImpl implements CatClientesService {
                 if (banderaIdentificacion && !request.getData().getIdentificacion().getImagen().isEmpty()) {
                     byte[] img1 = org.apache.commons.codec.binary.Base64.decodeBase64(request.getData().getIdentificacion().getImagen());
                     img1 = UtilGenerico.encriptarDesencriptarBytes(img1);
-//                    ftp.connect();
-//                    InputStream is = new ByteArrayInputStream(img1);
-//
-//                    ftp.uploadFiles(nuevo.getIdPersona().getCurp() + "/iden", nuevo.getIdDtIdentificacion().getIdDtIdentificacion() + "-" + nuevo.getIdDtIdentificacion().getIdDtIdentificacion(), is);
+
                     if (ftp.sendFileSFTP(img1,
                             nuevo.getIdDtIdentificacion().getIdDtIdentificacion() + "-" + nuevo.getIdDtIdentificacion().getIdDtIdentificacion(),
                             obtenpropiedades(nuevo.getIdPersona().getCurp() + "/iden"))) {
@@ -321,14 +304,7 @@ public class CatClientesServiceImpl implements CatClientesService {
             nuevo.setJson(Transform.toJSON(request));
             boolean banderaIdentificacion = false;
 
-//            CatPersonas p = catClientesRepository.buscarCurp(request.getData().getPersona().getCurp());
-//            if (p != null && p.getIdPersona() != null) {
-//                throw new Exception("La curp:" + request.getData().getPersona().getCurp() + " ya se encuentra registrada");
-//            }
-//            CatClientes cli = catClientesRepository.buscarClienteTelefono(request.getData().getPersona().getTelefono());
-//            if (cli != null) {
-//                throw new Exception("El telefono:" + request.getData().getPersona().getTelefono() + " ya se encuentra registrado");
-//            }
+
             List<CatListaNegraAmextra> negra = catClientesRepository.buscarListaNegraCurp(request.getData().getPersona().getCurp());
 
             if (negra != null && !negra.isEmpty()) {
@@ -397,7 +373,6 @@ public class CatClientesServiceImpl implements CatClientesService {
             persona.setFechaNacimiento(UtilGenerico.parseStringToDate(request.getData().getPersona().getFechaNacimiento(), "yyyy-MM-dd"));
 
             nuevo.setIdPersona(persona);
-            //   genericoRepository.guardar(persona);
 
             DtDatosLaborales datos = new DtDatosLaborales();
             if (request.getData().getDatosLaborales() == null) {
@@ -422,7 +397,7 @@ public class CatClientesServiceImpl implements CatClientesService {
                 idestado = "0" + idestado;
             }
             direccionLaboral.setIdEstado(estadosrepositiory.buscarEstadoCodigo(idestado));
-            //direccionLaboral.setIdEstado(genericoRepository.findByID(CatEstados.class, request.getData().getDatosLaborales().getDireccion().getEstadoId()));
+            
             if (request.getData().getDatosLaborales().getDireccion().getMunicipioId() == null) {
                 throw new Exception("El campo municipio-datos laborales es requerido ");
             }
@@ -430,7 +405,7 @@ public class CatClientesServiceImpl implements CatClientesService {
 
             direccionLaboral.setIdTipoResidencia(genericoRepository.findByID(CatTiposResidencias.class, request.getData().getDatosLaborales().getDireccion().getTipoResidenciaId()));
             direccionLaboral.setIdTipoVivienda(genericoRepository.findByID(CatTiposViviendas.class, request.getData().getDatosLaborales().getDireccion().getTipoViviendaId()));
-            //  genericoRepository.guardar(direccionLaboral);
+            
             datos.setIdDireccion(direccionLaboral);
             if (request.getData().getDatosLaborales().getGiroNegocioId() == null) {
                 throw new Exception("El campo giro de negocio es requerido ");
@@ -552,7 +527,7 @@ public class CatClientesServiceImpl implements CatClientesService {
             response.getResponse().setCodigo(500);
             response.getResponse().setMensaje(e.fillInStackTrace().getMessage() + " " + e.getMessage());
             System.out.println(e);
-            //nuevo.setMsjError(e.getMessage());
+            
         }
 
         return response;
@@ -587,15 +562,13 @@ public class CatClientesServiceImpl implements CatClientesService {
             if (cli != null) {
                 response.getData().setCliente(cli);
                 response.getData().getCliente().getIdDireccion().setComprobante("");
-//                response.getData().getCliente().getIdDireccion().setComprobante(
-//                        obtenerBase64(response.getData().getCliente().getIdDireccion().getNombreArchivo(), response.getData().getCliente().getIdPersona().getCurp() + "/comDir"));
+
                 if (response.getData().getCliente().getIdDtIdentificacion().getIdTipoIdentificacion().getIdIdentificaciones() == 1L) {
-//                    response.getData().getCliente().getIdDtIdentificacion().setAnverso(obtenerBase64("anv",response.getData().getCliente().getIdPersona().getCurp() + "/iden"));
-//                    response.getData().getCliente().getIdDtIdentificacion().setReverso(obtenerBase64("rev",response.getData().getCliente().getIdPersona().getCurp() + "/iden"));
+
                     response.getData().getCliente().getIdDtIdentificacion().setAnverso("");
                     response.getData().getCliente().getIdDtIdentificacion().setReverso("");
                 } else {
-//                    response.getData().getCliente().getIdDtIdentificacion().setImagen(obtenerBase64(response.getData().getCliente().getIdDtIdentificacion().getNombreImagen(), response.getData().getCliente().getIdPersona().getCurp() + "/iden"));
+
                     response.getData().getCliente().getIdDtIdentificacion().setImagen("");
                 }
                 response.getResponse().setCodigo(200);
@@ -676,6 +649,8 @@ public class CatClientesServiceImpl implements CatClientesService {
             response.getData().setNombres(p.getIdPersona().getNombres());
             response.getData().setApellidoPaterno(p.getIdPersona().getApellidoPaterno());
             response.getData().setApellidoMaterno(p.getIdPersona().getApellidoMaterno());
+            response.getData().setAproboVerificacionSms(p.getAproboVerificacionSms());
+            response.getData().setTelefono(p.getIdPersona().getTelefono());
             response.getResponse().setCodigo(200);
             response.getResponse().setMensaje("OK");
         } catch (Exception e) {

@@ -47,7 +47,6 @@ public class EnviaSMS extends AppCompatActivity {
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
             numeroTelefonoCliente =  recepcion.getString("telefono");
             curp =  recepcion.getString("curp");
-
         }
 
         btnContinua.setOnClickListener(new View.OnClickListener() {
