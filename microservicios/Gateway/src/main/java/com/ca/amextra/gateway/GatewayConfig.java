@@ -20,7 +20,7 @@ public class GatewayConfig {
 	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder) {
 		return builder.routes().route("catalogos", r -> r.path("/catalogos/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9020/"))
-				.route("agenda", r -> r.path("/agenda/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9021/"))
+				.route("agenda", r -> r.path("/agenda/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9024/"))
 				.route("login", r -> r.path("/login/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9000/"))
 				.route("clientes", r -> r.path("/clientes/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9021/"))
 				.route("sms", r -> r.path("/envio/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9022/"))
