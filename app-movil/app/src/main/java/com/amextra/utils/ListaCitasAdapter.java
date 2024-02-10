@@ -14,10 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.amextra.Beans.ImagesIdentificacion;
 import com.amextra.amextra.R;
 import com.amextra.io.Response.Agenda;
-import com.amextra.io.Response.ListaProyeccion;
 
 import java.util.ArrayList;
 

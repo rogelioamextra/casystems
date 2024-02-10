@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -20,7 +19,6 @@ import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.Cliente;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 
 public class ConsultaPersonal extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
     Button  btnEditarInfo, nxtBtn;

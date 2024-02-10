@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import com.amextra.AltaEdicionCliente.ReferenciasAlta_dos;
 import com.amextra.MainActivity;
 import com.amextra.MenuHomeScreen;
 import com.amextra.amextra.R;
@@ -187,6 +188,21 @@ public class ConsultaClientes extends AppCompatActivity implements Callback<Resp
                         Toast.makeText(ConsultaClientes.this, datos.response.codigo+" - "+datos.response.mensaje, Toast.LENGTH_SHORT).show();
 
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(ConsultaClientes.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(ConsultaClientes.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

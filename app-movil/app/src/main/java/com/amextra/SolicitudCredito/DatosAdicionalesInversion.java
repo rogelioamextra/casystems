@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
@@ -17,11 +16,7 @@ import com.amextra.io.Request.DataRequestSolicitudCredito;
 import com.amextra.io.Request.Ingresos_;
 import com.amextra.io.Request.RequestSolicitudCredito;
 import com.amextra.io.Response.InfoUSer;
-import com.amextra.io.Response.Patrimonio;
-import com.amextra.io.Response.ResponseLogin;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
 
 public class DatosAdicionalesInversion extends AppCompatActivity implements MenuSolicitudCredito.TransfiereDatos {
     Button siguiente;

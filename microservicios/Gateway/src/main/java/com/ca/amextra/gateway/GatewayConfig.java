@@ -19,15 +19,17 @@ public class GatewayConfig {
 
 	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder) {
-		return builder.routes().route("catalogos", r -> r.path("/catalogos/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9020/"))
-				.route("agenda", r -> r.path("/agenda/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9024/"))
-				.route("login", r -> r.path("/login/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9000/"))
-				.route("clientes", r -> r.path("/clientes/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9021/"))
-				.route("sms", r -> r.path("/envio/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9022/"))
-				.route("curp", r -> r.path("/valida/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9002/"))
-				.route("ocrine", r -> r.path("/ocr/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9005/"))
-				.route("solicitud", r -> r.path("/solicitud/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9023/"))
-				.route("consultacp", r -> r.path("/servicio/consultaCP/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9012/")).build();
+		return builder.routes()
+                        .route("login", r -> r.path("/login/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9000/"))
+                        .route("curp", r -> r.path("/valida/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9002/"))
+                        .route("ocrine", r -> r.path("/ocr/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9005/"))
+                        .route("consultacp", r -> r.path("/servicio/consultaCP/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9012/"))                                                
+                        .route("clientes", r -> r.path("/clientes/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9021/"))
+                        .route("sms", r -> r.path("/envio/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9022/"))
+                        .route("solicitud", r -> r.path("/solicitud/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9023/"))                        
+                        .route("catalogos", r -> r.path("/catalogos/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9024/"))
+                        .route("agenda", r -> r.path("/agenda/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9024/"))
+                        .build();
 	}
 
 }

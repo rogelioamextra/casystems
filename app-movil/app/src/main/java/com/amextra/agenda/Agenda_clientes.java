@@ -14,8 +14,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,7 +37,6 @@ import com.amextra.io.Response.Agenda;
 import com.amextra.io.Response.Geolocalizacion;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseAgenda;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.utils.ListaCitasAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -290,6 +287,22 @@ public class Agenda_clientes extends AppCompatActivity implements ListaCitasAdap
                                 .setContentText(info.response.codigo + " - " + info.response.mensaje)
                                 .show();
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+
+                    new SweetAlertDialog(Agenda_clientes.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(Agenda_clientes.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

@@ -17,7 +17,6 @@ import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.Cliente;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 
 public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
 

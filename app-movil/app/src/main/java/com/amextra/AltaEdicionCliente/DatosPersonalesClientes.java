@@ -1,5 +1,8 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -10,7 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -21,6 +23,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 
+import com.amextra.MainActivity;
 import com.amextra.MenuHomeScreen;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
@@ -40,7 +43,6 @@ import com.amextra.io.Response.Nacionalidade;
 import com.amextra.io.Response.ResponseCatalogosNacionalidad;
 import com.amextra.io.Response.ResponseCurp;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.Responseestados;
 import com.amextra.utils.ConverterReqClient;
 import com.google.android.material.textfield.TextInputEditText;
@@ -304,19 +306,30 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                         Toast.makeText(context, nacionalidades.response.codigo + " " + nacionalidades.response.mensaje, duration);
                     }
                 }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientes.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientes.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseCatalogosNacionalidad> call, Throwable t) {
                 call.cancel();
                 Toast.makeText(context, t.toString(), duration);
-
-
             }
         });
     }
-
-
     private void consultaLugaresNac() {
         Call<Responseestados> call = ApiAdapter.getApiService(responseLogIn.token).estados();
         call.enqueue(new Callback<Responseestados>() {
@@ -359,6 +372,21 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                         Toast.makeText(DatosPersonalesClientes.this, data.response.codigo + " - " + data.response.mensaje, Toast.LENGTH_SHORT).show();
 
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientes.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientes.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 
@@ -429,6 +457,21 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                         consultaLugaresNac();
                     }
 
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientes.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientes.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

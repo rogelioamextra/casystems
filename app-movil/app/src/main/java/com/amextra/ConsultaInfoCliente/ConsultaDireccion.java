@@ -9,10 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.amextra.AltaEdicionCliente.DatosClienteLaborales;
 import com.amextra.amextra.R;
 import com.amextra.AltaEdicionCliente.datos_personales_address;
 import com.amextra.dialogs.MenuHeader;
@@ -21,7 +19,6 @@ import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.Cliente;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 
 public class ConsultaDireccion extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
     Button  btnEditarInfo;

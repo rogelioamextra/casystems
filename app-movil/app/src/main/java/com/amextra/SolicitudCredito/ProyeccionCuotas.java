@@ -3,10 +3,9 @@ package com.amextra.SolicitudCredito;
 
 import static android.os.Build.VERSION.SDK_INT;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -15,25 +14,19 @@ import androidx.fragment.app.DialogFragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
@@ -41,15 +34,11 @@ import com.amextra.io.ApiAdapter;
 import com.amextra.io.Request.RequestProyeccion;
 import com.amextra.io.Request.RequestSolicitudCredito;
 import com.amextra.io.Response.InfoUSer;
-import com.amextra.io.Response.ListaCliente;
 import com.amextra.io.Response.ListaProyeccion;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponseSolicitudProyeccion;
-import com.amextra.utils.ListaClienteAdapter;
 import com.amextra.utils.ListaProyeccionAdapter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -186,8 +175,25 @@ public class ProyeccionCuotas extends AppCompatActivity {
                                 .setContentText("" + resp.response.codigo+" - "+resp.response.mensaje)
                                 .show();
                     }
+
+                    dialogFragment.dismiss();
                 }
-                dialogFragment.dismiss();
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(ProyeccionCuotas.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(ProyeccionCuotas.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
+
             }
 
             @Override

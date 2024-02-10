@@ -1,7 +1,6 @@
 package com.amextra.io.Request;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class DataReqCliente implements Serializable {
     public String id;

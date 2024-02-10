@@ -11,11 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.amextra.amextra.R;
-import com.amextra.io.Response.DtReferenciasPersonalesList;
-import com.amextra.io.Response.ListaCliente;
 import com.amextra.io.Response.ListaProyeccion;
 
 import java.util.ArrayList;

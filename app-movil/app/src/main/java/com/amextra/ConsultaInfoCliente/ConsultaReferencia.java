@@ -3,17 +3,13 @@ package com.amextra.ConsultaInfoCliente;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.amextra.SMS.EnviaSMS;
 import com.amextra.AltaEdicionCliente.ReferenciasAlta;
@@ -24,8 +20,6 @@ import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.DtReferenciasPersonalesList;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
-import com.amextra.utils.ListaClienteAdapter;
 import com.amextra.utils.ListaReferenciasAdapter;
 
 public class ConsultaReferencia extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {

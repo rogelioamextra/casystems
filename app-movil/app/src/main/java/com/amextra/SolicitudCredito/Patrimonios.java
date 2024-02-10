@@ -1,5 +1,8 @@
 package com.amextra.SolicitudCredito;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -23,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amextra.MainActivity;
 import com.amextra.MenuHomeScreen;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
@@ -31,13 +35,11 @@ import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuSolicitudCredito;
 import com.amextra.io.ApiAdapter;
 import com.amextra.io.Request.PatrimoniosCls;
-import com.amextra.io.Request.Referencia;
 import com.amextra.io.Request.RequestSolicitudCredito;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ListaPatrimonio;
 import com.amextra.io.Response.Patrimonio;
 import com.amextra.io.Response.ResponseAddSolicitudCredito;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponsePatrimonios;
 import com.amextra.utils.ListaPatrimoniosAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -238,11 +240,26 @@ public class Patrimonios extends AppCompatActivity
                                             .show();
                                 }
                             }
+
+                            else {
+                                final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                                new SweetAlertDialog(Patrimonios.this,SweetAlertDialog.ERROR_TYPE)
+                                        .setTitleText("Error")
+                                        .setContentText(alertText)
+                                        .setConfirmText("Continuar")
+                                        .setConfirmClickListener(sweetAlertDialog -> {
+                                            finish();
+                                            Intent login = new Intent(Patrimonios.this, MainActivity.class);
+                                            login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                            startActivity(login);
+                                        })
+                                        .show();
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<ResponseAddSolicitudCredito> call, Throwable t) {
-
+                            dialogFragment.dismiss();
                         }
                     });
                 }else{
@@ -296,6 +313,21 @@ public class Patrimonios extends AppCompatActivity
                             llenaTablaPats();
                         }
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(Patrimonios.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(Patrimonios.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 
@@ -387,8 +419,6 @@ public class Patrimonios extends AppCompatActivity
             noContent.setVisibility(View.GONE);
             listPatrimonios.setVisibility(View.VISIBLE);
             totalPrecios.setVisibility(View.VISIBLE);
-
-
 
         } else {
             listPatrimonios.setVisibility(View.GONE);

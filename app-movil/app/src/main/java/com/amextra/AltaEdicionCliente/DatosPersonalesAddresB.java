@@ -1,15 +1,15 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,21 +17,18 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuInformacionCliente;
@@ -41,18 +38,13 @@ import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.Geolocalizacion;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseImagesCte;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponsetiposViviendas;
 import com.amextra.io.Response.TiposVivienda;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -171,22 +163,6 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
         });
         cargaTiposVivienda();
         iniciaCargaDatosLaborales();
-
-
-
-
-
-
-;
-
-/*        try {
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
-            mapFragment.getMapAsync(this);
-        } catch (Exception e) {
-
-        }*/
-
-
     }
 
     private void mapDataCliente(DataReqCliente data) {
@@ -233,6 +209,23 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
                                     .setContentText(info.response.codigo+" "+info.response.mensaje)
                                     .show();
                         }
+                    }
+
+                    else {
+
+                        final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                        new SweetAlertDialog(DatosPersonalesAddresB.this,SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Error")
+                                .setContentText(alertText)
+                                .setConfirmText("Continuar")
+                                .setConfirmClickListener(sweetAlertDialog -> {
+                                    finish();
+                                    Intent login = new Intent(DatosPersonalesAddresB.this, MainActivity.class);
+                                    login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(login);
+                                })
+                                .show();
+
                     }
                 }
 
@@ -377,6 +370,21 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
                         call.cancel();
                         Toast.makeText(DatosPersonalesAddresB.this, info.response.codigo + " " + info.response.mensaje, Toast.LENGTH_LONG).show();
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesAddresB.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesAddresB.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

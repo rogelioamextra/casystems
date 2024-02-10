@@ -8,16 +8,10 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amextra.ConsultaInfoCliente.ConsultaClientes;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
@@ -25,8 +19,6 @@ import com.amextra.io.ApiAdapter;
 import com.amextra.io.Response.Aviso;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseAvisos;
-import com.amextra.io.Response.ResponseLogin;
-import com.amextra.utils.ListAdapterSolicitudesCredito;
 import com.amextra.utils.ListAvisosAdapter;
 
 import java.util.ArrayList;

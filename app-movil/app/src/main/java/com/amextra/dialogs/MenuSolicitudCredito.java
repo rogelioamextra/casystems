@@ -9,32 +9,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 
-import com.amextra.AltaEdicionCliente.DatosClienteLaborales;
-import com.amextra.AltaEdicionCliente.DatosPersonalesClientes;
-import com.amextra.AltaEdicionCliente.ReferenciasAlta;
-import com.amextra.AltaEdicionCliente.datos_personales_address;
-import com.amextra.Beans.ImagesIdentificacion;
-import com.amextra.ConsultaInfoCliente.ConsultaDireccion;
-import com.amextra.ConsultaInfoCliente.ConsultaEmpleo;
-import com.amextra.ConsultaInfoCliente.ConsultaPersonal;
-import com.amextra.ConsultaInfoCliente.ConsultaReferencia;
 import com.amextra.SolicitudCredito.DatosAdicionales;
 import com.amextra.SolicitudCredito.Egresos;
-import com.amextra.SolicitudCredito.GastosMensuales;
 import com.amextra.SolicitudCredito.Patrimonios;
 import com.amextra.amextra.R;
 import com.amextra.io.Request.RequestSolicitudCredito;
 import com.amextra.io.Response.InfoUSer;
-import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 
 /**
  * A simple {@link Fragment} subclass.

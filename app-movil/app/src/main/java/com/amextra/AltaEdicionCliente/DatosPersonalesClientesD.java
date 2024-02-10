@@ -1,12 +1,14 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,11 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import com.amextra.MainActivity;
 import com.amextra.MenuHomeScreen;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
@@ -31,7 +30,6 @@ import com.amextra.io.Response.GradosEscolare;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResValidaTelefono;
 import com.amextra.io.Response.ResponseCatalogoGradosEscolares;
-import com.amextra.io.Response.ResponseLogin;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -219,6 +217,21 @@ public class DatosPersonalesClientesD extends AppCompatActivity implements MenuI
                         dialogoK.show();
                     }
                 }
+
+                else {
+                    final String alertText = (estado == 400 || estado == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientesD.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientesD.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
             }
 
             @Override
@@ -281,6 +294,21 @@ public class DatosPersonalesClientesD extends AppCompatActivity implements MenuI
                             }
                         });
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientesD.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientesD.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
 
             }

@@ -1,37 +1,29 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.transition.AutoTransition;
-import android.transition.Transition;
-import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.amextra.SMS.EnviaSMS;
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuInformacionCliente;
 import com.amextra.io.ApiAdapter;
-import com.amextra.io.Request.ClientDefine;
 import com.amextra.io.Request.DataReqCliente;
 import com.amextra.io.Request.Direccion;
 import com.amextra.io.Request.Referencia;
@@ -44,8 +36,6 @@ import com.amextra.io.Response.ID;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.Parentesco;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseGetClientes;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponseParentescos;
 import com.amextra.io.Response.ResponsecodigoPostal;
 import com.amextra.utils.ConverterReqClient;
@@ -54,6 +44,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -451,6 +442,21 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
                     });
 
                 }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(ReferenciasAlta.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(ReferenciasAlta.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
             }
 
             @Override
@@ -555,10 +561,18 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
 
                     }
                 } else {
-                    dialogFragment.dismiss();
-                    Toast.makeText(ReferenciasAlta.this, "Error al consultar el codigo postal: " + responsecodigoPostal.response.codigo + " - " + responsecodigoPostal.response.mensaje, Toast.LENGTH_SHORT).show();
-
-
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(ReferenciasAlta.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(ReferenciasAlta.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
 
             }

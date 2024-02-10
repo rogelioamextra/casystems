@@ -24,11 +24,8 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amextra.Beans.RequestLogin;
 import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
@@ -46,12 +43,9 @@ import com.amextra.io.Response.ResponseCatalogoProductos;
 import com.amextra.io.Response.ResponseCurpClienteSolicitud;
 import com.amextra.io.Response.ResponseDestinoCredito;
 import com.amextra.io.Response.ResponseFrecuenciaPago;
-import com.amextra.io.Response.ResponseLogin;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -381,6 +375,21 @@ public class SolicitudDeCredito extends AppCompatActivity {
                                 .show();
                     }
                 }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(SolicitudDeCredito.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(SolicitudDeCredito.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
             }
 
             @Override
@@ -427,6 +436,21 @@ public class SolicitudDeCredito extends AppCompatActivity {
                                 .setTitleText("Advertencia")
                                 .show();
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(SolicitudDeCredito.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(SolicitudDeCredito.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 
@@ -475,6 +499,21 @@ public class SolicitudDeCredito extends AppCompatActivity {
                                 .show();
                     }
 
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(SolicitudDeCredito.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(SolicitudDeCredito.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

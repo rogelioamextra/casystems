@@ -14,8 +14,6 @@ import androidx.annotation.Nullable;
 
 import com.amextra.amextra.R;
 import com.amextra.io.Response.DtReferenciasPersonalesList;
-import com.amextra.io.Response.ListaCliente;
-
 public class ListaReferenciasAdapter extends ArrayAdapter <DtReferenciasPersonalesList>  {
     private Context mContext;
     int mResource;

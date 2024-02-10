@@ -1,5 +1,8 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -8,8 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -17,17 +18,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amextra.Beans.ImagesIdentificacion;
-import com.amextra.SolicitudCredito.ProyeccionCuotas;
-import com.amextra.SolicitudCredito.SolicitudDeCredito;
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.IneScanner;
 import com.amextra.dialogs.LoaderTransparent;
@@ -41,19 +37,15 @@ import com.amextra.io.Request.Identificacion;
 import com.amextra.io.Request.ReqReconocimiento;
 import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Request.RequestvalidaIne;
-import com.amextra.io.Response.Cliente;
 import com.amextra.io.Response.DataResValidaIne;
 import com.amextra.io.Response.Geolocalizacion;
 import com.amextra.io.Response.GradosEscolare;
 import com.amextra.io.Response.Identificacione;
 import com.amextra.io.Response.InfoUSer;
-import com.amextra.io.Response.Nacionalidade;
 import com.amextra.io.Response.ResponseCatalogosEstadoCivil;
 import com.amextra.io.Response.ResponseGetCliente;
 import com.amextra.io.Response.ResponseIdentificaicon;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponseValidaIne;
-import com.amextra.utils.ConverterReqClient;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -144,7 +136,6 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
             }
         }
 
-
         if (idGenero == 1) {
             switchGenero.setChecked(true);
         } else {
@@ -203,18 +194,6 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
         }
 
     }
-
-/*    private void capturaImgs() {
-        btnCamara.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
-    }*/
-
-
     private String pathToBase64(String path, int quality) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -340,8 +319,21 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                             dialogFragment.show(getSupportFragmentManager(), "IneScanner");
                         }
                     });
+                }
 
-
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientesB.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
 
             }
@@ -391,7 +383,21 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                         }
                     });
 
+                }
 
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientesB.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
 
             }
@@ -477,8 +483,21 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                                 .show();
                     }
 
+                }
 
-
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientesB.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
 
             }
@@ -524,6 +543,21 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                                 .setTitleText(datos.response.codigo + " " + datos.response.mensaje)
                                 .show();
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosPersonalesClientesB.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 
@@ -633,10 +667,7 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
             }
         }
 
-
         return status;
-
-
     }
 
     @Override
@@ -647,7 +678,6 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
         mBundle.putSerializable("infoLogIn", responseLogIn);
         mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
         menuInformacionCliente.setArguments(mBundle);
-
 
     }
 }

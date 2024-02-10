@@ -1,7 +1,5 @@
 package com.amextra.io.Request;
 
-import com.amextra.io.Response.Patrimonio;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

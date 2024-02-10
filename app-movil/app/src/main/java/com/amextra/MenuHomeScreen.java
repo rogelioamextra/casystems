@@ -16,7 +16,6 @@ import com.amextra.amextra.R;
 import com.amextra.cartera.ClientesAsesor;
 import com.amextra.io.Response.Geolocalizacion;
 import com.amextra.io.Response.InfoUSer;
-import com.amextra.io.Response.ResponseLogin;
 import cn.pedant.SweetAlert.SweetAlertDialog ;
 
 public class MenuHomeScreen extends AppCompatActivity {

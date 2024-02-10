@@ -1,12 +1,13 @@
 package com.amextra.SMS;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amextra.MainActivity;
 import com.amextra.SolicitudCredito.SolicitudDeCredito;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
@@ -26,9 +28,7 @@ import com.amextra.io.Request.RequestValidaSMS;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseEnvioSMS;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponseValidaSMS;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -155,6 +155,21 @@ public class ConfirmaSMS extends AppCompatActivity {
                                     .show();
                         }
                     }
+
+                    else {
+                        final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                        new SweetAlertDialog(ConfirmaSMS.this,SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Error")
+                                .setContentText(alertText)
+                                .setConfirmText("Continuar")
+                                .setConfirmClickListener(sweetAlertDialog -> {
+                                    finish();
+                                    Intent login = new Intent(ConfirmaSMS.this, MainActivity.class);
+                                    login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(login);
+                                })
+                                .show();
+                    }
                 }
 
                 @Override
@@ -200,6 +215,18 @@ public class ConfirmaSMS extends AppCompatActivity {
                     dialogFragment.dismiss();
                 } else {
                     dialogFragment.dismiss();
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(ConfirmaSMS.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(ConfirmaSMS.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.amextra.amextra.R;
-import com.amextra.io.Response.Agenda;
 import com.amextra.io.Response.Aviso;
 
 import java.util.ArrayList;
@@ -69,10 +68,7 @@ public class ListAvisosAdapter extends ArrayAdapter<Aviso> {
             result = convertView;
         }
 
-        //Animation animation = AnimationUtils.loadAnimation(mContext,
-         //       (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-        Animation animation = AnimationUtils.loadAnimation(mContext,
-                 R.anim.anim_left);
+        Animation animation = AnimationUtils.loadAnimation(mContext,R.anim.anim_left);
         result.startAnimation(animation);
         lastPosition = position;
 

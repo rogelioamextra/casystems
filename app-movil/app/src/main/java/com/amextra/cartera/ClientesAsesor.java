@@ -19,16 +19,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.amextra.MainActivity;
-import com.amextra.MenuHomeScreen;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.io.ApiAdapter;
-import com.amextra.io.ApiService;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ListaCliente;
 import com.amextra.io.Response.ResponseGetClientes;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.utils.ListaClienteAdapter;
 
 import java.util.ArrayList;
@@ -71,8 +68,6 @@ public class ClientesAsesor extends AppCompatActivity {
             titulo = (receptor.getString(nombreTit));
             esAlta = (receptor.getBoolean(nombreStatus));
             responseLogIn = (InfoUSer) receptor.getSerializable("infoLogIn");
-
-
         }
 
         bHeader.putString(nombreTit, titulo);
@@ -102,8 +97,6 @@ public class ClientesAsesor extends AppCompatActivity {
         getClientesAsesor(responseLogIn.usuarioId);
 
     }
-
-
 
     private void getClientesAsesor (String idAsesor){
         dialogFragment.show(getSupportFragmentManager(), "LoaderTransparent");

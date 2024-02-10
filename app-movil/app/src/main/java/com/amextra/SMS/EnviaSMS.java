@@ -1,5 +1,8 @@
 package com.amextra.SMS;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -9,19 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.amextra.AltaEdicionCliente.DatosClienteLab;
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.io.ApiAdapter;
 import com.amextra.io.Request.DataReqSms;
 import com.amextra.io.Request.RequestEnvioSMS;
-import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseEnvioSMS;
-import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +31,6 @@ import retrofit2.Response;
 public class EnviaSMS extends AppCompatActivity {
     LinearProgressIndicator loader;
     Button btnCancela,btnContinua;
-
     InfoUSer responseLogIn = new InfoUSer();
     String numeroTelefonoCliente ="", curp ="";
     @Override
@@ -93,7 +93,25 @@ public class EnviaSMS extends AppCompatActivity {
                 if (response.isSuccessful() && code==200 && envioToken.response.codigo ==200){
                     dialogFragment.dismiss();
                     startActivity(confirmaSMS);
-                }else{
+                }
+
+                else if (code == 400 || code == 401) {
+                    dialogFragment.dismiss();
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(EnviaSMS.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(EnviaSMS.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
+
+                else{
                     dialogFragment.dismiss();
                     Toast.makeText(EnviaSMS.this, "Error al enviar sms: " + envioToken.response.codigo + " - " + envioToken.response.mensaje, Toast.LENGTH_SHORT).show();
                     startActivity(confirmaSMS);

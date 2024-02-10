@@ -12,7 +12,6 @@ import com.amextra.io.Request.RequestSolicitudCredito;
 import com.amextra.io.Request.RequestValidaSMS;
 import com.amextra.io.Request.RequestvalidaIne;
 import com.amextra.io.Response.ResValidaTelefono;
-import com.amextra.io.Response.Response;
 import com.amextra.io.Response.ResponseAddSolicitudCredito;
 import com.amextra.io.Response.ResponseAgenda;
 import com.amextra.io.Response.ResponseAvisos;
@@ -46,7 +45,6 @@ import com.amextra.io.Response.ResponsecoloniaPorMunicipio;
 import com.amextra.io.Response.Responseestados;
 import com.amextra.io.Response.ResponsemunicipiosPorEstado;
 import com.amextra.io.Response.ResponsetiposViviendas;
-import com.amextra.io.Response.ResquestAltaCliente;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

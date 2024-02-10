@@ -29,7 +29,6 @@ import com.amextra.AltaEdicionCliente.datos_personales_address;
 import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseGetCliente;
-import com.amextra.io.Response.ResponseLogin;
 
 /**
  * A simple {@link Fragment} subclass.

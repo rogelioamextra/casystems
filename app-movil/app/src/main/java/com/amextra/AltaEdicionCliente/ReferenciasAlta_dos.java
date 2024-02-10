@@ -1,5 +1,8 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -10,7 +13,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -19,13 +21,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.amextra.MainActivity;
 import com.amextra.SMS.EnviaSMS;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuInformacionCliente;
 import com.amextra.io.ApiAdapter;
-import com.amextra.io.Request.ClientDefine;
 import com.amextra.io.Request.DataReqCliente;
 import com.amextra.io.Request.Direccion;
 import com.amextra.io.Request.Referencia;
@@ -37,7 +39,6 @@ import com.amextra.io.Response.ID;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.Parentesco;
 import com.amextra.io.Response.ResponseGetClientes;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponseParentescos;
 import com.amextra.io.Response.ResponsecodigoPostal;
 import com.google.android.material.textfield.TextInputEditText;
@@ -255,6 +256,21 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                     });
 
                 }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(ReferenciasAlta_dos.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
             }
 
             @Override
@@ -278,14 +294,9 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
         mBundle.putSerializable("infoLogIn",responseLogIn);
         mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
         menuInformacionCliente.setArguments(mBundle);
-
-
     }
 
     private boolean validaReferencia() {
-
-
-
         boolean status = true;
         String nombre = txtNombre.getText().toString();
         String apPat = txtApPat.getText().toString();
@@ -474,10 +485,8 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                 });
             }
         }catch (Exception e){
-                dialogUpdate.dismiss();
+            dialogUpdate.dismiss();
             Toast.makeText(ReferenciasAlta_dos.this, "Error de actualizacion " +e, Toast.LENGTH_SHORT).show();
-
-
         }
 
     }
@@ -532,12 +541,6 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                 }
             }
 
-
-
-
-
-
-
             dataReqCliente.setReferencias(referencias);
             DialogFragment dialogFragment = LoaderTransparent.loaderTransparent("Generando alta de cliente..");
             dialogFragment.show(getSupportFragmentManager(), "LoaderTransparent");
@@ -571,6 +574,21 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                                     .show();
 
                         }
+                    }
+
+                    else {
+                        final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                        new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Error")
+                                .setContentText(alertText)
+                                .setConfirmText("Continuar")
+                                .setConfirmClickListener(sweetAlertDialog -> {
+                                    finish();
+                                    Intent login = new Intent(ReferenciasAlta_dos.this, MainActivity.class);
+                                    login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(login);
+                                })
+                                .show();
                     }
 
                 }
@@ -695,7 +713,6 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.NO_WRAP);
 
-
     }
     private void consultaCP(String cp) {
 
@@ -787,10 +804,18 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
 
                     }
                 } else {
-                    dialogFragment.dismiss();
-                    Toast.makeText(ReferenciasAlta_dos.this, "Error al consultar el codigo postal: " + responsecodigoPostal.response.codigo + " - " + responsecodigoPostal.response.mensaje, Toast.LENGTH_SHORT).show();
-
-
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(ReferenciasAlta_dos.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
 
             }

@@ -1,8 +1,12 @@
 package com.amextra.cartera;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,21 +14,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.io.ApiAdapter;
 import com.amextra.io.Response.InfoUSer;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponseSolicitudesCreditoCliente;
 import com.amextra.io.Response.SolicitudesCredito;
 import com.amextra.utils.ListAdapterSolicitudesCredito;
-import com.amextra.utils.ListaClienteAdapter;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -104,6 +107,21 @@ public class SolicitudesCreditoCliente extends AppCompatActivity {
                             pintaSolicitudes(infoSolicitudes.data.solicitudes);
                     }
 
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(SolicitudesCreditoCliente.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(SolicitudesCreditoCliente.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

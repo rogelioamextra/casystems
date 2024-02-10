@@ -1,5 +1,8 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -7,20 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
 import com.amextra.dialogs.MenuHeader;
@@ -37,7 +35,6 @@ import com.amextra.io.Response.Geolocalizacion;
 import com.amextra.io.Response.ID;
 import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.Municipio;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.io.Response.ResponseTiemposActualesEmpleo;
 import com.amextra.io.Response.ResponsecodigoPostal;
 import com.amextra.io.Response.ResponsecoloniaPorMunicipio;
@@ -50,6 +47,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -230,6 +228,22 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
                         }
                     });
                 }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+
+                    new SweetAlertDialog(DatosClienteLab.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosClienteLab.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
             }
 
             @Override
@@ -250,81 +264,100 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
             @Override
             public void onResponse(Call<ResponsecodigoPostal> call, Response<ResponsecodigoPostal> response) {
                 int code = response.code();
-                ResponsecodigoPostal responsecodigoPostal = response.body();
-                if (response.isSuccessful() && code == 200 &&
-                        responsecodigoPostal.response.codigo == 200) {
 
-                    ColoniasLista[] coloniasListas = responsecodigoPostal.data.infoCodigoPostal.coloniasLista;
-                    EstadoID estado = responsecodigoPostal.data.infoCodigoPostal.estadoId;
-                    ID municipio = responsecodigoPostal.data.infoCodigoPostal.municipioId;
+                if (response.isSuccessful() && code == 200) {
 
+                    ResponsecodigoPostal responsecodigoPostal = response.body();
 
-                    ArrayList<String> listColonias = new ArrayList<>();
-                    ArrayList<String> listIdsColonias = new ArrayList<>();
-                    ArrayList<String> listIdsEstados = new ArrayList<>();
-                    ArrayList<String> listEstados = new ArrayList<>();
-                    ArrayList<String> listMunicipios = new ArrayList<>();
-                    ArrayList<String> listIdsMunicipios = new ArrayList<>();
+                    if (responsecodigoPostal.response.codigo == 200) {
 
-                    listEstados.add(estado.nombre.toUpperCase());
-                    listIdsEstados.add(String.valueOf(estado.codigoEstado));
+                        ColoniasLista[] coloniasListas = responsecodigoPostal.data.infoCodigoPostal.coloniasLista;
+                        EstadoID estado = responsecodigoPostal.data.infoCodigoPostal.estadoId;
+                        ID municipio = responsecodigoPostal.data.infoCodigoPostal.municipioId;
 
 
-                    listMunicipios.add(municipio.nombre.toUpperCase());
-                    listIdsMunicipios.add(String.valueOf(municipio.idMunicipio));
-                    idDescCiudad = municipio.idMunicipio;
+                        ArrayList<String> listColonias = new ArrayList<>();
+                        ArrayList<String> listIdsColonias = new ArrayList<>();
+                        ArrayList<String> listIdsEstados = new ArrayList<>();
+                        ArrayList<String> listEstados = new ArrayList<>();
+                        ArrayList<String> listMunicipios = new ArrayList<>();
+                        ArrayList<String> listIdsMunicipios = new ArrayList<>();
+
+                        listEstados.add(estado.nombre.toUpperCase());
+                        listIdsEstados.add(String.valueOf(estado.codigoEstado));
+
+                        listMunicipios.add(municipio.nombre.toUpperCase());
+                        listIdsMunicipios.add(String.valueOf(municipio.idMunicipio));
+                        idDescCiudad = municipio.idMunicipio;
 
 
-                    for (ColoniasLista colonia : coloniasListas) {
-                        listColonias.add(colonia.nombre.toUpperCase());
-                        listIdsColonias.add(String.valueOf(colonia.idColonia));
-                    }
-
-                    if(existeInfo){
-                        Long idColonia = requestInsertClient.data.datosLaborales.direccion.coloniaId;
                         for (ColoniasLista colonia : coloniasListas) {
-                            if(idColonia == colonia.idColonia){
-                                spinnTxtColonia.setText(colonia.nombre.toUpperCase());
-                                idDescColonia = idColonia;
-                                break;
+                            listColonias.add(colonia.nombre.toUpperCase());
+                            listIdsColonias.add(String.valueOf(colonia.idColonia));
+                        }
+
+                        if (existeInfo) {
+                            Long idColonia = requestInsertClient.data.datosLaborales.direccion.coloniaId;
+                            for (ColoniasLista colonia : coloniasListas) {
+                                if (idColonia == colonia.idColonia) {
+                                    spinnTxtColonia.setText(colonia.nombre.toUpperCase());
+                                    idDescColonia = idColonia;
+                                    break;
+                                }
                             }
                         }
+                        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(DatosClienteLab.this, android.R.layout.simple_spinner_dropdown_item, listColonias);
+                        spinnTxtColonia.setAdapter(spinnerArrayAdapter);
+                        spinnTxtColonia.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                idDescColonia = Long.parseLong(listIdsColonias.get(position));
+                            }
+                        });
+                        ArrayAdapter<String> spAdaptMunici = new ArrayAdapter<String>(DatosClienteLab.this, android.R.layout.simple_spinner_dropdown_item, listMunicipios);
+                        spinTxtMunicipio.setAdapter(spAdaptMunici);
+                        spinTxtMunicipio.setText(listMunicipios.get(0));
+                        idDescMunicipio = Long.parseLong(listIdsMunicipios.get(0));
+                        spinTxtMunicipio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                idDescMunicipio = Long.parseLong(listIdsMunicipios.get(position));
+                            }
+                        });
+
+                        ArrayAdapter<String> spAdaptEstado = new ArrayAdapter<String>(DatosClienteLab.this, android.R.layout.simple_spinner_dropdown_item, listEstados);
+                        spinnTxtEstado.setAdapter(spAdaptEstado);
+                        spinnTxtEstado.setText(listEstados.get(0));
+                        idDescEstado = listIdsEstados.get(0);
+                        spinnTxtEstado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                idDescEstado = listIdsEstados.get(position);
+                            }
+                        });
+                        dialogFragment.dismiss();
+                    } else {
+                        dialogFragment.dismiss();
+                        Toast.makeText(DatosClienteLab.this, "Error al consultar el codigo postal: " + responsecodigoPostal.response.codigo + " - " + responsecodigoPostal.response.mensaje, Toast.LENGTH_SHORT).show();
+
                     }
-                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(DatosClienteLab.this, android.R.layout.simple_spinner_dropdown_item, listColonias);
-                    spinnTxtColonia.setAdapter(spinnerArrayAdapter);
-                    spinnTxtColonia.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            idDescColonia = Long.parseLong(listIdsColonias.get(position));
-                        }
-                    });
-                    ArrayAdapter<String> spAdaptMunici = new ArrayAdapter<String>(DatosClienteLab.this, android.R.layout.simple_spinner_dropdown_item, listMunicipios);
-                    spinTxtMunicipio.setAdapter(spAdaptMunici);
-                    spinTxtMunicipio.setText(listMunicipios.get(0));
-                    idDescMunicipio = Long.parseLong(listIdsMunicipios.get(0));
-                    spinTxtMunicipio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            idDescMunicipio = Long.parseLong(listIdsMunicipios.get(position));
-                        }
-                    });
-
-                    ArrayAdapter<String> spAdaptEstado = new ArrayAdapter<String>(DatosClienteLab.this, android.R.layout.simple_spinner_dropdown_item, listEstados);
-                    spinnTxtEstado.setAdapter(spAdaptEstado);
-                    spinnTxtEstado.setText(listEstados.get(0));
-                    idDescEstado = listIdsEstados.get(0);
-                    spinnTxtEstado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            idDescEstado = listIdsEstados.get(position);
-                        }
-                    });
-                    dialogFragment.dismiss();
-                } else {
-                    dialogFragment.dismiss();
-                    Toast.makeText(DatosClienteLab.this, "Error al consultar el codigo postal: " + responsecodigoPostal.response.codigo + " - " + responsecodigoPostal.response.mensaje, Toast.LENGTH_SHORT).show();
-
                 }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosClienteLab.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosClienteLab.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
+
             }
 
             @Override
@@ -456,6 +489,21 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
                     } else {
 
                     }
+                }
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosClienteLab.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosClienteLab.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
                 }
             }
 

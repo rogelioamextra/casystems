@@ -1,12 +1,14 @@
 package com.amextra.AltaEdicionCliente;
 
+import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -15,11 +17,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import com.amextra.MainActivity;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuInformacionCliente;
@@ -35,7 +34,6 @@ import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseCaracteristicasNegocios;
 import com.amextra.io.Response.ResponseGetCliente;
 import com.amextra.io.Response.ResponseGirosNegocios;
-import com.amextra.io.Response.ResponseLogin;
 import com.amextra.utils.ConverterReqClient;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputEditText;
@@ -45,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -251,18 +250,33 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
 
                         }
                     }
+
+                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(DatosClienteLaborales.this, android.R.layout.simple_spinner_dropdown_item, listCarateristicas);
+                    spinTxtEmpresaNegocio.setAdapter(spinnerArrayAdapter);
+                    spinTxtEmpresaNegocio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            idDescEmpresa = idsGiro.get(position);
+
+                        }
+                    });
                 }
 
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosClienteLaborales.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosClienteLaborales.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
 
-                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(DatosClienteLaborales.this, android.R.layout.simple_spinner_dropdown_item, listCarateristicas);
-                spinTxtEmpresaNegocio.setAdapter(spinnerArrayAdapter);
-                spinTxtEmpresaNegocio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        idDescEmpresa = idsGiro.get(position);
-
-                    }
-                });
 
             }
 
@@ -300,15 +314,31 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
 
                         }
                     }
+
+                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(DatosClienteLaborales.this, android.R.layout.simple_spinner_dropdown_item, listaGirosNegocio);
+                    spinGiroEmpresaNegocio.setAdapter(spinnerArrayAdapter);
+                    spinGiroEmpresaNegocio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            idDescGiroEmpresaNegocio = Long.parseLong(IDNegocio.get(position));
+                        }
+                    });
                 }
-                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(DatosClienteLaborales.this, android.R.layout.simple_spinner_dropdown_item, listaGirosNegocio);
-                spinGiroEmpresaNegocio.setAdapter(spinnerArrayAdapter);
-                spinGiroEmpresaNegocio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        idDescGiroEmpresaNegocio = Long.parseLong(IDNegocio.get(position));
-                    }
-                });
+
+                else {
+                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
+                    new SweetAlertDialog(DatosClienteLaborales.this,SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Error")
+                            .setContentText(alertText)
+                            .setConfirmText("Continuar")
+                            .setConfirmClickListener(sweetAlertDialog -> {
+                                finish();
+                                Intent login = new Intent(DatosClienteLaborales.this, MainActivity.class);
+                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                startActivity(login);
+                            })
+                            .show();
+                }
 
             }
 
