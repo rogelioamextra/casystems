@@ -30,6 +30,8 @@ public class InfoUsuarioDTO implements Serializable {
     private String nombreUsuario;
     @JsonProperty("username")
     private String username;
+    @JsonProperty("email")
+    private String email;
     @JsonProperty("usuarioId")
     private String usuarioId;
     @JsonProperty("token")
@@ -117,11 +119,13 @@ public class InfoUsuarioDTO implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
-    
-    
-    
-    
-    
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 }

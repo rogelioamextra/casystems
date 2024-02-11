@@ -62,10 +62,6 @@ public class SimpleRepository {
     @Transactional
     public <T> T findByID(Class<T> type, Long id) {
         try {
-//            ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-//                    .getGenericSuperclass();
-//            Class<T> entityClass = (Class<T>) genericSuperclass
-//                    .getActualTypeArguments()[0];
             return (T) getSession().get(type.getName(), id);
         } catch (Exception e) {
             logger.error(e);
@@ -77,10 +73,6 @@ public class SimpleRepository {
     @Transactional
     public <T> T findByID(Class<T> type, Integer id) {
         try {
-//            ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-//                    .getGenericSuperclass();
-//            Class<T> entityClass = (Class<T>) genericSuperclass
-//                    .getActualTypeArguments()[0];
             return (T) getSession().get(type.getName(), id);
         } catch (Exception e) {
             logger.error(e);
@@ -92,10 +84,6 @@ public class SimpleRepository {
     @Transactional
     public <T> T findByID(Class<T> type, String id) {
         try {
-//            ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-//                    .getGenericSuperclass();
-//            Class<T> entityClass = (Class<T>) genericSuperclass
-//                    .getActualTypeArguments()[0];
             return (T) getSession().get(type.getName(), id);
         } catch (Exception e) {
             logger.error(e);
@@ -115,10 +103,7 @@ public class SimpleRepository {
 
                 return (List<T>) getSession().createQuery("SELECT entity FROM " + type.getName() + " entity  ").list();
             }
-//
-//            ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-//            Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-//            return (List<T>) getSession().createQuery("SELECT entity FROM " + entityClass.getSimpleName() + " entity").list();
+
         } catch (Exception e) {
             logger.error(e);
         }
@@ -129,13 +114,8 @@ public class SimpleRepository {
     @Transactional
     public <T> List<T> findAll(Class<T> type) {
         try {
-
             return (List<T>) getSession().createQuery("SELECT entity FROM " + type.getName() + " entity  ").list();
 
-//
-//            ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-//            Class<T> entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-//            return (List<T>) getSession().createQuery("SELECT entity FROM " + entityClass.getSimpleName() + " entity").list();
         } catch (Exception e) {
             logger.error(e);
         }

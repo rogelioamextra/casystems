@@ -54,4 +54,10 @@ public class CatUsuariosServiceImpl implements CatUsuariosService {
     public List<CatUsuarios> consultaUsuariosXEmpresa(boolean activos, Long idempresa) {
         return usuariosRepository.consultaUsuariosXEmpresa(activos, idempresa);
     }
+
+    @Override
+    public CatUsuarios searchByEmail(String email) {
+        return usuariosRepository.searchByEmail(email);
+    }   
+    
 }

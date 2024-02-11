@@ -6,12 +6,9 @@
 package com.mx.ca.viu.repositorys.impl;
 
 import com.mx.ca.viu.modelos.CatUsuarios;
-import com.mx.ca.viu.modelos.DtConfiguracionEmpresas;
 import com.mx.ca.viu.repositorys.CatUsuariosRepository;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("catUsuariosRepository")
 public class CatUsuariosRepositoryImpl extends SimpleRepository implements CatUsuariosRepository {
-
-    private static final Logger logger = LogManager.getLogger(CatUsuariosRepositoryImpl.class.getName());
 
     @Override
     @Transactional
@@ -55,8 +50,7 @@ public class CatUsuariosRepositoryImpl extends SimpleRepository implements CatUs
             logger.fatal("Error en persistencia(actualizarContrasena): ", e);
         }
         return respuesta;
-    }
-  
+    }  
 
     @Override
     @Transactional
@@ -143,22 +137,21 @@ public class CatUsuariosRepositoryImpl extends SimpleRepository implements CatUs
         return respuesta;     
     }
     
-    /*
     @Override
     @Transactional
-    public List<DtConfiguracionEmpresas> consultaUsuariosXEmpresa(boolean activos,Long idempresa) {
-        List<DtConfiguracionEmpresas> respuesta = new ArrayList<>();
+    public CatUsuarios searchByEmail(String email) {
+        CatUsuarios usuario = null;
+        
         try {
-            if (activos) {
-                respuesta = (List<DtConfiguracionEmpresas>) getSession().createQuery("select r from DtConfiguracionEmpresas r where r.idEmpresa.idEmpresas =:empresa").setParameter("empresa", idempresa).list();
-
-            } else {
-                respuesta = (List<DtConfiguracionEmpresas>) getSession().createQuery("select r from DtConfiguracionEmpresas r where r.idEmpresa.idEmpresas=:empresa").setParameter("empresa", idempresa).list();
-            }
-        } catch (Exception e) {
-            logger.error(e);
+            usuario = (CatUsuarios) getSession().createQuery("SELECT r from CatUsuarios r WHERE r.idPersona.email = :email").setParameter("email", email).uniqueResult();
+        } 
+        
+        catch (Exception e) {
+            logger.info("email: {} not found", email);
         }
-        return respuesta;     
+        
+        return usuario;
+        
     }
-    */
+    
 }

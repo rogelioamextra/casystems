@@ -12,18 +12,14 @@ import com.mx.ca.viu.modelos.CatUsuarios;
 import com.mx.ca.viu.modelos.dtos.generico.InfoUsuarioDTO;
 import com.mx.ca.viu.modelos.dtos.generico.infoProducto;
 import com.mx.ca.viu.modelos.dtos.request.LoginEntrarRequest;
+import com.mx.ca.viu.modelos.dtos.request.RecuperaPassRequest;
 import com.mx.ca.viu.modelos.dtos.response.LoginEntrarResponse;
-import com.mx.ca.viu.services.CatCamposService;
-import com.mx.ca.viu.services.CatCategoriasCamposService;
-import com.mx.ca.viu.services.CatDocumentosService;
-import com.mx.ca.viu.services.CatEnrolamientoService;
+import com.mx.ca.viu.modelos.dtos.response.RecuperaPassResponse;
 import com.mx.ca.viu.services.CatProductosService;
 import com.mx.ca.viu.services.CatUsuariosService;
-import com.mx.ca.viu.services.MvConfigMensajesService;
-import com.mx.ca.viu.services.MvConfigRiesgoService;
-import com.mx.ca.viu.services.MvConfigSolicitudesService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,31 +39,13 @@ public class ControllerServicioLogin {
     CatProductosService catProductosService;
     private List<CatUsuarios> empresa;
     private InfoUsuarioDTO usuario;
-    private infoProducto producto;
-    
-    private List<CatProductos> listaProductos;
-    
-    @Autowired
-    MvConfigSolicitudesService mvConfigSolicitudesService;
-    @Autowired
-    CatEnrolamientoService catEnrolamientoService;
-    @Autowired
-    CatCategoriasCamposService catCategoriasCamposService;
-    @Autowired
-    CatCamposService catCamposService;
-    @Autowired
-    CatDocumentosService catDocumentosService;
-    @Autowired
-    MvConfigRiesgoService mvConfigRiesgoService;
-    @Autowired
-    MvConfigMensajesService mvConfigMensajesService;
+    private infoProducto producto;    
+    private List<CatProductos> listaProductos;    
     
     @Autowired
     private JwtUtil jwtUtil;
     
     @PostMapping(path = "/login/entrar", consumes = "application/json", produces = "application/json")
-    //@PostMapping
-    //@PostMapping("login")
     @ResponseBody
     public LoginEntrarResponse login(@RequestBody LoginEntrarRequest request) {
         LoginEntrarResponse response = new LoginEntrarResponse();
@@ -105,6 +83,8 @@ public class ControllerServicioLogin {
                 
                 usuario.setUsername(empresa.get(0).getUsername());
                 
+                usuario.setEmail(empresa.get(0).getIdPersona().getEmail());
+                
                 response.getData().setInfoUSer(usuario);
                 //response.getData().setInfoProductos(aux);
                 response.getResponse().setCodigo(200);
@@ -117,6 +97,46 @@ public class ControllerServicioLogin {
         }
         return response;
     }
+    
+    @PostMapping(path = "/login/recuperapass", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public RecuperaPassResponse recuperaPass(@RequestBody RecuperaPassRequest request) {
+        RecuperaPassResponse response = new RecuperaPassResponse();
+        
+        try {
+            CatUsuarios catUsuario = catUsuariosService.searchByEmail(request.getData().getEmail());
+            
+            if (Objects.isNull(catUsuario)) {
+                response.getResponse().setCodigo(400);
+                response.getResponse().setMensaje("Correo electrónico no encontrado");
+                response.setData(null);
+            }
+            
+            else {
+                usuario = new InfoUsuarioDTO();
+                usuario.setUsuarioId(String.valueOf(catUsuario.getIdUsuario()));
+                usuario.setNombreUsuario(catUsuario.getUsername());
+                usuario.setEmail(catUsuario.getIdPersona().getEmail());                
+                
+                response.getData().setInfoUser(usuario);
+                response.getResponse().setCodigo(200);
+                response.getResponse().setMensaje("OK");
+            }           
+            
+        }
+        
+        catch (Exception e) {
+            response.getResponse().setCodigo(500);
+            response.getResponse().setMensaje(e.toString());
+            response.setData(null);
+            
+            
+        }
+        
+        return response;
+        
+    }
+    
     
     public InfoUsuarioDTO getUsuario() {
         return usuario;

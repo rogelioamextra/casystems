@@ -87,8 +87,6 @@ public interface ApiService {
     @GET("/clientes/validaciontelefono/{phone}")
     Call<ResValidaTelefono> validaNumeroTelfono(@Path("phone")String telefono);
 
-
-
     //--------- CATALOGOS --------->
     @GET("/catalogos/gradosEscolares")
     Call<ResponseCatalogoGradosEscolares> gradosEscolares();

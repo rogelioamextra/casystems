@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter implements GatewayFilter {
 //        final List<String> apiEndpoints = List.of("/entrar");
         List<String> apiEndpoints = new ArrayList<>();
         apiEndpoints.add("/entrar");
+        apiEndpoints.add("/recuperapass");
 
         Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));

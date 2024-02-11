@@ -20,4 +20,5 @@ public interface CatUsuariosService {
     public List<CatUsuarios> buscarNombre(String nombre, Long id);
     public List<CatUsuarios> buscarUsuario(String usuario, String pass);
     public List<CatUsuarios> consultaUsuariosXEmpresa(boolean activos,Long idempresa);
+    public CatUsuarios searchByEmail(String email);
 }
