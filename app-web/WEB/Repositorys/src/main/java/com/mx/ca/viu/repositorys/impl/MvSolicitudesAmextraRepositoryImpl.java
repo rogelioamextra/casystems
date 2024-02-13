@@ -41,7 +41,7 @@ public class MvSolicitudesAmextraRepositoryImpl extends SimpleRepository impleme
         List<MvSolicitudesAmextra> resultado=null;
 
         try {
-            resultado=(List<MvSolicitudesAmextra>)getSession().createQuery("SELECT sol  FROM MvSolicitudesAmextra sol inner join sol.idCliente cli where cli.idCliente = :id and sol.idEstatus.idEstatus in (1,3)  ").setParameter("id", id).list();
+            resultado=(List<MvSolicitudesAmextra>)getSession().createQuery("SELECT sol  FROM MvSolicitudesAmextra sol inner join sol.idCliente cli where cli.idCliente = :id and sol.idEstatus.idEstatus in (3)  ").setParameter("id", id).list();
         } catch (Exception e) {
                 logger.error(e);
         }

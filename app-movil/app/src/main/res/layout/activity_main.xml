@@ -44,7 +44,6 @@
         app:layout_constraintTop_toBottomOf="@id/img_view_amextraLogo" />
 
     <EditText
-        android:text="rzavaleta"
         android:id="@+id/texInputEmail"
         android:layout_width="320dp"
         android:layout_height="48dp"
@@ -68,7 +67,6 @@
         app:layout_constraintTop_toBottomOf="@id/img_view_nous_logo" />
 
     <EditText
-        android:text="123"
         android:id="@+id/texInputPassword"
         android:layout_width="320dp"
         android:layout_height="48dp"
@@ -95,11 +93,12 @@
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:autoSizeTextType="uniform"
         android:text="Olvide mi contraseña"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:padding="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/texInputPassword" />

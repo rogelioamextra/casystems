@@ -267,7 +267,7 @@ public class ControllerTablero extends UtilServicios implements Serializable {
     public void guardarCambioEstatus() {
 
         cambioEstatus.setFechaAprobacion(UtilGenerico.obtenerHoraMexico());
-        if (genericoService.guardar(cambioEstatus)) {
+        if (genericoService.update(cambioEstatus)) {
             WebGenerico.menajeInformativo("La solicitud se guardo correctamente");
         }
     }

@@ -153,5 +153,21 @@ public class CatUsuariosRepositoryImpl extends SimpleRepository implements CatUs
         return usuario;
         
     }
+
+    @Override
+    @Transactional
+    public CatUsuarios findById(Long id) {
+        CatUsuarios usuario = null;
+        
+        try {
+            usuario = (CatUsuarios) getSession().createQuery("SELECT r from CatUsuarios r WHERE r.idUsuario = :idUsuario").setParameter("idUsuario", id).uniqueResult();
+        } 
+        
+        catch (Exception e) {
+            logger.info("idUsuario: {} not found", id);
+        }
+        
+        return usuario;
+    }
     
 }

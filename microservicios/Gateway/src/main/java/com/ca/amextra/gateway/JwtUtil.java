@@ -6,7 +6,6 @@ package com.ca.amextra.gateway;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -20,15 +19,15 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtUtil {
 
-    private String jwtSecret = "4m3xtr42023";
+    private final String jwtSecret = "4m3xtr42023";
 
-    private long tokenValidity = 1800000L;
+    private final long tokenValidity = 1800000L;
 
     public Claims getClaims(final String token) {
         try {
             Claims body = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
             return body;
-        } catch (Exception e) {
+        } catch (ExpiredJwtException | MalformedJwtException | SignatureException | UnsupportedJwtException | IllegalArgumentException e) {
             System.out.println(e.getMessage() + " => " + e);
         }
         return null;

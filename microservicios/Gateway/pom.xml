@@ -27,14 +27,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-                
-        <!--                   <dependency>
-            <groupId>com.mx.ca.viu</groupId>
-            <artifactId>Commons</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>-->
-        
+        </dependency>        
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>

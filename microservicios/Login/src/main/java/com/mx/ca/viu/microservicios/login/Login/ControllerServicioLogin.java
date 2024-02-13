@@ -11,10 +11,12 @@ import com.mx.ca.viu.modelos.CatProductos;
 import com.mx.ca.viu.modelos.CatUsuarios;
 import com.mx.ca.viu.modelos.dtos.generico.InfoUsuarioDTO;
 import com.mx.ca.viu.modelos.dtos.generico.infoProducto;
+import com.mx.ca.viu.modelos.dtos.request.ActualizaPassRequest;
+import com.mx.ca.viu.modelos.dtos.request.ExistePassRequest;
 import com.mx.ca.viu.modelos.dtos.request.LoginEntrarRequest;
-import com.mx.ca.viu.modelos.dtos.request.RecuperaPassRequest;
+import com.mx.ca.viu.modelos.dtos.response.ActualizaPassResponse;
+import com.mx.ca.viu.modelos.dtos.response.ExistePassResponse;
 import com.mx.ca.viu.modelos.dtos.response.LoginEntrarResponse;
-import com.mx.ca.viu.modelos.dtos.response.RecuperaPassResponse;
 import com.mx.ca.viu.services.CatProductosService;
 import com.mx.ca.viu.services.CatUsuariosService;
 import java.util.ArrayList;
@@ -35,12 +37,17 @@ public class ControllerServicioLogin {
     
     @Autowired
     CatUsuariosService catUsuariosService;
+    
     @Autowired
     CatProductosService catProductosService;
+    
     private List<CatUsuarios> empresa;
+    
     private InfoUsuarioDTO usuario;
+    
     private infoProducto producto;    
-    private List<CatProductos> listaProductos;    
+    
+    private List<CatProductos> listaProductos;        
     
     @Autowired
     private JwtUtil jwtUtil;
@@ -98,44 +105,60 @@ public class ControllerServicioLogin {
         return response;
     }
     
-    @PostMapping(path = "/login/recuperapass", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/login/existecorreo", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public RecuperaPassResponse recuperaPass(@RequestBody RecuperaPassRequest request) {
-        RecuperaPassResponse response = new RecuperaPassResponse();
+    public ExistePassResponse existeCorreo (@RequestBody ExistePassRequest request) {
+        ExistePassResponse response = new ExistePassResponse();
         
-        try {
-            CatUsuarios catUsuario = catUsuariosService.searchByEmail(request.getData().getEmail());
-            
-            if (Objects.isNull(catUsuario)) {
-                response.getResponse().setCodigo(400);
-                response.getResponse().setMensaje("Correo electrónico no encontrado");
-                response.setData(null);
-            }
-            
-            else {
-                usuario = new InfoUsuarioDTO();
-                usuario.setUsuarioId(String.valueOf(catUsuario.getIdUsuario()));
-                usuario.setNombreUsuario(catUsuario.getUsername());
-                usuario.setEmail(catUsuario.getIdPersona().getEmail());                
-                
-                response.getData().setInfoUser(usuario);
-                response.getResponse().setCodigo(200);
-                response.getResponse().setMensaje("OK");
-            }           
-            
+        CatUsuarios catUsuario = catUsuariosService.searchByEmail(request.getData().getEmail());
+        
+        if (Objects.isNull(catUsuario)) {
+            response.getResponse().setCodigo(404);
+            response.getResponse().setMensaje("Correo no encontrado");
+            response.setData(null);
         }
         
-        catch (Exception e) {
-            response.getResponse().setCodigo(500);
-            response.getResponse().setMensaje(e.toString());
-            response.setData(null);
-            
-            
+        else {
+            response.getResponse().setCodigo(200);
+            response.getResponse().setMensaje("OK");            
+            response.getData().setIdUsuario(String.valueOf(catUsuario.getIdUsuario()));
+            response.getData().setEmail(catUsuario.getIdPersona().getEmail());
+            response.getData().setNombreUsuario(catUsuario.getIdPersona().getNombres());
+            response.getData().setToken(jwtUtil.generateToken(catUsuario.getIdUsuario().toString()));
         }
         
         return response;
-        
     }
+    
+    @PostMapping(path = "/login/actualizapass", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ActualizaPassResponse actualizaPass (@RequestBody ActualizaPassRequest request) {
+        ActualizaPassResponse response = new ActualizaPassResponse();
+        
+        Long idUsuario = Long.valueOf(request.getData().getIdUsuario().trim());
+        String email = request.getData().getEmail().trim();
+        String newPass = request.getData().getNewPass();
+        String newPassEncriptado = UtilGenerico.Encriptar(newPass);
+        
+        CatUsuarios catUsuario = catUsuariosService.findById(idUsuario);
+        
+        if (Objects.equals(catUsuario.getIdUsuario(), idUsuario) && Objects.equals(catUsuario.getIdPersona().getEmail(), email)) {
+            catUsuariosService.actualizarContrasena(catUsuario.getUsername(), newPassEncriptado);
+            response.getResponse().setCodigo(200);
+            response.getResponse().setMensaje("Contraseña actualizada correctamente, inicia sesión con tu nueva contraseña");
+            response.getData().setEmail(email);
+            response.getData().setNombreUsuario(catUsuario.getIdPersona().getNombres());
+        }
+        
+        else {
+            response.getResponse().setCodigo(500);
+            response.getResponse().setMensaje("Ocurrió un error, por favor vuelva a intentarlo");
+            response.setData(null);
+        }
+        
+       return response;
+    }
+    
     
     
     public InfoUsuarioDTO getUsuario() {

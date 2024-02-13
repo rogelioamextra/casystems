@@ -59,5 +59,10 @@ public class CatUsuariosServiceImpl implements CatUsuariosService {
     public CatUsuarios searchByEmail(String email) {
         return usuariosRepository.searchByEmail(email);
     }   
+
+    @Override
+    public CatUsuarios findById(Long id) {
+        return usuariosRepository.findById(id);
+    }
     
 }
