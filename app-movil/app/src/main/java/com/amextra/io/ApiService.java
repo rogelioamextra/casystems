@@ -57,37 +57,26 @@ public interface ApiService {
 
     @GET("/clientes")
     Call<ResponseGetClientes> getListClientes();
-
     @GET("/catalogos/avisos")
     Call<ResponseAvisos> avisos();
-
     @POST("/login/entrar")
     Call<ResponseLogin> postIniciaSesion(@Body RequestLogin requestLogin);
     @GET("/clientes/{id}")
     Call<ResponseGetCliente> getCliente(@Path("id") String id);
-
-
     @GET("/clientes/imagenescliente/{id}")
     Call<ResponseImagesCte> getImagesClient(@Path("id") String id);
-
     @GET("/clientes/curp/{curp}")
     Call<ResponseCurpClienteSolicitud> getCurpClienteSolicitud(@Path("curp") String curp);
     @POST("/clientes")
     Call<ResponseGetClientes> generaAltaCliente(@Body RequestInsertClient resquestAltaCliente);
-
     @PUT("/clientes")
     Call<ResponseGetClientes> actualizaCliente(@Body RequestInsertClient resquestAltaCliente);
-
     @GET("/solicitud/cliente/{id}")
     Call<ResponseSolicitudesCreditoCliente> solicitudesCreditoCliente(@Path("id") String id);
-
     @GET("/clientes/asesor/{id}")
     Call<ResponseGetClientes> getClientesAsesor(@Path("id") String id);
-
     @GET("/clientes/validaciontelefono/{phone}")
     Call<ResValidaTelefono> validaNumeroTelfono(@Path("phone")String telefono);
-
-
 
     //--------- CATALOGOS --------->
     @GET("/catalogos/gradosEscolares")
@@ -114,16 +103,11 @@ public interface ApiService {
     Call<ResponseValidaSMS> validaSMS(@Body RequestValidaSMS requestValidaSMS);
     @POST("/ocr/ine/")
     Call<ResponseValidaIne> validaIne(@Body RequestvalidaIne requestvalidaIne);
-
-
     @POST("/ocr/reconocimientofacial")
     Call<ResponseValidaIne> pruebaVida(@Body ReqReconocimiento reqReconocimiento);
     @GET("/catalogos/estados") Call<Responseestados> estados();
-
     @GET("/catalogos/municipiosPorEstado/{id}") Call<ResponsemunicipiosPorEstado> municipiosPorEstado(@Path("id") String id);
-
     @GET("/catalogos/ciudadPorEstado/{id}") Call<ResponseciudadPorEstado> ciudadPorEstado(@Path("id") String id);
-
     @GET("/catalogos/coloniaPorMunicipio/{id}") Call<ResponsecoloniaPorMunicipio> coloniaPorMunicipio(@Path("id") String id);
     @GET("/catalogos/codigoPostal/{id}")
     Call<ResponsecodigoPostal> codigoPostal(@Path("id") String id);
@@ -139,18 +123,15 @@ public interface ApiService {
     Call<ResponseDestinoCredito> destinoCreditos();
     @POST("/solicitud/proyeccion")
     Call<ResponseSolicitudProyeccion> solicitudProyeccion(@Body RequestProyeccion requestProyeccion);
-
     @POST("/solicitud/")
     Call<ResponseAddSolicitudCredito> addSolicitudCredito(@Body RequestSolicitudCredito requestSolicitudCredito);
     @GET("/catalogos/patrimonios")
     Call<ResponsePatrimonios> patrimonios();
 
-
-    /*OTROS*/
+    //--------- AGENDA --------->
     @POST("/agenda/pendientes/asesorfecha/")
     Call<ResponseAgenda> agendaPendientes(@Body RequestCitasEmpleado requestCitasEmpleado);
-
-
     @POST("/agenda/registrarAsitencia/")
     Call<ResponseAgenda> confirmaAsistencia(@Body RequestRegistraAsistencia registraAsistencia);
+
 }

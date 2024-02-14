@@ -78,7 +78,6 @@ public class SolicitudDeCredito extends AppCompatActivity {
     int montoC;
     boolean esRecompra;
     String curpCliente;
-
     boolean smsValidado = true;
     int MAX_SOLCITUD = 200000;
     String N_REQ_SOL_CRED = "REQSOLCRED";
@@ -90,11 +89,9 @@ public class SolicitudDeCredito extends AppCompatActivity {
     final MenuHeader menuHeader = new MenuHeader();
     final androidx.fragment.app.FragmentTransaction mFragmentHeaderTransac = mFragmentManH.beginTransaction();
     InfoUSer responseLogIn = new InfoUSer();
-
     String INFO_USER = "infoLogIn";
-    private EditText et;
-
     TextInputLayout layOutTeditTxtFechaSolicitud, layoutPlazo, layoutFrecuencia, layOutDestinoCredito, layOutProductosCredito, layOutTxtCurp;
+    private boolean isAproboVerificacionSms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,7 +203,9 @@ public class SolicitudDeCredito extends AppCompatActivity {
                         nombreCliente.setText(datos.data.nombres.toUpperCase() + " " + datos.data.apellidoPaterno.toUpperCase() + " " + datos.data.apellidoMaterno.toUpperCase());
                         noCliente.setText(String.valueOf(datos.data.idCliente));
 
-                        if (!datos.data.isAproboVerificacionSms()) {
+                        isAproboVerificacionSms = datos.data.isAproboVerificacionSms();
+
+                        if (!isAproboVerificacionSms) {
                             validaSmsBtn.setVisibility(View.VISIBLE);
 
                             validaSmsBtn.setOnClickListener(v -> {
@@ -661,12 +660,22 @@ public class SolicitudDeCredito extends AppCompatActivity {
     private void realizaProyeccion() {
 
         siguiente.setOnClickListener(v -> {
-            String n = nombreCliente.getText().toString();
-            String c = noCliente.getText().toString();
-            Intent solicitudCreditoScreenIntent = new Intent(SolicitudDeCredito.this, ProyeccionCuotas.class);
-            Bundle sender = new Bundle();
+
+            if (!isAproboVerificacionSms) {
+                new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.WARNING_TYPE)
+                        .setContentText("Para continuar es necesario validar  el código SMS del cliente")
+                        .setTitleText("Advertencia")
+                        .show();
+                return;
+            }
 
             if (validaInfo()) {
+
+                String n = nombreCliente.getText().toString();
+                String c = noCliente.getText().toString();
+                Intent solicitudCreditoScreenIntent = new Intent(SolicitudDeCredito.this, ProyeccionCuotas.class);
+                Bundle sender = new Bundle();
+
                 capturaDatos();
                 sender.putSerializable(N_REQ_PROYEC, requestProyeccion);
                 sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
