@@ -13,9 +13,9 @@
             <h2>Administracion de Clientes</h2>
             <br/>
 
-<!--            <h:panelGroup>
-                <cmp:botonAgregarNuevo actionAgregar="# {controller.cambiaPaginaNuevo()}"/>
-            </h:panelGroup>-->
+            <!--            <h:panelGroup>
+                            <cmp:botonAgregarNuevo actionAgregar="# {controller.cambiaPaginaNuevo()}"/>
+                        </h:panelGroup>-->
 
 
             <h:panelGroup id="resultado">
@@ -40,14 +40,19 @@
                         <p:outputLabel value="#{usuarios.idPersona.nombres } #{usuarios.idPersona.apellidoPaterno } #{usuarios.idPersona.apellidoMaterno }"/>
                     </p:column>
 
-
                     <p:column headerText="#{msg['viu.generico.estatus']}" styleClass="centrado"  filterMatchMode="contains" 
                               filterBy="#{usuarios.status ?'Activo':'Inactivo'}">
                         <p:outputLabel value="#{usuarios.status?msg['viu.generico.activo']:msg['viu.generico.inactivo']}"/>
                     </p:column>
+                    
                     <p:column headerText="Verificacion sms" styleClass="centrado"  filterMatchMode="contains" 
                               filterBy="#{usuarios.aproboVerificacionSms ?'SI':'NO'}">
                         <p:outputLabel value="#{usuarios.aproboVerificacionSms?'SI':'NO'}"/>
+                    </p:column>
+
+                    <p:column headerText="Verificacion NIP" styleClass="centrado"  filterMatchMode="contains" >
+                        <p:graphicImage style="width: 30px!important;" name="images/amextra/#{usuarios.aproboNip?'ok.jpg':'no.jpg'}"
+                                        library="icarus-layout"  />
                     </p:column>
 
                     <p:column headerText="#{msg['viu.generico.editar']}" styleClass="centrado">
