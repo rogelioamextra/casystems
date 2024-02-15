@@ -45,9 +45,9 @@
                         <p:outputLabel value="#{usuarios.status?msg['viu.generico.activo']:msg['viu.generico.inactivo']}"/>
                     </p:column>
                     
-                    <p:column headerText="Verificacion sms" styleClass="centrado"  filterMatchMode="contains" 
-                              filterBy="#{usuarios.aproboVerificacionSms ?'SI':'NO'}">
-                        <p:outputLabel value="#{usuarios.aproboVerificacionSms?'SI':'NO'}"/>
+                    <p:column headerText="#{msg['viu.tablero.grid.verifSms']}" styleClass="centrado"  filterMatchMode="contains">
+                              <p:graphicImage style="width: 30px!important;" name="images/amextra/#{usuarios.aproboVerificacionSms?'ok.jpg':'no.jpg'}"
+                                            library="icarus-layout"  /> 
                     </p:column>
 
                     <p:column headerText="Verificacion NIP" styleClass="centrado"  filterMatchMode="contains" >
