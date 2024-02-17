@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mx.ca.viu.modelos.dtos.generico.GenericResponse;
 import com.mx.ca.viu.modelos.dtos.generico.InfoUsuarioDTO;
 import com.mx.ca.viu.modelos.dtos.generico.infoMenus;
-import com.mx.ca.viu.modelos.dtos.generico.infoProducto;
 
 import java.io.Serializable;
 import java.util.List;

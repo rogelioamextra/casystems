@@ -30,9 +30,9 @@ public class JwtAuthenticationFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = (ServerHttpRequest) exchange.getRequest();
 
-//        final List<String> apiEndpoints = List.of("/entrar");
         List<String> apiEndpoints = new ArrayList<>();
         apiEndpoints.add("/entrar");
+        apiEndpoints.add("/existecorreo");
 
         Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));
@@ -50,7 +50,6 @@ public class JwtAuthenticationFilter implements GatewayFilter {
             try {
                 jwtUtil.validateToken(token);
             } catch (JwtTokenMalformedException | JwtTokenMissingException e) {
-                e.printStackTrace();
 
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.BAD_REQUEST);
@@ -61,7 +60,6 @@ public class JwtAuthenticationFilter implements GatewayFilter {
             Claims claims = jwtUtil.getClaims(token);
             exchange.getRequest().mutate().header("id", String.valueOf(claims.get("id"))).build();
         }
-
         return chain.filter(exchange);
     }
 

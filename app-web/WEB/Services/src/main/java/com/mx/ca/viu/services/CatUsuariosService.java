@@ -13,6 +13,7 @@ import java.util.List;
  * @author jbecerril
  */
 public interface CatUsuariosService {
+    public CatUsuarios findById(Long id);
     public List<CatUsuarios> buscarTodos(boolean activos);
     public CatUsuarios login(String usuario, String pass);
     public boolean actualizarContrasena(String usuario, String pass);
@@ -20,4 +21,5 @@ public interface CatUsuariosService {
     public List<CatUsuarios> buscarNombre(String nombre, Long id);
     public List<CatUsuarios> buscarUsuario(String usuario, String pass);
     public List<CatUsuarios> consultaUsuariosXEmpresa(boolean activos,Long idempresa);
+    public CatUsuarios searchByEmail(String email);
 }

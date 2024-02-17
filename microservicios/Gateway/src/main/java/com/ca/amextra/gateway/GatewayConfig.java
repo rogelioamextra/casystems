@@ -29,6 +29,7 @@ public class GatewayConfig {
                         .route("solicitud", r -> r.path("/solicitud/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9023/"))                        
                         .route("catalogos", r -> r.path("/catalogos/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9024/"))
                         .route("agenda", r -> r.path("/agenda/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9024/"))
+                        .route("correo", r -> r.path("/correo/**").filters(f -> f.filter(filter)).uri("http://127.0.0.1:9025/"))
                         .build();
 	}
 

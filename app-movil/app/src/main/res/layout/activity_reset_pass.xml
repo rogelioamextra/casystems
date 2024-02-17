@@ -59,6 +59,7 @@
         android:drawableLeft="@drawable/icon_ionic_ios_mail"
         android:drawablePadding="20dp"
         android:hint="Correo Electronico"
+        android:inputType="textEmailAddress"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
