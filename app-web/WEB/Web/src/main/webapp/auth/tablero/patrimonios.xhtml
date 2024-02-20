@@ -23,11 +23,13 @@
                 <p:commandButton  icon="fa fa-camera" process="@this"
                                  actionListener="#{controllerTablero.buscarImagenesPatrimonios(ref)}"
                                  update="formContenido:panelImagenesIne"  
-                                 oncomplete="PF('imagenesIne').show();"/>
-             
-
-
-
+                                 oncomplete="PF('imagenesIne').show();"
+                                 rendered="#{ref.nombreImagen ne 'NO_IMAGE'}"/>
+                
+                <p:outputLabel rendered="#{ref.nombreImagen eq 'NO_IMAGE'}">
+                    <i class="fa fa-ban" style="color: #ff0000"/>
+                </p:outputLabel>
+ 
             </p:column>
 
 
