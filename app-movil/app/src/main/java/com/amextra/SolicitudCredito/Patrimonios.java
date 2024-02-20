@@ -50,6 +50,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -291,9 +292,14 @@ public class Patrimonios extends AppCompatActivity
         if(newPatrimonios.size()> 0){
             for (int i = 0; i <newPatrimonios.size() ; i++) {
                 PatrimoniosCls tmpPat = newPatrimonios.get(i);
-                String path = tmpPat.imagen;
-                String base64 = pathToBase64(path,100);
-                tmpPat.setImagen(base64);
+                if (Objects.isNull(tmpPat.imagen)) {
+                    tmpPat.setImagen("NO_IMAGE");
+                } else {
+                    String path = tmpPat.imagen;
+                    String base64 = pathToBase64(path,50);
+                    tmpPat.setImagen(base64);
+                }
+
             }
         }
     }

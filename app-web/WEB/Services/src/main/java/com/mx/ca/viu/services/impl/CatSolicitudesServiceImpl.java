@@ -16,7 +16,6 @@ import com.mx.ca.viu.modelos.CatPatrimonios;
 import com.mx.ca.viu.modelos.CatProductosCredito;
 import com.mx.ca.viu.modelos.CatProperties;
 import com.mx.ca.viu.modelos.CatServiciosValidacionesExternos;
-import com.mx.ca.viu.modelos.CatSucursales;
 import com.mx.ca.viu.modelos.CatUsuarios;
 import com.mx.ca.viu.modelos.DtComparacionFacial;
 
@@ -34,7 +33,6 @@ import com.mx.ca.viu.modelos.dtos.response.DTOMvsolicitudesAmextra;
 import com.mx.ca.viu.modelos.dtos.response.Proyeccion;
 import com.mx.ca.viu.modelos.dtos.response.SolicitudIdClienteResponse;
 import com.mx.ca.viu.modelos.dtos.response.SolicitudIdResponse;
-import com.mx.ca.viu.modelos.dtos.response.SolicitudListaResponse;
 import com.mx.ca.viu.modelos.dtos.response.SolicitudResponse;
 import com.mx.ca.viu.modelos.dtos.response.SolicitudTodosResponse;
 import com.mx.ca.viu.repositorys.CatServiciosValidacionesExternosRepository;
@@ -48,6 +46,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +58,8 @@ import org.springframework.stereotype.Service;
  */
 @Service("CatSolicitudesService")
 public class CatSolicitudesServiceImpl implements CatSolicitudService {
+    
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(CatSolicitudesServiceImpl.class.getName());
 
     @Autowired
     GenericoRepository genericoRepository;
@@ -73,6 +75,7 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
 
     @Override
     public SolicitudResponse solicitudNuevoTransform(SolicitudRequest request) {
+        
 
         SolicitudResponse response = new SolicitudResponse();
 
@@ -115,7 +118,7 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
             List<DtPatrimonio> patri = new ArrayList<>();
             for (PatrimoniosSolicitud sol : request.getData().getPatrimonios()) {
                 DtPatrimonio pat = new DtPatrimonio();
-                //if (!sol.getImagen().isEmpty() && sol.isCambioImagen()) {
+              
                 pat.setIdSolicitud(solicitud);
                 pat.setIdTipoPatrimonio(genericoRepository.findByID(CatPatrimonios.class, Long.valueOf(sol.getTipoPatrimonioId())));
                 pat.setPrecio(sol.getPrecio());
@@ -133,27 +136,25 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
             CatUsuarios asesor = genericoRepository.findByID(CatUsuarios.class, Long.valueOf(request.getData().getAsesorId()));
             solicitud.setIdAsesor(asesor);
             if (genericoRepository.guardar(solicitud)) {
-//                CatClientes cli = genericoRepository.findByID(CatClientes.class, solicitud.getIdCliente().getIdCliente());
-//                if (cli != null) {
-//                    cli.setIdSucursal(solicitud.getIdAsesor().getIdConfiguracionEmpresa().getIdSucursal());
-//                    genericoRepository.update(cli);
-//                }
-                for (DtPatrimonio sol : solicitud.getDtPatrimonioList()) {
-                    if (!sol.getNombreImagen().isEmpty()) {
-                        byte[] img1 = org.apache.commons.codec.binary.Base64.decodeBase64(sol.getNombreImagen());
-                        img1 = UtilGenerico.encriptarDesencriptarBytes(img1);
-                        // ftp.connect();
-//                        InputStream is = new ByteArrayInputStream(img1);
-//                        if (ftp.uploadFiles((solicitud.getIdCliente().getIdPersona().getCurp() + "/pat" + solicitud.getDtPatrimonioList().get(0).getIdPatrimonio().toString()),
-//                                solicitud.getIdCliente().getIdPersona().getCurp() + "_" + solicitud.getDtPatrimonioList().get(0).getIdTipoPatrimonio().getIdPatrimonio().toString(), is)) {
-//                            sol.setNombreImagen(solicitud.getIdCliente().getIdPersona().getCurp() + "_" + solicitud.getDtPatrimonioList().get(0).getIdTipoPatrimonio().getIdPatrimonio().toString());
-//                            genericoRepository.guardar(sol);
-//                        }
 
-                        if (ftp.sendFileSFTP(img1, solicitud.getIdCliente().getIdPersona().getCurp() + "_" + sol.getIdTipoPatrimonio().getIdPatrimonio().toString(),
-                                obtenpropiedades((solicitud.getIdCliente().getIdPersona().getCurp() + "/pat" + sol.getIdPatrimonio().toString())))) {
-                            sol.setNombreImagen(solicitud.getIdCliente().getIdPersona().getCurp() + "_" + sol.getIdTipoPatrimonio().getIdPatrimonio().toString());
+                for (DtPatrimonio sol : solicitud.getDtPatrimonioList()) {
+                    
+                    logger.info("Valor de la imagen  del patrimonio: {}", sol.getNombreImagen());
+                    
+                    if (!sol.getNombreImagen().isEmpty()) {
+                        if (!Objects.equals(sol.getNombreImagen(), "NO_IMAGE")) {
+                            byte[] img1 = org.apache.commons.codec.binary.Base64.decodeBase64(sol.getNombreImagen());
+                            img1 = UtilGenerico.encriptarDesencriptarBytes(img1);
+                            if (ftp.sendFileSFTP(img1, solicitud.getIdCliente().getIdPersona().getCurp() + "_" + sol.getIdTipoPatrimonio().getIdPatrimonio().toString(),
+                                    obtenpropiedades((solicitud.getIdCliente().getIdPersona().getCurp() + "/pat" + sol.getIdPatrimonio().toString())))) {
+                                sol.setNombreImagen(solicitud.getIdCliente().getIdPersona().getCurp() + "_" + sol.getIdTipoPatrimonio().getIdPatrimonio().toString());                                
+                            }
+                            
+                            else {
+                                sol.setNombreImagen(null);
+                            }
                             genericoRepository.guardar(sol);
+                            
                         }
 
                     }
@@ -197,23 +198,6 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
             List<MvSolicitudesAmextra> lista = genericoRepository.findAll(MvSolicitudesAmextra.class);
             for (MvSolicitudesAmextra sol : lista) {
                 if (!sol.getDtPatrimonioList().isEmpty() && !sol.getDtPatrimonioList().get(0).getNombreImagen().isEmpty()) {
-//                    if (ftp.connect()) {
-//                        if (sol.getIdCliente() != null) {
-//                            InputStream ip = ftp.dowloadFiles((sol.getIdCliente().getIdPersona().getCurp()
-//                                    + "/pat"
-//                                    + sol.getDtPatrimonioList().get(0).getIdPatrimonio().toString()),
-//                                    sol.getDtPatrimonioList().get(0).getNombreImagen()
-//                            );
-//                            if (ip != null) {
-//                                byte[] img1 = UtilGenerico.encriptarDesencriptarBytes(IOUtils.toByteArray(ip));
-////                            byte[] img1 = IOUtils.toByteArray(ip);
-//                                img1 = org.apache.commons.codec.binary.Base64.encodeBase64(img1);
-//                                sol.getDtPatrimonioList().get(0).setNombreImagen(new String(img1));
-//
-//                            }
-//                        }
-//
-//                    } 
                     byte[] img1 = ftp.dowloadFileSFTP(sol.getDtPatrimonioList().get(0).getNombreImagen(), obtenpropiedades((sol.getIdCliente().getIdPersona().getCurp() + "/pat" + sol.getDtPatrimonioList().get(0).getIdPatrimonio().toString())));
                     if (img1 != null) {
                         img1 = UtilGenerico.encriptarDesencriptarBytes(img1);
@@ -251,22 +235,6 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
 
             MvSolicitudesAmextra sol = genericoRepository.findByID(MvSolicitudesAmextra.class, id);
             if (!sol.getDtPatrimonioList().isEmpty() && !sol.getDtPatrimonioList().get(0).getNombreImagen().isEmpty()) {
-//                if (ftp.connect()) {
-//
-//                    InputStream ip = ftp.dowloadFiles((sol.getIdCliente().getIdPersona().getCurp()
-//                            + "/pat"
-//                            + sol.getDtPatrimonioList().get(0).getIdPatrimonio().toString()),
-//                            sol.getDtPatrimonioList().get(0).getNombreImagen()
-//                    );
-//                    if (ip != null) {
-//                        byte[] img1 = UtilGenerico.encriptarDesencriptarBytes(IOUtils.toByteArray(ip));
-////                            byte[] img1 = IOUtils.toByteArray(ip);
-//                        img1 = org.apache.commons.codec.binary.Base64.encodeBase64(img1);
-//                        sol.getDtPatrimonioList().get(0).setNombreImagen(new String(img1));
-//
-//                    }
-//
-//                } 
                 byte[] ip = ftp.dowloadFileSFTP(sol.getDtPatrimonioList().get(0).getNombreImagen(),
                         obtenpropiedades((sol.getIdCliente().getIdPersona().getCurp() + "/pat" + sol.getDtPatrimonioList().get(0).getIdPatrimonio().toString())));
                 if (ip != null) {

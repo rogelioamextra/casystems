@@ -163,8 +163,8 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
                 dialogFragment.show(getSupportFragmentManager(), "LoaderTransparent");
 
 
-                String usr = (String) texInputEmail.getText().toString();
-                String pwd = (String) texInputPassword.getText().toString();
+                String usr = texInputEmail.getText().toString().trim();
+                String pwd = texInputPassword.getText().toString().trim();
                 generaSesion(usr, pwd);
             }
         });

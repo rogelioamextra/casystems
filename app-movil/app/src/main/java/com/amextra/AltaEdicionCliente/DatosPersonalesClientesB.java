@@ -438,9 +438,9 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
     public void transfiereBase64(ImagesIdentificacion base64) {
 
         if (idTipoIdentificacion == 1) {
-            String base_rostro = pathToBase64(base64.rostro, 100);
-            String base_frente = pathToBase64(base64.anverso, 100);
-            String base_back = pathToBase64(base64.reverso, 100);
+            String base_rostro = pathToBase64(base64.rostro, 50);
+            String base_frente = pathToBase64(base64.anverso, 50);
+            String base_back = pathToBase64(base64.reverso, 50);
             RequestvalidaIne reqIne = new RequestvalidaIne();
             ReqReconocimiento reqPruebaVida = new ReqReconocimiento();
             reqPruebaVida.setData(new DataPruebaVida());
@@ -453,8 +453,6 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
             reqPruebaVida.getData().setSelfie(base_rostro);
             validaIne(reqIne);
             generaPruebaVida(reqPruebaVida);
-
-        } else {
 
         }
 

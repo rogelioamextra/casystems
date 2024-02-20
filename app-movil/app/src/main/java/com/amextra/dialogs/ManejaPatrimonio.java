@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 
 /**
@@ -122,9 +123,6 @@ public class ManejaPatrimonio extends DialogFragment {
             llenaDropPatrimonios(listaPatrimonios);
         }
 
-
-
-
         AlertDialog dialog = builder.create();
         dialog.setView(v);
         dialog.setCanceledOnTouchOutside(false);
@@ -142,15 +140,19 @@ public class ManejaPatrimonio extends DialogFragment {
     private void mapData(PatrimoniosCls p) {
         existInfo = true;
         txtPrecio.setText(p.precio);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        currentPath = p.imagen;
-        textoImagen = currentPath;
-        File imgFile = new  File(currentPath);
 
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            imgPatrimonio.setImageBitmap(myBitmap);
+        if (Objects.nonNull(p.imagen)) {
 
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            currentPath = p.imagen;
+            textoImagen = currentPath;
+            File imgFile = new  File(currentPath);
+
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                imgPatrimonio.setImageBitmap(myBitmap);
+
+            }
         }
 
         patrimonio = p;
@@ -205,7 +207,7 @@ public class ManejaPatrimonio extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                if(validaMonto() && validaImagen()){
+                if(validaMonto()){
                     enviaInformacion.transfierePatrimonio(patrimonio);
                     dismiss();
                 }
@@ -327,21 +329,10 @@ public class ManejaPatrimonio extends DialogFragment {
         }
 
         if ((textoImagen).equals("")){
-            continua = false;
-
-        }else{
-        }
-
-
-        return continua;
-    }
-
-    private boolean validaImagen(){
-        boolean continua= true;
-        if (textoImagen.equals("")){
-            continua = false;
+            continua = true;
 
         }
+
         return continua;
     }
 
