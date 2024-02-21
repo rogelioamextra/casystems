@@ -187,8 +187,6 @@ public class ManejaPatrimonio extends DialogFragment {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                 File storageDir = actividad.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                 try {
-
-
                     File image = File.createTempFile(fileName + timeStamp, ".jpg", storageDir);
                     currentPath = image.getAbsolutePath();
                     imageUri  = FileProvider.getUriForFile(actividad, "com.amextra.fileprovider", image);

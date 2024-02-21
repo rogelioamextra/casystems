@@ -1,6 +1,7 @@
 package com.amextra.AltaEdicionCliente;
 
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.QUALITY_IMAGE;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -406,7 +407,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                 if(esAlta){
                     if(!dataReqCliente.direccion.comprobante.equals("") && !dataReqCliente.direccion.comprobante.equals("null")) {
                         String comprobante = requestInsertClient.data.direccion.comprobante;
-                        String comp64 = pathToBase64(comprobante,100);
+                        String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
                         dataReqCliente.getDireccion().setComprobante(comp64);
                         dataReqCliente.getDireccion().setBanderaCambioImagen(true);
                     }else{
@@ -415,7 +416,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
 
                     if(!dataReqCliente.identificacion.imagen.equals("") && !dataReqCliente.identificacion.imagen.equals("null") ){
                         String ident = requestInsertClient.data.identificacion.imagen;
-                        String comp64 = pathToBase64(ident,100);
+                        String comp64 = pathToBase64(ident,QUALITY_IMAGE);
                         dataReqCliente.getIdentificacion().setImagen(comp64);
 
                     }
@@ -424,7 +425,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                 else{
                     if(!dataReqCliente.direccion.comprobante.equals("") && !dataReqCliente.direccion.comprobante.equals("null")){
                         String comprobante = requestInsertClient.data.direccion.comprobante;
-                        String comp64 = pathToBase64(comprobante,100);
+                        String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
                         dataReqCliente.getDireccion().setComprobante(comp64);
                         dataReqCliente.getDireccion().setBanderaCambioImagen(true);
                     }else{
@@ -434,7 +435,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
 
                     if(!dataReqCliente.identificacion.imagen.equals("") && !dataReqCliente.identificacion.imagen.equals("null") ){
                         String ident = requestInsertClient.data.identificacion.imagen;
-                        String comp64 = pathToBase64(ident,100);
+                        String comp64 = pathToBase64(ident,QUALITY_IMAGE);
                         dataReqCliente.getIdentificacion().setImagen(comp64);
 
                     }
@@ -507,7 +508,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
             if(esAlta){
                 if(!dataReqCliente.direccion.comprobante.equals("")){
                     String comprobante = requestInsertClient.data.direccion.comprobante;
-                    String comp64 = pathToBase64(comprobante,100);
+                    String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
                     dataReqCliente.getDireccion().setComprobante(comp64);
                     dataReqCliente.getDireccion().setBanderaCambioImagen(true);
                 }else{
@@ -516,7 +517,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
 
                 if(!dataReqCliente.identificacion.imagen.equals("")){
                     String ident = requestInsertClient.data.identificacion.imagen;
-                    String comp64 = pathToBase64(ident,100);
+                    String comp64 = pathToBase64(ident,QUALITY_IMAGE);
                     dataReqCliente.getIdentificacion().setImagen(comp64);
 
                 }
@@ -525,7 +526,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
             else{
                 if(!dataReqCliente.direccion.comprobante.equals("")){
                     String comprobante = requestInsertClient.data.direccion.comprobante;
-                    String comp64 = pathToBase64(comprobante,100);
+                    String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
                     dataReqCliente.getDireccion().setComprobante(comp64);
                     dataReqCliente.getDireccion().setBanderaCambioImagen(true);
                 }else{
@@ -535,7 +536,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
 
                 if(!dataReqCliente.identificacion.imagen.equals("")){
                     String ident = requestInsertClient.data.identificacion.imagen;
-                    String comp64 = pathToBase64(ident,100);
+                    String comp64 = pathToBase64(ident,QUALITY_IMAGE);
                     dataReqCliente.getIdentificacion().setImagen(comp64);
 
                 }

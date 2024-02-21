@@ -1,6 +1,7 @@
 package com.amextra.AltaEdicionCliente;
 
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.QUALITY_IMAGE;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -438,9 +439,9 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
     public void transfiereBase64(ImagesIdentificacion base64) {
 
         if (idTipoIdentificacion == 1) {
-            String base_rostro = pathToBase64(base64.rostro, 50);
-            String base_frente = pathToBase64(base64.anverso, 50);
-            String base_back = pathToBase64(base64.reverso, 50);
+            String base_rostro = pathToBase64(base64.rostro, QUALITY_IMAGE);
+            String base_frente = pathToBase64(base64.anverso, QUALITY_IMAGE);
+            String base_back = pathToBase64(base64.reverso, QUALITY_IMAGE);
             RequestvalidaIne reqIne = new RequestvalidaIne();
             ReqReconocimiento reqPruebaVida = new ReqReconocimiento();
             reqPruebaVida.setData(new DataPruebaVida());

@@ -1,6 +1,7 @@
 package com.amextra.SolicitudCredito;
 
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
+import static com.amextra.utils.Constants.QUALITY_IMAGE;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
 import androidx.annotation.NonNull;
@@ -296,7 +297,7 @@ public class Patrimonios extends AppCompatActivity
                     tmpPat.setImagen("NO_IMAGE");
                 } else {
                     String path = tmpPat.imagen;
-                    String base64 = pathToBase64(path,50);
+                    String base64 = pathToBase64(path,QUALITY_IMAGE);
                     tmpPat.setImagen(base64);
                 }
 
