@@ -34,21 +34,21 @@ public final class MailTemplates {
         "                    </tr>\n" +
         "                    <tr>\n" +
         "                        <td colspan=\"2\" style=\"padding-top:10px;border-top:1px solid #e4e2e2\">\n" +
-        "                            <h3 style=\"color:#518F44; font-size:18px; line-height: 1.6; font-weight:500;\">Recuperación de contraseña</h3>\n" +
+        "                            <h3 style=\"color:#518F44; font-size:18px; line-height: 1.6; font-weight:500;\">Recuperaci&oacute;n de contrase&ntilde;a</h3>\n" +
         "                            <p style=\"color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 1.4;\">\n" +
-        "                                ¡Hola %_NOMBRE_USUARIO_%!,\n" +
+        "                               &iexcl;Hola %_NOMBRE_USUARIO_%!,\n" +
         "                            </p>\n" +
         "                            <p style=\"color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 1.4;\">\n" +
-        "                                Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en nuestra plataforma. Si no has realizado esta solicitud, puedes ignorar este mensaje.\n" +
+        "                                Hemos recibido una solicitud para restablecer la contrase&ntilde;a de tu cuenta en nuestra plataforma. Si no has realizado esta solicitud, puedes ignorar este mensaje.\n" +
         "                            </p>\n" +
         "                            <p style=\"color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 1.4;\">\n" +
-        "                                Para continuar con el proceso de recuperación de contraseña, por favor utiliza el siguiente código de verificación:\n" +
+        "                                Para continuar con el proceso de recuperaci&oacute;n de contrase&ntilde;a, por favor utiliza el siguiente c&oacute;digo de verificaci&oacute;n:\n" +
         "                            </p>\n" +
-        "                            <h3 style=\"color:#518F44; font-size:18px; line-height: 1.6; font-weight:500;\">Código de verificación</h3>\n" +
+        "                            <h3 style=\"color:#518F44; font-size:18px; line-height: 1.6; font-weight:500;\">C&oacute;digo de verificaci&oacute;n</h3>\n" +
         "                            <p style=\"background-color:#f1f1f1; padding: 8px 15px; border-radius: 50px; display: inline-block; margin-bottom:20px; font-size: 14px;  line-height: 1.4; font-family: Courier New, Courier, monospace; margin-top:0; letter-spacing: 3PX;\">%_CODIGO_RECUPERA_PASS_%</p>\n" +
         "\n" +
         "                            <p style=\"color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 1.4;\">\n" +
-        "                                Una vez que hayas ingresado el código de verificación, podrás restablecer tu contraseña y acceder nuevamente a tu cuenta. Por razones de seguridad, te recomendamos que el nuevo contraseña sea única y no la compartas con nadie.                                \n" +
+        "                                Una vez que hayas ingresado el c&oacute;digo de verificaci&oacute;n, podr&aacute;s restablecer tu contrase&ntilde;a y acceder nuevamente a tu cuenta. Por razones de seguridad, te recomendamos que el nuevo contrase&ntilde;a sea &uacute;nica y no la compartas con nadie.                                \n" +
         "                            </p>\n" +
         "\n" +
         "                            <p style=\"color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 1.4;\">\n" +
@@ -60,7 +60,7 @@ public final class MailTemplates {
         "                            </p>\n" +
         "\n" +
         "                            <p style=\"color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 1.4;\">\n" +
-        "                                El eqipo de <strong style=\"color: #518F44;\">AMEXTRA FINANZAS</strong>                                \n" +
+        "                                El equipo de <strong style=\"color: #518F44;\">AMEXTRA FINANZAS</strong>                                \n" +
         "                            </p>\n" +
         "\n" +
         "                        </td>\n" +
@@ -72,7 +72,7 @@ public final class MailTemplates {
         "                    <tr>\n" +
         "                        <td align=\"center\" valign=\"center\">\n" +
         "                            <p style=\"font-size: 12px; text-decoration: none;line-height: 1; color:#909090; margin-top:0px; \">\n" +
-        "                                AMEXTRA, Todos los Derechos Reservaod\n" +
+        "                                AMEXTRA, Todos los Derechos Reservados\n" +
         "                            </p>                            \n" +
         "                        </td>\n" +
         "                    </tr>\n" +

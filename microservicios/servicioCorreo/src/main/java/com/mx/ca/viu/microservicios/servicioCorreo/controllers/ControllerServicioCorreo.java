@@ -39,8 +39,12 @@ public class ControllerServicioCorreo {
             // Enviamos correo con código
             String templateCorreo = MailTemplates.RECUPERA_PASS_TEMPLATE;
 
+            //sobre escribe los nombres que tengan caracteres especiales para ser mostrados correctamente en el correo
+            String nombre =  request.getData().getNombreUsuario();
+            String nombreChar = nombre.replace("Á", "&Aacute;").replace("É", "&Eacute;").replace("Í", "&Iacute;").replace("Ó", "&Oacute;").replace("Ú", "&Uacute;").replace("ú", "&uacute;");
+            
             // Sobreescribimos los valores del template por los del usuario                
-            templateCorreo = templateCorreo.replace("%_NOMBRE_USUARIO_%", request.getData().getNombreUsuario());
+            templateCorreo = templateCorreo.replace("%_NOMBRE_USUARIO_%", nombreChar);
             templateCorreo = templateCorreo.replace("%_CODIGO_RECUPERA_PASS_%", codigoRecuperacion);
 
             // Params = [Para, Asunto, Cuerpo del mensaje]
