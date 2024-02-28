@@ -20,7 +20,7 @@ public class Constantes {
     public static final String CODIGO_EMPRESA_CORE_AMEXTRA = "00024";
     public static final Long CONSTANTE_PROPERTIES_TASA = 1L;
     public static final Long CONSTANTE_PROPERTIES_IVA = 2L;
-    public static final Long TOKEN_VALIDITY = 1800000L;
+    public static final Long TOKEN_VALIDITY = 1800000L; // Valor de configuración del tiempo de expiración del token móvil
 
     public static final String JWTSECRET = "4m3xtr42023";
 
