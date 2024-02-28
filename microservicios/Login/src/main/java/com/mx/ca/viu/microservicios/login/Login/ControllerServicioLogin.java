@@ -71,7 +71,8 @@ public class ControllerServicioLogin {
                 response.setData(null);
             } else {
                 String token = jwtUtil.generateToken(empresa.get(0).getIdUsuario().toString());
-                usuario.setToken(token);
+                //usuario.setToken(token);
+                usuario.setToken("");
                 usuario.setUsuarioId(empresa.get(0).getIdUsuario().toString());
                 if (empresa.get(0).getIdConfiguracionEmpresa().getIdEmpresa().getIdEmpresas() != null) {
                     usuario.setIdempresa(empresa.get(0).getIdConfiguracionEmpresa().getIdEmpresa().getIdEmpresas());
