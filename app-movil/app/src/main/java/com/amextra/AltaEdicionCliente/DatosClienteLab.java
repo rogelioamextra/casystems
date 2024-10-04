@@ -3,9 +3,6 @@ package com.amextra.AltaEdicionCliente;
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.MainActivity;
 import com.amextra.amextra.R;
@@ -57,12 +57,12 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
     Button siguiente;
     String nombreStatus = "esAlta";
     String nombreTit = "Titulo";
-    String REQ_ALTA_CLI = "reqAltaCliente",idDescEstado;
+    String REQ_ALTA_CLI = "reqAltaCliente", idDescEstado;
     String titulo;
     boolean esAlta;
     AutoCompleteTextView spinnTxtEstado, spinTxtMunicipio, spinnTxtTiempoEmpleo, spinnTxtColonia;
     TextInputEditText txtCalle, txtNumExt, txtNumInt, ingresoMnsual, editCP;
-    long idDescColonia, idDescMunicipio,  idDescCiudad, idDesTiempoAc, idTiempoEmpleo;
+    long idDescColonia, idDescMunicipio, idDescCiudad, idDesTiempoAc, idTiempoEmpleo;
     RequestInsertClient requestInsertClient = new RequestInsertClient();
     final androidx.fragment.app.FragmentManager mFragmentManager = getSupportFragmentManager();
     final MenuInformacionCliente menuInformacionCliente = new MenuInformacionCliente();
@@ -117,8 +117,8 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
             requestInsertClient = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
 
-            if(requestInsertClient.data != null){ 
-                if(requestInsertClient.data.datosLaborales != null && requestInsertClient.data.datosLaborales.direccion!=null){ 
+            if (requestInsertClient.data != null) {
+                if (requestInsertClient.data.datosLaborales != null && requestInsertClient.data.datosLaborales.direccion != null) {
                     mapDataClient(requestInsertClient.data);
                     existeInfo = true;
                 }
@@ -128,12 +128,12 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
         mBundle.putString(nombreTit, titulo);
         mBundle.putInt("itm", 6);
         mBundle.putBoolean(nombreStatus, esAlta);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
 
 
         bHeader.putString(nombreTit, titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
         bHeader.putSerializable("geo", geolocalizacion);
 
         menuInformacionCliente.setArguments(mBundle);
@@ -189,11 +189,12 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
         });
     }
 
-    private void cleanCp(){
+    private void cleanCp() {
         spinnTxtColonia.setText("");
         spinTxtMunicipio.setText("");
         spinnTxtEstado.setText("");
     }
+
     private void getListaTiempoEmpleo() {
         Call<ResponseTiemposActualesEmpleo> call = ApiAdapter.getApiService(responseLogIn.token).tiemposActualesEmpleo();
         call.enqueue(new Callback<ResponseTiemposActualesEmpleo>() {
@@ -209,10 +210,10 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
                         listaTiempos.add(tiempo.nombre.toUpperCase());
                         listaIdsTiempos.add(String.valueOf(tiempo.idTiempoEmpleoActual));
                     }
-                    if(existeInfo){
+                    if (existeInfo) {
                         Long idTiempo = Long.parseLong(requestInsertClient.data.datosLaborales.tiempoEmpleoActualId);
                         for (TieposActuale tiempo : tiempos) {
-                            if(idTiempo == tiempo.idTiempoEmpleoActual){
+                            if (idTiempo == tiempo.idTiempoEmpleoActual) {
                                 spinnTxtTiempoEmpleo.setText(tiempo.nombre.toUpperCase());
                                 idTiempoEmpleo = idTiempo;
                                 break;
@@ -227,12 +228,10 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
                             idTiempoEmpleo = Long.parseLong(listaIdsTiempos.get(position));
                         }
                     });
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
 
-                    new SweetAlertDialog(DatosClienteLab.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosClienteLab.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -341,11 +340,9 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
                         Toast.makeText(DatosClienteLab.this, "Error al consultar el codigo postal: " + responsecodigoPostal.response.codigo + " - " + responsecodigoPostal.response.mensaje, Toast.LENGTH_SHORT).show();
 
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosClienteLab.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosClienteLab.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -385,7 +382,7 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
         }
 
         DataReqCliente dataReqCliente = requestInsertClient.getData();
-        if(!existeInfo){
+        if (!existeInfo) {
             dataReqCliente.getDatosLaborales().setDireccion(new Direccion());
             dataReqCliente.getDatosLaborales().getDireccion().setColoniaID(idDescColonia);
             dataReqCliente.getDatosLaborales().getDireccion().setID(0);
@@ -406,7 +403,7 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
             dataReqCliente.getDatosLaborales().getDireccion().setBanderaCambioImagen(false);
             dataReqCliente.setAsesorId(responseLogIn.usuarioId);
             requestInsertClient.setData(dataReqCliente);
-        }else{
+        } else {
 
             dataReqCliente.getDatosLaborales().getDireccion().setColoniaID(idDescColonia);
             dataReqCliente.getDatosLaborales().getDireccion().setTiempoResidencia(idDesTiempoAc);
@@ -442,7 +439,7 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
                     sender.putSerializable("reqAltaCliente", requestInsertClient);
                     sender.putString(nombreTit, titulo);
                     sender.putBoolean(nombreStatus, esAlta);
-                    sender.putSerializable("infoLogIn",responseLogIn);
+                    sender.putSerializable("infoLogIn", responseLogIn);
 
                     consultaInfDireccion.putExtras(sender);
                     consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -489,11 +486,9 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
                     } else {
 
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosClienteLab.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosClienteLab.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -609,8 +604,6 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
     private boolean validaCampos() {
 
 
-
-
         boolean status = true;
         String exte = txtNumExt.getText().toString();
         String monto = ingresoMnsual.getText().toString();
@@ -692,13 +685,12 @@ public class DatosClienteLab extends AppCompatActivity implements MenuInformacio
 
     @Override
     public void transfiereInfo(RequestInsertClient req) {
-        if(validaCampos()){
+        if (validaCampos()) {
             recopilaInfo();
         }
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
         menuInformacionCliente.setArguments(mBundle);
-
 
 
     }

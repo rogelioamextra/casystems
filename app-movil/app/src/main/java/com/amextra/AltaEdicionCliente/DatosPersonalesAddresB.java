@@ -3,16 +3,11 @@ package com.amextra.AltaEdicionCliente;
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
@@ -27,6 +22,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.amextra.MainActivity;
 import com.amextra.amextra.R;
@@ -93,7 +92,7 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
 
     String REQ_ALTA_CLI = "reqAltaCliente";
 
-    TextInputLayout layoutAnios,  layOutTipoVivienda;
+    TextInputLayout layoutAnios, layOutTipoVivienda;
     InfoUSer responseLogIn = new InfoUSer();
     int quality = 0;
     String currentPath;
@@ -126,7 +125,7 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
             titulo = (recepcion.getString(nombreTit));
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
             requestInsertClient = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
-            if(requestInsertClient.data.direccion.tipoViviendaId !=0){
+            if (requestInsertClient.data.direccion.tipoViviendaId != 0) {
                 mapDataCliente(requestInsertClient.data);
 
             }
@@ -137,8 +136,8 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
         mBundle.putString(nombreTit, titulo);
         mBundle.putInt("itm", 4);
         mBundle.putBoolean(nombreStatus, esAlta);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
 
         bHeader.putString(nombreTit, titulo);
         bHeader.putSerializable("infoLogIn", responseLogIn);
@@ -150,9 +149,6 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
 
         mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
         mFragmentTransaction.add(R.id.frameLayout, menuInformacionCliente).commit();
-
-
-
 
 
         btnCamaraComprobante.setOnClickListener(new View.OnClickListener() {
@@ -172,9 +168,9 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
 
         basee64ComprobanteDomicilio = data.direccion.comprobante;
         currentPath = data.direccion.comprobante;
-        File imgFile = new  File(currentPath);
+        File imgFile = new File(currentPath);
 
-        if(imgFile.exists()){
+        if (imgFile.exists()) {
             labelImgComprobante.setVisibility(View.GONE);
             loaderCircular.setVisibility(View.VISIBLE);
 
@@ -185,7 +181,7 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
 
         }
 
-        if(!esAlta && !imgFile.exists()){
+        if (!esAlta && !imgFile.exists()) {
             labelImgComprobante.setVisibility(View.GONE);
             loaderCircular.setVisibility(View.VISIBLE);
             Call<ResponseImagesCte> call = ApiAdapter.getApiService(responseLogIn.token).getImagesClient(requestInsertClient.data.id);
@@ -194,27 +190,25 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
                 public void onResponse(Call<ResponseImagesCte> call, Response<ResponseImagesCte> response) {
                     int code = response.code();
                     boolean status = response.isSuccessful();
-                    if(code == 200 && status){
+                    if (code == 200 && status) {
                         ResponseImagesCte info = response.body();
-                        if(info.response.codigo == 200){
+                        if (info.response.codigo == 200) {
                             String b64 = info.data.comprobanteDomicilio;
                             Bitmap bm = base64toBm(b64);
                             imgComprobanteDom.setImageBitmap(bm);
                             loaderCircular.setVisibility(View.GONE);
                             imgComprobanteDom.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             loaderCircular.setVisibility(View.GONE);
-                            new SweetAlertDialog(DatosPersonalesAddresB.this,SweetAlertDialog.WARNING_TYPE)
+                            new SweetAlertDialog(DatosPersonalesAddresB.this, SweetAlertDialog.WARNING_TYPE)
                                     .setTitleText("Alerta")
-                                    .setContentText(info.response.codigo+" "+info.response.mensaje)
+                                    .setContentText(info.response.codigo + " " + info.response.mensaje)
                                     .show();
                         }
-                    }
-
-                    else {
+                    } else {
 
                         final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                        new SweetAlertDialog(DatosPersonalesAddresB.this,SweetAlertDialog.ERROR_TYPE)
+                        new SweetAlertDialog(DatosPersonalesAddresB.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Error")
                                 .setContentText(alertText)
                                 .setConfirmText("Continuar")
@@ -231,7 +225,7 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
 
                 @Override
                 public void onFailure(Call<ResponseImagesCte> call, Throwable t) {
-                    new SweetAlertDialog(DatosPersonalesAddresB.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesAddresB.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("ERROR")
                             .setContentText(t.toString())
                             .show();
@@ -252,7 +246,7 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
 
             File image = File.createTempFile(fileName + timeStamp, ".jpg", storageDir);
             currentPath = image.getAbsolutePath();
-            imageUri  = FileProvider.getUriForFile(this, "com.amextra.fileprovider", image);
+            imageUri = FileProvider.getUriForFile(this, "com.amextra.fileprovider", image);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(intent, 1);
@@ -292,13 +286,15 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  null;
+        return null;
     }
-    private Bitmap base64toBm(String base64){
+
+    private Bitmap base64toBm(String base64) {
         byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
     }
+
     private void iniciaCargaDatosLaborales() {
         siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,7 +308,7 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
                     boolean status = (receptor.getBoolean(nombreStatus));
                     sender.putString(nombreTit, titulo);
                     sender.putBoolean(nombreStatus, status);
-                    sender.putSerializable("infoLogIn",responseLogIn);
+                    sender.putSerializable("infoLogIn", responseLogIn);
                     sender.putSerializable("reqAltaCliente", requestInsertClient);
                     consultaInfDireccion.putExtras(sender);
                     consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -342,12 +338,12 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
                             listaIdViviendas.add(String.valueOf(tiposVivienda.idVivienda));
                         }
 
-                        if(requestInsertClient.data.direccion.tipoViviendaId !=0){
+                        if (requestInsertClient.data.direccion.tipoViviendaId != 0) {
                             Long idTipoViv = requestInsertClient.data.direccion.tipoViviendaId;
                             for (TiposVivienda tiposVivienda : tiposViviendas) {
-                                if(idTipoViv == tiposVivienda.idVivienda){
+                                if (idTipoViv == tiposVivienda.idVivienda) {
                                     spinTxtTipoVivienda.setText(tiposVivienda.nombre);
-                                    idDesctipoVivienda =idTipoViv;
+                                    idDesctipoVivienda = idTipoViv;
                                     break;
 
                                 }
@@ -370,11 +366,9 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
                         call.cancel();
                         Toast.makeText(DatosPersonalesAddresB.this, info.response.codigo + " " + info.response.mensaje, Toast.LENGTH_LONG).show();
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesAddresB.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesAddresB.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -471,11 +465,11 @@ public class DatosPersonalesAddresB extends AppCompatActivity implements OnMapRe
 
     @Override
     public void transfiereInfo(RequestInsertClient req) {
-        if(validaInfo()){
+        if (validaInfo()) {
             recopilaDatos();
         }
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
         menuInformacionCliente.setArguments(mBundle);
 
 

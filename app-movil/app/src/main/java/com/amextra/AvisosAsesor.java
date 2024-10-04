@@ -3,14 +3,14 @@ package com.amextra;
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.amextra.R;
 import com.amextra.dialogs.LoaderTransparent;
@@ -45,6 +45,7 @@ public class AvisosAsesor extends AppCompatActivity {
     InfoUSer responseLogIn = new InfoUSer();
 
     private ListAvisosAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,25 +73,23 @@ public class AvisosAsesor extends AppCompatActivity {
     }
 
 
-    private void getListaAvisos(){
+    private void getListaAvisos() {
         Call<ResponseAvisos> call = ApiAdapter.getApiService(responseLogIn.token).avisos();
         call.enqueue(new Callback<ResponseAvisos>() {
             @Override
-            public void onResponse(Call<ResponseAvisos> call, Response<ResponseAvisos> response) {                
+            public void onResponse(Call<ResponseAvisos> call, Response<ResponseAvisos> response) {
                 int code = response.code();
                 final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
                 boolean status = response.isSuccessful();
-                if(code == 200 && status){
+                if (code == 200 && status) {
                     ResponseAvisos avisos = response.body();
-                    if(avisos.response.codigo == 200){
+                    if (avisos.response.codigo == 200) {
                         muestraAvisos(avisos.data.avisos);
-                    }else{
+                    } else {
 
                     }
-                }
-
-                else {
-                    new SweetAlertDialog(AvisosAsesor.this,SweetAlertDialog.ERROR_TYPE)
+                } else {
+                    new SweetAlertDialog(AvisosAsesor.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -113,16 +112,28 @@ public class AvisosAsesor extends AppCompatActivity {
 
     }
 
-    private void muestraAvisos(ArrayList<Aviso> avisos){
+    private void muestraAvisos(ArrayList<Aviso> avisos) {
 
-        if(avisos.size()>0){
-            adapter = new ListAvisosAdapter(this, R.layout.custom_card_avisos, avisos);
+
+        if (!avisos.isEmpty()) {
+
+            ArrayList<Aviso> ad = new ArrayList<>();
+            for (Aviso aviso : avisos) {
+                if (aviso.getContenidoAviso() != null && aviso.getTituloAviso() != null) {
+                    Aviso tmp = new Aviso();
+                    tmp.setContenidoAviso(aviso.getContenidoAviso());
+                    tmp.setTituloAviso(aviso.getTituloAviso());
+                    ad.add(tmp);
+                }
+            }
+
+            adapter = new ListAvisosAdapter(this, R.layout.custom_card_avisos, ad);
             listViewClientes.setAdapter(adapter);
             listViewClientes.setVisibility(View.VISIBLE);
             listViewClientes.setClickable(false);
             noContent.setVisibility(View.GONE);
 
-        }else{
+        } else {
             noContent.setVisibility(View.VISIBLE);
             listViewClientes.setVisibility(View.GONE);
         }

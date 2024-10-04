@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,35 +31,44 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/btn_active_state"
-                android:button="@android:color/transparent"
-                android:drawableStart="@drawable/ic_money"
+                android:drawableTop="@drawable/ic_money"
                 android:gravity="center"
-                android:paddingStart="5dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="10dp"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:button="@android:color/transparent"
                 android:text="Ingresos"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:enabled="false"/>
+                android:textColor="@color/white" />
 
             <RadioButton
                 android:id="@+id/radioEgresos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/btn_active_state"
                 android:button="@android:color/transparent"
-                android:drawableStart="@drawable/ic_money_off"
+                android:background="@drawable/btn_active_state"
+                android:drawableTop="@drawable/ic_money_off"
                 android:gravity="center"
-                android:paddingStart="5dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="10dp"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:layout_weight="1"
                 android:text="Egresos"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:enabled="false"/>
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/radioAvales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:button="@android:color/transparent"
+                android:background="@drawable/btn_active_state"
+                android:drawableTop="@drawable/ic_person"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:text="Avales"
+                android:layout_weight="1"
+                android:textColor="@color/white" />
 
             <RadioButton
                 android:id="@+id/radioPatrimonios"
@@ -69,16 +77,13 @@
                 android:layout_gravity="center"
                 android:background="@drawable/btn_active_state"
                 android:button="@android:color/transparent"
-                android:drawableStart="@drawable/ic_real_estate_agent"
+                android:drawableTop="@drawable/ic_real_estate_agent"
                 android:gravity="center"
-                android:paddingStart="5dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="10dp"
+                android:padding="10dp"
+                android:textSize="15sp"
                 android:text="Patrimonios"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:enabled="false"/>
+                android:layout_weight="1"
+                android:textColor="@color/white" />
 
 
         </RadioGroup>

@@ -12,6 +12,7 @@
     <color name="ButtonShadow">#F3D061</color>
     <color name="PlaceHolderHint">#959595</color>
     <color name="BlueDark">#282358</color>
+    <color name="BlueDark2">#5050A4</color>
     <color name="GreenDark">#3C8B41</color>
     <color name="text_shadow">#5F6A6A</color>
     <color name="btnActive">#608C4D</color>
@@ -19,4 +20,10 @@
     <color name="Morado">#B33C96</color>
     <color name="GreenTittle">#3C8A40</color>
     <color name="TextColor">#393939</color>
+    <color name="tabIndicatorColor">#512e5f</color>
+    <color name="tabSelected">#c39bd3</color>
+    <color name="tabUnSelected">#e5e7e9</color>
+    <color name="optionRow">#58d68d</color>
+
+
 </resources>

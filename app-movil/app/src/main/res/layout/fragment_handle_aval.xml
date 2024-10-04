@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/contenedor_white"
+    android:orientation="vertical"
+    android:layout_margin="40dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="15dp"
+        android:fitsSystemWindows="true"
+        android:gravity="center"
+        android:foregroundGravity="center"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/cardData">
+
+            <LinearLayout
+                android:id="@+id/cardContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/contenedor_white"
+                android:elevation="@dimen/cardview_default_radius"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alta"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:textColor="@color/BlueDark"
+                        android:id="@+id/txtTitle" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_above="@+id/buttonsLayout"
+                        android:fadeScrollbars="false"
+                        android:scrollbarThumbVertical="@drawable/scroll_bar_style">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:orientation="vertical">
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layOutTxtCurp"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="10dp"
+                                android:hint="CURP"
+                                app:counterEnabled="true"
+                                app:counterMaxLength="18"
+                                app:helperText="*Requerido">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTxtCurp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textCapCharacters"
+                                    android:maxLength="18"
+                                    android:maxLines="1"
+                                    android:selectAllOnFocus="true"
+                                    android:textAllCaps="true" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layOuteditTxtNombre"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:hint="Nombre(s)"
+                                app:helperText="*Requerido">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTxtNombre"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textCapCharacters"
+                                    android:maxLines="1"
+                                    android:selectAllOnFocus="true"
+                                    android:textAllCaps="true" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layOuteditTxtApellidoP"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:hint="Apellido Paterno"
+                                app:helperText="*Requerido">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTxtApellidoP"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textCapCharacters"
+                                    android:maxLines="1"
+                                    android:textAllCaps="true" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layOuteditTxtApellidoM"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:hint="Apellido Materno"
+                                app:helperText="*Requerido">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTxtApellidoM"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textCapCharacters"
+                                    android:maxLines="1"
+                                    android:textAllCaps="true" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layOutTeditTxtFechaNacimiento"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:focusedByDefault="false"
+
+                                android:hint="Fecha de nacimiento"
+                                app:helperText="*Requerido">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTxtFechaNacimiento"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableEnd="@drawable/ic_calendar"
+                                    android:focusable="false"
+                                    android:inputType="none"
+                                    android:maxLines="1"
+                                    android:textAllCaps="true" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:id="@+id/alertaNac"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="-20dp"
+                                android:layout_marginBottom="5dp"
+                                android:gravity="center"
+                                android:text="Fecha requerida"
+                                android:textColor="@color/Rojo"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layOutTelefono"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:hint="Telefono"
+                                app:counterEnabled="true"
+                                app:counterMaxLength="10"
+                                app:helperText="*Requerido"
+                                app:helperTextTextColor="@color/Rojo"
+                                app:prefixText="52"
+                                app:prefixTextColor="@color/BlueDark"
+                                app:startIconDrawable="@drawable/ic_phone">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/txtTelefonoEmpresa"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="phone"
+                                    android:maxLength="10"
+                                    android:maxLines="1" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/identificacionSpinerLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="10dp"
+                                app:helperText="*Requerido"
+                                android:focusable="false"
+                                android:layout_weight="1"
+                                android:hint="Tipo de Identificación">
+
+                                <AutoCompleteTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/spinerTxtTipoID"
+                                    android:focusable="false"
+                                    android:inputType="none">
+
+                                </AutoCompleteTextView>
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layOutFront"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_height="wrap_content"
+                                    app:cardCornerRadius="5dp"
+                                    android:elevation="10dp"
+
+                                    app:contentPadding="5dp"
+                                    android:id="@+id/expandFront">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:id="@+id/actionsFront"
+                                            android:weightSum="4">
+
+                                            <TextView
+                                                android:padding="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Test"
+                                                android:textStyle="bold"
+                                                android:id="@+id/txtFrente"
+                                                android:layout_weight="3"
+                                                android:textColor="@color/Morado"
+                                                android:textSize="15dp" />
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal">
+
+                                                <ImageButton
+                                                    android:padding="5dp"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/viewFrontBtn"
+                                                    android:visibility="gone"
+                                                    android:src="@drawable/ic_remove_red_eye_24" />
+
+                                                <ImageButton
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:id="@+id/btnCamaraFront"
+                                                    android:src="@drawable/ic_camera_" />
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="150dp"
+                                            android:visibility="gone"
+                                            android:id="@+id/imgFront"
+                                            tools:ignore="DuplicateIds" />
+                                    </LinearLayout>
+
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layOutBakc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_height="wrap_content"
+                                    app:cardCornerRadius="5dp"
+                                    android:elevation="10dp"
+                                    app:contentPadding="5dp"
+                                    android:id="@+id/expandBack">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="4">
+
+                                            <TextView
+                                                android:padding="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Reverso"
+                                                android:textStyle="bold"
+                                                android:layout_weight="3"
+                                                android:textColor="@color/Morado"
+                                                android:textSize="15dp" />
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal">
+
+                                                <ImageButton
+                                                    android:padding="5dp"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:visibility="gone"
+                                                    android:id="@+id/viewBacktBtn"
+                                                    android:src="@drawable/ic_remove_red_eye_24" />
+
+                                                <ImageButton
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:id="@+id/btnCamaraBack"
+                                                    android:src="@drawable/ic_camera_" />
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="150dp"
+                                            android:visibility="gone"
+                                            android:id="@+id/imgBack" />
+                                    </LinearLayout>
+
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layOutComprobante"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_height="match_parent"
+                                    app:cardCornerRadius="5dp"
+                                    android:elevation="20dp"
+                                    app:contentPadding="5dp"
+                                    android:id="@+id/expandComprobante">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="horizontal"
+                                            android:weightSum="4">
+
+                                            <TextView
+                                                android:padding="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Comprobante Dom."
+                                                android:layout_weight="3"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/Morado"
+                                                android:textSize="15dp" />
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal">
+
+                                                <ImageButton
+                                                    android:padding="5dp"
+                                                    android:visibility="gone"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/viewBtnComprobante"
+                                                    android:src="@drawable/ic_remove_red_eye_24" />
+
+                                                <ImageButton
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:id="@+id/btnCamComprobante"
+                                                    android:src="@drawable/ic_camera_" />
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="150dp"
+                                            android:visibility="gone"
+                                            android:id="@+id/imgComprobante" />
+
+                                    </LinearLayout>
+
+
+                                </androidx.cardview.widget.CardView>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </ScrollView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/buttonsLayout"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:paddingBottom="3dp">
+
+                        <Button
+                            android:id="@+id/btnSiguiente"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:padding="10dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/btn_siguiente"
+                            android:text="Continuar"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white" />
+
+                        <Button
+                            android:id="@+id/btnCancela"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:layout_weight="1"
+                            android:layout_margin="10dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/purple_button"
+                            android:text="Cancelar"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/contenedor_bordered"
+            android:id="@+id/cardSmsAval">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/contenedor_white"
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:layout_weight="20"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_arrow_back_ios_24"
+                        android:id="@+id/backIcon"
+                        android:background="@drawable/ic_arrow_back_ios_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Confirmación de SMS"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_weight="9"
+                        android:gravity="center"
+                        android:textSize="19dp"
+                        android:textColor="@color/BlueDark"
+                        android:id="@+id/txtSms" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Se ha enviado un mensaje de texto con un token para poder confirmar la  veracidad de la información, por favor ingrese el token para poder continuar."
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="12dp"
+                        android:textColor="@color/BlueDark" />
+
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/txtTkn"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="60dp"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:layout_gravity="center"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp"
+                    android:maxLines="1"
+                    android:hint="TOKEN"
+                    android:letterSpacing="1.5"
+                    android:singleLine="true"
+                    android:layout_margin="15dp"
+                    android:textColorHint="#ABB2B9"
+                    android:background="@drawable/contenedor_white" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_siguiente"
+                    android:id="@+id/btnSaveAval"
+                    android:layout_marginBottom="20dp"
+                    android:text="Guardar"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false" />
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

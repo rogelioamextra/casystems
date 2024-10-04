@@ -6,7 +6,9 @@ package com.mx.ca.viu.repositorys;
 
 import com.mx.ca.viu.modelos.BtValidacionSms;
 import com.mx.ca.viu.modelos.CatClientes;
+import com.mx.ca.viu.modelos.DtValidacionPinAval;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,11 @@ public interface ValidacionSmsRepository {
      public void desabilitaTodos5Minutos(Date fecha);
      public CatClientes buscarClienteTelefono(String telefono) ;
      public String obtenPin(String curp);
-       public String validarPin(String curp,String nip);
+    public String validarPin(String curp,String nip);
+    
+    
+    public String validarPinAval(String telefono, String codigo, String curp);
+    public String obtenPinAval(String curp);
+    public void actualizaStatusNipAval(String telefono, String curp, String codigo);
     
 }

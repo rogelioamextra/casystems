@@ -30,6 +30,20 @@ public class RequestValidarCodigoSms extends GenericAuth implements Serializable
         private String nip;
         @JsonProperty("curp")
         private String curp;
+        
+        @JsonProperty("isAval")
+        private boolean isAval;
+
+        public boolean isIsAval() {
+            return isAval;
+        }
+
+        public void setIsAval(boolean isAval) {
+            this.isAval = isAval;
+        }
+        
+        
+        
 
         public String getNip() {
             return nip;

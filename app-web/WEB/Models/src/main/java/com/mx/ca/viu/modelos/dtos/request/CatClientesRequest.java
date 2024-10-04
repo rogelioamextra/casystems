@@ -29,19 +29,25 @@ public class CatClientesRequest extends GenericAuth implements Serializable {
 
         @JsonProperty("id")
         private Long id;
+        
         @JsonProperty(value = "direccion", required = true)
-
         private Direcciones direccion;
+        
         @JsonProperty("persona")
         private Personas persona;
+        
         @JsonProperty("datosLaborales")
         private DatosLaborales datosLaborales;
+        
         @JsonProperty("referencias")
         private List<Referencias> referencias;
+        
         @JsonProperty("identificacion")
         private Identificacion identificacion;
+        
         @JsonProperty("status")
         private boolean status;
+        
         @JsonProperty("asesorId")
         private String asesorId;
 

@@ -4,9 +4,6 @@ import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.QUALITY_IMAGE;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.MainActivity;
 import com.amextra.SMS.EnviaSMS;
@@ -48,10 +48,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import cn.pedant.SweetAlert.SweetAlertDialog ;
 
 
 public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
@@ -65,7 +65,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
     TextInputEditText txtNombre, txtCalle, txtNumExt,
             txtCelular, editCP, txtNumInt, txtApMat, txtApPat;
     long idDescColonia, idDescMunicipio, idDescCiudad, idParentesco;
-    String descColonia,idDescEstado;
+    String descColonia, idDescEstado;
     private AutoCompleteTextView spinTxtColonia, txtEstado, spintTxtMunicipio, txtParentesco;
 
     final androidx.fragment.app.FragmentManager mFragmentManager = getSupportFragmentManager();
@@ -85,9 +85,10 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
     Bundle bHeader = new Bundle();
     String REQ_ALTA_CLI = "reqAltaCliente";
     boolean existeInfo = false;
-    String curp = "", telfono ="";
+    String curp = "", telfono = "";
 
     Referencia[] referencias;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,22 +104,20 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
             esAlta = recepcion.getBoolean(nombreStatus);
 
 
-                RequestInsertClient reqInsCliTmp = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
-                recepcion.clear();
-                if (reqInsCliTmp != null) {
-                    requestInsertClient = reqInsCliTmp;
-                    referencias = requestInsertClient.data.referencias;
-                    curp = requestInsertClient.data.persona.curp;
-                    telfono = requestInsertClient.data.persona.telefono;
-                    if (requestInsertClient.data.referencias != null) {
-                        if (requestInsertClient.data.referencias[1] != null) {
-                            mapDataClient(requestInsertClient.data);
-                            existeInfo=true;
-                        }
+            RequestInsertClient reqInsCliTmp = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
+            recepcion.clear();
+            if (reqInsCliTmp != null) {
+                requestInsertClient = reqInsCliTmp;
+                referencias = requestInsertClient.data.referencias;
+                curp = requestInsertClient.data.persona.curp;
+                telfono = requestInsertClient.data.persona.telefono;
+                if (requestInsertClient.data.referencias != null) {
+                    if (requestInsertClient.data.referencias[1] != null) {
+                        mapDataClient(requestInsertClient.data);
+                        existeInfo = true;
                     }
                 }
-
-
+            }
 
 
         }
@@ -126,12 +125,12 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
         mBundle.putString(nombreTit, titulo);
         mBundle.putInt("itm", 7);
         mBundle.putBoolean(nombreStatus, esAlta);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
 
 
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
         bHeader.putString(nombreTit, titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
         bHeader.putSerializable("geo", geolocalizacion);
 
         menuInformacionCliente.setArguments(mBundle);
@@ -169,9 +168,9 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
         siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(esAlta){
+                if (esAlta) {
                     generaAltaCliente(requestInsertClient);
-                }else{
+                } else {
                     updateClient(requestInsertClient);
                 }
 
@@ -237,10 +236,10 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                         idsParentescos.add(parentesco.idParentesco);
                     }
 
-                    if(existeInfo){
+                    if (existeInfo) {
                         long idParent = requestInsertClient.data.referencias[1].parentescoId;
                         for (Parentesco parentesco : parentescos) {
-                            if(idParent == parentesco.idParentesco){
+                            if (idParent == parentesco.idParentesco) {
                                 idParentesco = idParent;
                                 txtParentesco.setText(parentesco.nombre.toUpperCase());
                                 break;
@@ -256,11 +255,9 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                         }
                     });
 
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(ReferenciasAlta_dos.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -289,11 +286,11 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
 
     @Override
     public void transfiereInfo(RequestInsertClient req) {
-        if(validaReferencia()){
+        if (validaReferencia()) {
             capturaInfoRf1();
         }
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
         menuInformacionCliente.setArguments(mBundle);
     }
 
@@ -396,7 +393,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
         return status;
     }
 
-    private void updateClient(RequestInsertClient body){
+    private void updateClient(RequestInsertClient body) {
         DialogFragment dialogUpdate = LoaderTransparent.loaderTransparent("Actualizando datos de cliente..");
         dialogUpdate.show(getSupportFragmentManager(), "LoaderTransparent");
         try {
@@ -404,43 +401,41 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                 DataReqCliente dataReqCliente = requestInsertClient.getData();
                 capturaInfoRf1();
 
-                if(esAlta){
-                    if(!dataReqCliente.direccion.comprobante.equals("") && !dataReqCliente.direccion.comprobante.equals("null")) {
+                if (esAlta) {
+                    if (!dataReqCliente.direccion.comprobante.equals("") && !dataReqCliente.direccion.comprobante.equals("null")) {
                         String comprobante = requestInsertClient.data.direccion.comprobante;
-                        String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
+                        String comp64 = pathToBase64(comprobante, QUALITY_IMAGE);
                         dataReqCliente.getDireccion().setComprobante(comp64);
                         dataReqCliente.getDireccion().setBanderaCambioImagen(true);
-                    }else{
+                    } else {
                         dataReqCliente.getDireccion().setBanderaCambioImagen(false);
                     }
 
-                    if(!dataReqCliente.identificacion.imagen.equals("") && !dataReqCliente.identificacion.imagen.equals("null") ){
+                    if (!dataReqCliente.identificacion.imagen.equals("") && !dataReqCliente.identificacion.imagen.equals("null")) {
                         String ident = requestInsertClient.data.identificacion.imagen;
-                        String comp64 = pathToBase64(ident,QUALITY_IMAGE);
+                        String comp64 = pathToBase64(ident, QUALITY_IMAGE);
                         dataReqCliente.getIdentificacion().setImagen(comp64);
 
                     }
 
-                }
-                else{
-                    if(!dataReqCliente.direccion.comprobante.equals("") && !dataReqCliente.direccion.comprobante.equals("null")){
+                } else {
+                    if (!dataReqCliente.direccion.comprobante.equals("") && !dataReqCliente.direccion.comprobante.equals("null")) {
                         String comprobante = requestInsertClient.data.direccion.comprobante;
-                        String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
+                        String comp64 = pathToBase64(comprobante, QUALITY_IMAGE);
                         dataReqCliente.getDireccion().setComprobante(comp64);
                         dataReqCliente.getDireccion().setBanderaCambioImagen(true);
-                    }else{
+                    } else {
                         dataReqCliente.getDireccion().setBanderaCambioImagen(false);
 
                     }
 
-                    if(!dataReqCliente.identificacion.imagen.equals("") && !dataReqCliente.identificacion.imagen.equals("null") ){
+                    if (!dataReqCliente.identificacion.imagen.equals("") && !dataReqCliente.identificacion.imagen.equals("null")) {
                         String ident = requestInsertClient.data.identificacion.imagen;
-                        String comp64 = pathToBase64(ident,QUALITY_IMAGE);
+                        String comp64 = pathToBase64(ident, QUALITY_IMAGE);
                         dataReqCliente.getIdentificacion().setImagen(comp64);
 
                     }
                 }
-
 
 
                 dataReqCliente.setReferencias(referencias);
@@ -455,7 +450,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                             if (datos.response.codigo == 200) {
                                 Intent enviaSms = new Intent(ReferenciasAlta_dos.this, EnviaSMS.class);
                                 Bundle sender = new Bundle();
-                                sender.putSerializable("infoLogIn",responseLogIn);
+                                sender.putSerializable("infoLogIn", responseLogIn);
                                 sender.putSerializable("telefono", telfono);
                                 sender.putSerializable("curp", curp);
                                 requestInsertClient = new RequestInsertClient();
@@ -467,7 +462,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                                 finish();
                             } else {
                                 dialogUpdate.dismiss();
-                                new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.WARNING_TYPE)
+                                new SweetAlertDialog(ReferenciasAlta_dos.this, SweetAlertDialog.WARNING_TYPE)
                                         .setTitleText("Advertencia")
                                         .setContentText(datos.response.codigo + " - " + datos.response.mensaje)
                                         .show();
@@ -479,64 +474,64 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
 
                     @Override
                     public void onFailure(Call<ResponseGetClientes> call, Throwable t) {
-                        dialogUpdate  .dismiss();
+                        dialogUpdate.dismiss();
                         Toast.makeText(ReferenciasAlta_dos.this, "ERROR: " + t, Toast.LENGTH_SHORT).show();
 
                     }
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             dialogUpdate.dismiss();
-            Toast.makeText(ReferenciasAlta_dos.this, "Error de actualizacion " +e, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReferenciasAlta_dos.this, "Error de actualizacion " + e, Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    private void cleanCp(){
+    private void cleanCp() {
         spinTxtColonia.setText("");
         spintTxtMunicipio.setText("");
         txtEstado.setText("");
     }
+
     private void generaAltaCliente(RequestInsertClient body) {
 
         if (validaReferencia()) {
             DataReqCliente dataReqCliente = requestInsertClient.getData();
-            Referencia[]  referencias = dataReqCliente.getReferencias();
+            Referencia[] referencias = dataReqCliente.getReferencias();
             capturaInfoRf1();
 
 
-            if(esAlta){
-                if(!dataReqCliente.direccion.comprobante.equals("")){
+            if (esAlta) {
+                if (!dataReqCliente.direccion.comprobante.equals("")) {
                     String comprobante = requestInsertClient.data.direccion.comprobante;
-                    String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
+                    String comp64 = pathToBase64(comprobante, QUALITY_IMAGE);
                     dataReqCliente.getDireccion().setComprobante(comp64);
                     dataReqCliente.getDireccion().setBanderaCambioImagen(true);
-                }else{
+                } else {
                     dataReqCliente.getDireccion().setBanderaCambioImagen(false);
                 }
 
-                if(!dataReqCliente.identificacion.imagen.equals("")){
+                if (!dataReqCliente.identificacion.imagen.equals("")) {
                     String ident = requestInsertClient.data.identificacion.imagen;
-                    String comp64 = pathToBase64(ident,QUALITY_IMAGE);
+                    String comp64 = pathToBase64(ident, QUALITY_IMAGE);
                     dataReqCliente.getIdentificacion().setImagen(comp64);
 
                 }
 
-            }
-            else{
-                if(!dataReqCliente.direccion.comprobante.equals("")){
+            } else {
+                if (!dataReqCliente.direccion.comprobante.equals("")) {
                     String comprobante = requestInsertClient.data.direccion.comprobante;
-                    String comp64 = pathToBase64(comprobante,QUALITY_IMAGE);
+                    String comp64 = pathToBase64(comprobante, QUALITY_IMAGE);
                     dataReqCliente.getDireccion().setComprobante(comp64);
                     dataReqCliente.getDireccion().setBanderaCambioImagen(true);
-                }else{
+                } else {
                     dataReqCliente.getDireccion().setBanderaCambioImagen(false);
 
                 }
 
-                if(!dataReqCliente.identificacion.imagen.equals("")){
+                if (!dataReqCliente.identificacion.imagen.equals("")) {
                     String ident = requestInsertClient.data.identificacion.imagen;
-                    String comp64 = pathToBase64(ident,QUALITY_IMAGE);
+                    String comp64 = pathToBase64(ident, QUALITY_IMAGE);
                     dataReqCliente.getIdentificacion().setImagen(comp64);
 
                 }
@@ -558,7 +553,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                             Intent enviaSms = new Intent(ReferenciasAlta_dos.this, EnviaSMS.class);
                             Bundle sender = new Bundle();
                             sender.clear();
-                            sender.putSerializable("infoLogIn",responseLogIn);
+                            sender.putSerializable("infoLogIn", responseLogIn);
                             sender.putSerializable("telefono", telfono);
                             sender.putSerializable("curp", curp);
                             enviaSms.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -569,17 +564,15 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                             finish();
                         } else {
                             dialogFragment.dismiss();
-                            new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.WARNING_TYPE)
+                            new SweetAlertDialog(ReferenciasAlta_dos.this, SweetAlertDialog.WARNING_TYPE)
                                     .setTitleText("Advertencia")
                                     .setContentText(datos.response.codigo + " - " + datos.response.mensaje)
                                     .show();
 
                         }
-                    }
-
-                    else {
+                    } else {
                         final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                        new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.ERROR_TYPE)
+                        new SweetAlertDialog(ReferenciasAlta_dos.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Error")
                                 .setContentText(alertText)
                                 .setConfirmText("Continuar")
@@ -612,16 +605,16 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
         String apMat = txtApMat.getText().toString();
         String numInt = "0";
         String numExt = "0";
-        if(!txtNumExt.getText().toString().equals("")){
+        if (!txtNumExt.getText().toString().equals("")) {
             numExt = txtNumExt.getText().toString();
         }
 
-        if(!txtNumInt.getText().toString().equals("")){
+        if (!txtNumInt.getText().toString().equals("")) {
             numInt = txtNumInt.getText().toString();
         }
 
 
-        if(!existeInfo){
+        if (!existeInfo) {
             Direccion dir = new Direccion();
             Referencia referencia = new Referencia();
             referencia.setDireccion(dir);
@@ -650,7 +643,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
             referencias[1] = referencia;
             requestInsertClient.getData().setAsesorId(responseLogIn.usuarioId);
 
-        }else{
+        } else {
             Referencia referencia = requestInsertClient.data.referencias[1];
             referencia.setNombre(name);
             referencia.setApellidoPaterno(apPat);
@@ -715,6 +708,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
         return Base64.encodeToString(byteArray, Base64.NO_WRAP);
 
     }
+
     private void consultaCP(String cp) {
 
         String msg = "Obteniendo informacion...";
@@ -753,10 +747,10 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                             listColonias.add(colonia.nombre);
                             listIdsColonias.add(String.valueOf(colonia.idColonia));
                         }
-                        if (existeInfo){
+                        if (existeInfo) {
                             long idCol = requestInsertClient.data.referencias[1].direccion.coloniaId;
                             for (ColoniasLista colonia : coloniasListas) {
-                                if(idCol == colonia.idColonia){
+                                if (idCol == colonia.idColonia) {
                                     spinTxtColonia.setText(colonia.nombre.toUpperCase());
                                     idDescColonia = idCol;
                                     break;
@@ -806,7 +800,7 @@ public class ReferenciasAlta_dos extends AppCompatActivity implements MenuInform
                     }
                 } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(ReferenciasAlta_dos.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(ReferenciasAlta_dos.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")

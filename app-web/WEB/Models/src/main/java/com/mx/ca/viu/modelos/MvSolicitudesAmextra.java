@@ -39,33 +39,53 @@ public class MvSolicitudesAmextra implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_solicitud")
     private Long idSolicitud;
+    
+    
     @Column(name = "plazo")
     private String plazo;
+    
     @Column(name = "revolvente")
     private Boolean revolvente;
+    
     @Column(name = "fecha_solicitud")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaSolicitud;
+    
     @Column(name = "fecha_aprobacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaAprobacion;
+    
     @Column(name = "monto")
     private String monto;
+    
     @Column(name = "longitud")
     private String longitud;
+    
     @Column(name = "latitud")
     private String latitud;
-      @Column(name = "json")
+    
+    @Column(name = "json")
     @JsonIgnore
     private String json;
+    
+    @Column(name = "disseasedescription")
+    private String disseasedescription;
+    
+    @Column(name = "sick")
+    private Boolean sick;
+     
+    
     @OneToMany(mappedBy = "idSolicitud", cascade = CascadeType.ALL)
     private List<DtEgresos> dtEgresosList;
+    
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     @ManyToOne(cascade = CascadeType.ALL)
     private CatClientes idCliente;
+    
     @JoinColumn(name = "id_destino_credito", referencedColumnName = "id_destino_credito")
     @ManyToOne
     private CatDestinoCreditos idDestinoCredito;
+    
     @JoinColumn(name = "id_asesor", referencedColumnName = "id_usuario")
     @ManyToOne
     private CatUsuarios idAsesor;
@@ -73,11 +93,14 @@ public class MvSolicitudesAmextra implements Serializable {
     @JoinColumn(name = "id_frecuencia", referencedColumnName = "id_frecuencia_pago")
     @ManyToOne
     private CatFrecuenciaPago idFrecuencia;
+    
     @JoinColumn(name = "id_producto_credito", referencedColumnName = "id_productos_credito")
     @ManyToOne
     private CatProductosCredito idProductoCredito;
+    
     @OneToMany(mappedBy = "idSolicitud", cascade = CascadeType.ALL)
     private List<DtPatrimonio> dtPatrimonioList;
+    
     @OneToMany(mappedBy = "idSolicitud", cascade = CascadeType.ALL)
     private List<DtIngresos> dtIngresosList;
 
@@ -260,7 +283,24 @@ public class MvSolicitudesAmextra implements Serializable {
     public void setJson(String json) {
         this.json = json;
     }
-    
+
+    public String getDisseasedescription() {
+        return disseasedescription;
+    }
+
+    public void setDisseasedescription(String disseasedescription) {
+        this.disseasedescription = disseasedescription;
+    }
+
+    public Boolean getSick() {
+        return sick;
+    }
+
+    public void setSick(Boolean sick) {
+        this.sick = sick;
+    }
+
+
     
 
 }

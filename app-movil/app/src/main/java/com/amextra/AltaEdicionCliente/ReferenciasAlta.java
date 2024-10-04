@@ -3,9 +3,6 @@ package com.amextra.AltaEdicionCliente;
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.MainActivity;
 import com.amextra.amextra.R;
@@ -58,8 +58,8 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
     RequestInsertClient requestInsertClient = new RequestInsertClient();
     TextInputEditText txtNombre, txtCalle, txtNumExt,
             txtCelular, editCP, txtNumInt, txtApMat, txtApPat;
-    long idDescColonia, idDescMunicipio,  idDescCiudad, idParentesco;
-    String descColonia,idDescEstado;
+    long idDescColonia, idDescMunicipio, idDescCiudad, idParentesco;
+    String descColonia, idDescEstado;
     private AutoCompleteTextView spinTxtColonia, txtEstado, spintTxtMunicipio, txtParentesco;
     final androidx.fragment.app.FragmentManager mFragmentManager = getSupportFragmentManager();
     final MenuInformacionCliente menuInformacionCliente = new MenuInformacionCliente();
@@ -99,12 +99,12 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
             if (esAlta) {
                 requestInsertClient = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
 
-                if(requestInsertClient.data!= null){
+                if (requestInsertClient.data != null) {
                     if (requestInsertClient.data.referencias != null) {
                         referencias = requestInsertClient.data.referencias;
                         if (referencias[0] != null) {
                             mapDataClient(requestInsertClient.data);
-                            existeInfo=true;
+                            existeInfo = true;
                         }
                     }
                 }
@@ -116,24 +116,24 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
                     Cliente cliente = responseGetCliente.data.cliente;
                     ConverterReqClient converterReqClient = new ConverterReqClient();
                     requestInsertClient = converterReqClient.converter(cliente);
-                    if(requestInsertClient.data!= null){
+                    if (requestInsertClient.data != null) {
                         if (requestInsertClient.data.referencias != null) {
                             referencias = requestInsertClient.data.referencias;
                             if (referencias[0] != null) {
                                 mapDataClient(requestInsertClient.data);
-                                existeInfo=true;
+                                existeInfo = true;
                             }
                         }
                     }
                 }
                 if (getIntent().hasExtra(REQ_ALTA_CLI)) {
                     requestInsertClient = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
-                    if(requestInsertClient.data!= null){
+                    if (requestInsertClient.data != null) {
                         if (requestInsertClient.data.referencias != null) {
                             referencias = requestInsertClient.data.referencias;
                             if (referencias[0] != null) {
                                 mapDataClient(requestInsertClient.data);
-                                existeInfo=true;
+                                existeInfo = true;
                             }
                         }
                     }
@@ -237,7 +237,7 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
             numInt = txtNumInt.getText().toString();
         }
 
-        if(!existeInfo){
+        if (!existeInfo) {
             Direccion dir = new Direccion();
             Referencia referencia = new Referencia();
             referencia.setDireccion(dir);
@@ -266,7 +266,7 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
             requestInsertClient.getData().setAsesorId(responseLogIn.usuarioId);
 
             referencias[0] = referencia;
-        }else{
+        } else {
             Referencia referencia = requestInsertClient.data.referencias[0];
             referencia.setNombre(name);
             referencia.setApellidoPaterno(apPat);
@@ -291,8 +291,6 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
             requestInsertClient.getData().setAsesorId(responseLogIn.usuarioId);
 
         }
-
-
 
 
     }
@@ -422,10 +420,10 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
                         idsParentescos.add(parentesco.idParentesco);
                     }
 
-                    if(existeInfo){
+                    if (existeInfo) {
                         long idParent = requestInsertClient.data.referencias[0].parentescoId;
                         for (Parentesco parentesco : parentescos) {
-                            if(idParent == parentesco.idParentesco){
+                            if (idParent == parentesco.idParentesco) {
                                 idParentesco = idParent;
                                 txtParentesco.setText(parentesco.nombre.toUpperCase());
                                 break;
@@ -441,11 +439,9 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
                         }
                     });
 
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(ReferenciasAlta.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(ReferenciasAlta.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -466,11 +462,12 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
         });
     }
 
-    private void cleanCp(){
+    private void cleanCp() {
         spinTxtColonia.setText("");
         spintTxtMunicipio.setText("");
         txtEstado.setText("");
     }
+
     private void consultaCP(String cp) {
 
         String msg = "Obteniendo informacion...";
@@ -509,10 +506,10 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
                             listColonias.add(colonia.nombre);
                             listIdsColonias.add(String.valueOf(colonia.idColonia));
                         }
-                        if (existeInfo){
+                        if (existeInfo) {
                             long idCol = requestInsertClient.data.referencias[0].direccion.coloniaId;
                             for (ColoniasLista colonia : coloniasListas) {
-                                if(idCol == colonia.idColonia){
+                                if (idCol == colonia.idColonia) {
                                     spinTxtColonia.setText(colonia.nombre.toUpperCase());
                                     idDescColonia = idCol;
                                     break;
@@ -562,7 +559,7 @@ public class ReferenciasAlta extends AppCompatActivity implements MenuInformacio
                     }
                 } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(ReferenciasAlta.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(ReferenciasAlta.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")

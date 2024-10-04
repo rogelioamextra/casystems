@@ -149,6 +149,47 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="20dp">
+
+
+                            <CheckBox
+                                android:id="@+id/isPolitical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:layout_weight="1"
+                                android:text="Politico"
+                                android:textColor="@color/Morado" />
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layOutDescJobPolitic"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:hint="Cargo Politico"
+                                app:helperTextTextColor="@color/Rojo"
+                                app:prefixTextColor="@color/BlueDark"
+                                app:startIconDrawable="@drawable/ic_warning">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/txtjobPolitical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textEmailAddress"
+                                    android:maxLines="1" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                        </LinearLayout>
+
+
                     </LinearLayout>
 
                 </ScrollView>

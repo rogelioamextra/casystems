@@ -1,7 +1,5 @@
 package com.amextra.ConsultaInfoCliente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amextra.amextra.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.amextra.AltaEdicionCliente.datos_personales_address;
+import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuInformacionCliente;
 import com.amextra.io.Request.RequestInsertClient;
@@ -21,7 +21,7 @@ import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseGetCliente;
 
 public class ConsultaDireccion extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
-    Button  btnEditarInfo;
+    Button btnEditarInfo;
     String nombreStatus = "esAlta";
     ResponseGetCliente infoCliente = null;
     Button btnSiguiente;
@@ -47,7 +47,7 @@ public class ConsultaDireccion extends AppCompatActivity implements MenuInformac
     final androidx.fragment.app.FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
     final androidx.fragment.app.FragmentTransaction mFragmentHeaderTransac = mFragmentManH.beginTransaction();
     ResponseGetCliente responseGetCliente = new ResponseGetCliente();
-    String clienteInfo ="INFO_CLIENT";
+    String clienteInfo = "INFO_CLIENT";
     InfoUSer responseLogIn = new InfoUSer();
 
 
@@ -65,22 +65,24 @@ public class ConsultaDireccion extends AppCompatActivity implements MenuInformac
         if (recepcion != null) {
             titulo = (recepcion.getString(nombreTit));
             esAlta = recepcion.getBoolean(nombreStatus);
-            responseGetCliente =(ResponseGetCliente) recepcion.getSerializable(clienteInfo);
+            responseGetCliente = (ResponseGetCliente) recepcion.getSerializable(clienteInfo);
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
             setInfoCliente(responseGetCliente);
         }
-        mBundle.putString(nombreTit,titulo);
-        mBundle.putSerializable(clienteInfo,responseGetCliente);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putInt("itm",1);
-        mBundle.putBoolean(nombreStatus,esAlta);
-        mBundle.putString(nombreTit,titulo);
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
+        mBundle.putString(nombreTit, titulo);
+        mBundle.putSerializable(clienteInfo, responseGetCliente);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putInt("itm", 1);
+        mBundle.putBoolean(nombreStatus, esAlta);
+        mBundle.putString(nombreTit, titulo);
+        bHeader.putString(nombreTit, titulo);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
+
         menuInformacionCliente.setArguments(mBundle);
         menuHeader.setArguments(bHeader);
-        mFragmentHeaderTransac.add(R.id.frameHeader,menuHeader).commit();
-        mFragmentTransaction.add(R.id.frameLayout,menuInformacionCliente).commit();
+
+        mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
+        mFragmentTransaction.add(R.id.frameLayout, menuInformacionCliente).commit();
 
 
         aConsultaInfLaboral();
@@ -90,15 +92,15 @@ public class ConsultaDireccion extends AppCompatActivity implements MenuInformac
     private void setInfoCliente(ResponseGetCliente responseGetCliente) {
         Cliente datos = responseGetCliente.data.cliente;
 
-        if(datos.idDireccion!=null){
+        if (datos.idDireccion != null) {
 
-            String tiempoAnios = datos.idDireccion.tiempoResidencia>1 ? "años":"año";
-            String tiempoMeses = datos.idDireccion.tiempoResidenciaMeses>1 ? "meses":"mes";
+            String tiempoAnios = datos.idDireccion.tiempoResidencia > 1 ? "años" : "año";
+            String tiempoMeses = datos.idDireccion.tiempoResidenciaMeses > 1 ? "meses" : "mes";
             txtCalle.setText(datos.idDireccion.calle.toUpperCase());
             txtNumInt.setText(datos.idDireccion.numeroInterior);
             txtNumExt.setText(datos.idDireccion.numeroExterior);
             txtEstado.setText(datos.idDireccion.idEstado.nombre.toUpperCase());
-            txtTiempoEnResidencia.setText(datos.idDireccion.tiempoResidencia+" "+tiempoAnios+"  "+datos.idDireccion.tiempoResidenciaMeses+" "+tiempoMeses);
+            txtTiempoEnResidencia.setText(datos.idDireccion.tiempoResidencia + " " + tiempoAnios + "  " + datos.idDireccion.tiempoResidenciaMeses + " " + tiempoMeses);
             txtCodigoPostal.setText(datos.idDireccion.cp);
             if (datos.idDireccion.idMunicipio != null) {
                 txtMunicipio.setText(datos.idDireccion.idMunicipio.nombre.toUpperCase());
@@ -107,10 +109,10 @@ public class ConsultaDireccion extends AppCompatActivity implements MenuInformac
                 txtTipoResidencia.setText(datos.idDireccion.idTipoResidencia.nombre.toUpperCase());
             }
             if (datos.idDireccion.idTipoVivienda != null) {
-                txtTipoVivienda.setText(datos.idDireccion.idTipoVivienda.nombre.toUpperCase());;
+                txtTipoVivienda.setText(datos.idDireccion.idTipoVivienda.nombre.toUpperCase());
             }
             if (datos.idDireccion.idColonia != null) {
-                txtColonia.setText(datos.idDireccion.idColonia.nombre.toUpperCase());;
+                txtColonia.setText(datos.idDireccion.idColonia.nombre.toUpperCase());
             }
         }
 
@@ -123,10 +125,10 @@ public class ConsultaDireccion extends AppCompatActivity implements MenuInformac
             Intent consultaInfDireccion = new Intent(ConsultaDireccion.this, datos_personales_address.class);
             consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             sender.putString(nombreTit, "Editar Datos del Cliente");
-            sender.putSerializable("infoLogIn",responseLogIn);
+            sender.putSerializable("infoLogIn", responseLogIn);
 
-            sender.putBoolean(nombreStatus,esAlta);
-            sender.putSerializable(clienteInfo,responseGetCliente);
+            sender.putBoolean(nombreStatus, esAlta);
+            sender.putSerializable(clienteInfo, responseGetCliente);
             consultaInfDireccion.putExtras(sender);
             startActivity(consultaInfDireccion);
         });
@@ -139,11 +141,11 @@ public class ConsultaDireccion extends AppCompatActivity implements MenuInformac
                 Bundle sender = new Bundle();
                 Intent consultaInfLaboral = new Intent(ConsultaDireccion.this, ConsultaEmpleo.class);
                 consultaInfLaboral.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                sender.putSerializable("infoLogIn",responseLogIn);
+                sender.putSerializable("infoLogIn", responseLogIn);
 
                 sender.putString(nombreTit, titulo);
                 sender.putBoolean(nombreStatus, esAlta);
-                sender.putSerializable(clienteInfo,responseGetCliente);
+                sender.putSerializable(clienteInfo, responseGetCliente);
                 consultaInfLaboral.putExtras(sender);
                 startActivity(consultaInfLaboral);
             }
@@ -168,6 +170,6 @@ public class ConsultaDireccion extends AppCompatActivity implements MenuInformac
 
     @Override
     public void transfiereInfo(RequestInsertClient req) {
-        Log.d("consultaC", "se ejecuta en transfiere info: "+1);
+        Log.d("consultaC", "se ejecuta en transfiere info: " + 1);
     }
 }

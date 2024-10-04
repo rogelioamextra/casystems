@@ -44,7 +44,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /**
  *
  * @author jbecerril
@@ -54,25 +55,44 @@ public class CatClientesServiceImpl implements CatClientesService {
 
     @Autowired
     GenericoRepository genericoRepository;
+    
     @Autowired
     CatClientesRepository catClientesRepository;
+    
     @Autowired
     CatEstadoRepository estadosrepositiory;
 
     @Autowired
     CatServiciosValidacionesExternosRepository servicios;
+    
     @Autowired
     FTPService ftp;
 
+    
+    private static final Logger logger = LogManager.getLogger(CatClientesServiceImpl.class.getName());
+    
     @Override
     public ClienteResponse clientesNuevoTransform(CatClientesRequest request) {
         CatClientes nuevo = new CatClientes();
         ClienteResponse response = new ClienteResponse();
 
         try {
+            
+            
             boolean banderaIdentificacion = false;
-            nuevo.setJson(Transform.toJSON(request));
+            logger.info("Json info newClient method clientesNuevoTransform ->: {}", Transform.toJSON(request));
+            nuevo.setJson("");
 
+            
+            if(request.getData().getPersona().getPolitical().isIsPolitical() && 
+                    request.getData().getPersona().getPolitical().getJobDescription().isEmpty()){
+            
+                throw new Exception("La curp:" + request.getData().getPersona().getCurp() + " cuenta con un puesto politico, por favor ingrese el cargo politico");
+            }
+            
+            nuevo.setEspolitico(request.getData().getPersona().getPolitical().isIsPolitical());
+            nuevo.setPoliticaljobdescription(request.getData().getPersona().getPolitical().getJobDescription());
+            
             CatPersonas p = catClientesRepository.buscarCurp(request.getData().getPersona().getCurp());
             if (p != null && p.getIdPersona() != null) {
                 throw new Exception("La curp:" + request.getData().getPersona().getCurp() + " ya se encuentra registrada");
@@ -301,7 +321,8 @@ public class CatClientesServiceImpl implements CatClientesService {
 
         try {
             nuevo.setIdCliente(request.getData().getId());
-            nuevo.setJson(Transform.toJSON(request));
+            logger.info("Json info update method clientesUpdateTransform ->: {}", Transform.toJSON(request));
+            nuevo.setJson("");
             boolean banderaIdentificacion = false;
 
 

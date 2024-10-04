@@ -15,6 +15,7 @@ import com.mx.ca.viu.modelos.CatNacionalidades;
 import com.mx.ca.viu.modelos.CatPersonas;
 import com.mx.ca.viu.modelos.CatServiciosValidacionesExternos;
 import com.mx.ca.viu.modelos.DtValidacionCurp;
+import com.mx.ca.viu.modelos.DtValidacionPinAval;
 import com.mx.ca.viu.modelos.Estado;
 import com.mx.ca.viu.modelos.dtos.generico.GenericResponse;
 import com.mx.ca.viu.modelos.dtos.request.RequestNubarimCurp;
@@ -23,6 +24,7 @@ import com.mx.ca.viu.modelos.dtos.response.CurpResponse;
 import com.mx.ca.viu.modelos.dtos.response.NubarimCurpResponse;
 import com.mx.ca.viu.modelos.dtos.response.ValidacionCurpResponse;
 import com.mx.ca.viu.repositorys.CatClientesRepository;
+import com.mx.ca.viu.repositorys.GenericoRepository;
 import com.mx.ca.viu.services.CatEstadoService;
 import com.mx.ca.viu.services.CatServiciosValidacionesExternosServices;
 import com.mx.ca.viu.services.GenericoService;
@@ -52,6 +54,8 @@ public class ControllerCurp {
     public CatEstadoService estadoService;
     @Autowired
     CatClientesRepository catClientesRepository;
+    @Autowired
+    GenericoRepository genericoRepository;
 
     @PostMapping("/valida/curp")
     public ResponseEntity<ValidacionCurpResponse> consultar(@RequestBody ValidaCurpRequest request, Principal principal) {
@@ -60,10 +64,21 @@ public class ControllerCurp {
             CatServiciosValidacionesExternos servicio = service.buscarServicioId(1L);
             //SE AGREGA REEMPLAZO DE PALABRA CONTENIDO POR LA QUE SE LE ENVIA AL MICROSERVICIO DE NUBARIUM
             RequestNubarimCurp body = new RequestNubarimCurp();
-            CatPersonas p = catClientesRepository.buscarCurp(request.getData().getCurp());
-            if (p != null) {
-                throw new Exception("La curp:" + request.getData().getCurp() + " ya se encuentra registrada");
+            boolean possibleC = request.getData().isPosibleCliente();
+            
+                System.err.println("psos  "+possibleC);
+            
+            if(possibleC){
+             CatPersonas p = catClientesRepository.buscarCurp(request.getData().getCurp());
+             
+                System.err.println("person "+ p);
+                if (p != null) {
+                    throw new Exception("La curp:" + request.getData().getCurp() + " ya se encuentra registrada");
+                }
+            
             }
+             
+      
             List<CatListaNegraAmextra> negra = catClientesRepository.buscarListaNegraCurp(request.getData().getCurp());
 
             if (negra != null && !negra.isEmpty()) {

@@ -5,17 +5,20 @@ import com.amextra.io.Request.DatosLaborales;
 import com.amextra.io.Request.Direccion;
 import com.amextra.io.Request.Identificacion;
 import com.amextra.io.Request.Persona;
+import com.amextra.io.Request.Political;
 import com.amextra.io.Request.Referencia;
 import com.amextra.io.Request.RequestInsertClient;
 import com.amextra.io.Response.Cliente;
 import com.amextra.io.Response.DtReferenciasPersonalesList;
 
 public class ConverterReqClient {
-    public RequestInsertClient converter(Cliente infoClient){
+    public RequestInsertClient converter(Cliente infoClient) {
 
         RequestInsertClient require = new RequestInsertClient();
         require.setData(new DataReqCliente());
         DataReqCliente dataReqCliente = new DataReqCliente();
+
+        Political politic = new Political();
 
         dataReqCliente.setPersona(new Persona());
         dataReqCliente.setDireccion(new Direccion());
@@ -24,11 +27,12 @@ public class ConverterReqClient {
 
         dataReqCliente.setID(String.valueOf(infoClient.idCliente));
         dataReqCliente.setStatus(infoClient.status);
-
-
+        politic.setJobDescription(infoClient.getPoliticaljobdescription());
+        politic.setPolitical(infoClient.isEspolitico());
         dataReqCliente.setID(String.valueOf(infoClient.idCliente));
         dataReqCliente.getPersona().setID(String.valueOf(infoClient.idPersona.idPersona));
         dataReqCliente.getPersona().setEmail(infoClient.idPersona.email);
+        dataReqCliente.getPersona().setPolitical(politic);
         dataReqCliente.getPersona().setTelefono(infoClient.idPersona.telefono);
         dataReqCliente.getPersona().setCurp(infoClient.idPersona.curp);
         dataReqCliente.getPersona().setGenero(infoClient.idPersona.genero);
@@ -66,13 +70,12 @@ public class ConverterReqClient {
         dataReqCliente.getDatosLaborales().getDireccion().setComprobante(infoClient.idDatosLaborales.idDireccion.comprobante);
         dataReqCliente.getDatosLaborales().getDireccion().setGeolocalizacionLatitud(infoClient.idDatosLaborales.idDireccion.geolocalizacionLatitud);
         dataReqCliente.getDatosLaborales().getDireccion().setGeolocalizacionLongitud(infoClient.idDatosLaborales.idDireccion.geolocalizacionLongitud);
-        dataReqCliente.getDatosLaborales().getDireccion().setTipoResidenciaID(infoClient.idDatosLaborales.idDireccion.idTipoResidencia!=null?infoClient.idDatosLaborales.idDireccion.idTipoResidencia.idTipoResidencia:1 );
+        dataReqCliente.getDatosLaborales().getDireccion().setTipoResidenciaID(infoClient.idDatosLaborales.idDireccion.idTipoResidencia != null ? infoClient.idDatosLaborales.idDireccion.idTipoResidencia.idTipoResidencia : 1);
         dataReqCliente.getDatosLaborales().getDireccion().setTipoViviendaId(infoClient.idDatosLaborales.idDireccion.idTipoVivienda != null ? Long.parseLong(infoClient.idDatosLaborales.idDireccion.idTipoVivienda.idVivienda) : 0);
         dataReqCliente.getDatosLaborales().getDireccion().setColoniaID(infoClient.idDatosLaborales.idDireccion.idColonia.idColonia);
         dataReqCliente.getDatosLaborales().getDireccion().setEstadoID(infoClient.idDatosLaborales.idDireccion.idEstado.codigoEstado);
         dataReqCliente.getDatosLaborales().getDireccion().setMunicipioID(infoClient.idDatosLaborales.idDireccion.idMunicipio.idMunicipio);
         dataReqCliente.getDatosLaborales().getDireccion().setBanderaCambioImagen(infoClient.idDatosLaborales.idDireccion.banderaCambioImagen);
-
 
 
         dataReqCliente.getDireccion().setID(infoClient.idDireccion.idDireccion);
@@ -105,9 +108,7 @@ public class ConverterReqClient {
         Referencia[] referencias_end = new Referencia[2];
 
 
-
-
-        for (int i = 0; i < referencias.length ; i++) {
+        for (int i = 0; i < referencias.length; i++) {
             DtReferenciasPersonalesList item = referencias[i];
 
             Referencia ref = new Referencia();
@@ -121,7 +122,6 @@ public class ConverterReqClient {
             ref.getDireccion().setTiempoResidenciaMes(item.idDireccion.tiempoResidenciaMeses);
             ref.getDireccion().setTiempoResidencia(item.idDireccion.tiempoResidencia);
             ref.setID(String.valueOf(item.idReferencia));
-
 
 
             ref.getDireccion().setBanderaCambioImagen(false);

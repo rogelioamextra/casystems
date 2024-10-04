@@ -2,14 +2,8 @@ package com.amextra.SolicitudCredito;
 
 
 import static android.os.Build.VERSION.SDK_INT;
-
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 
 import android.Manifest;
 import android.content.Intent;
@@ -25,6 +19,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.MainActivity;
 import com.amextra.amextra.R;
@@ -44,10 +43,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import cn.pedant.SweetAlert.SweetAlertDialog ;
 
 public class ProyeccionCuotas extends AppCompatActivity {
     String nombreStatus = "esAlta";
@@ -73,7 +72,8 @@ public class ProyeccionCuotas extends AppCompatActivity {
     TextView nombre, clienteId;
     InfoUSer responseLogIn = new InfoUSer();
     ListView listProyeccion;
-
+    String curpCliente = "";
+    final String CURP_CLI = "CURP_CLI";
     private ListaProyeccionAdapter adapter;
 
     @Override
@@ -90,6 +90,7 @@ public class ProyeccionCuotas extends AppCompatActivity {
         listProyeccion = findViewById(R.id.listProyeccion);
         if (recepcion != null) {
             responseLogIn = (InfoUSer) recepcion.getSerializable(INFO_USER);
+            curpCliente = recepcion.getString(CURP_CLI);
             titulo = (recepcion.getString(nombreTit));
             requestProyeccion = (RequestProyeccion) recepcion.getSerializable(N_REQ_PROYEC);
             requestSolicitudCredito = (RequestSolicitudCredito) recepcion.getSerializable(N_REQ_SOL_CRED);
@@ -141,7 +142,8 @@ public class ProyeccionCuotas extends AppCompatActivity {
             Bundle receptor = getIntent().getExtras();
             boolean status = (receptor.getBoolean(nombreStatus));
             sender.putString(nombreTit, titulo);
-            sender.putSerializable(INFO_USER,responseLogIn);
+            sender.putString(CURP_CLI, curpCliente);
+            sender.putSerializable(INFO_USER, responseLogIn);
             sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
             sender.putBoolean(nombreStatus, status);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -168,20 +170,18 @@ public class ProyeccionCuotas extends AppCompatActivity {
                         pintaListaClientes(infoProyeccion);
                         dialogFragment.dismiss();
 
-                    }else{
+                    } else {
                         dialogFragment.dismiss();
-                        new SweetAlertDialog(ProyeccionCuotas.this,SweetAlertDialog.ERROR_TYPE)
+                        new SweetAlertDialog(ProyeccionCuotas.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Error")
-                                .setContentText("" + resp.response.codigo+" - "+resp.response.mensaje)
+                                .setContentText(resp.response.codigo + " - " + resp.response.mensaje)
                                 .show();
                     }
 
                     dialogFragment.dismiss();
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(ProyeccionCuotas.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(ProyeccionCuotas.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -198,7 +198,7 @@ public class ProyeccionCuotas extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseSolicitudProyeccion> call, Throwable t) {
-                    dialogFragment.dismiss();
+                dialogFragment.dismiss();
             }
         });
 
@@ -216,7 +216,7 @@ public class ProyeccionCuotas extends AppCompatActivity {
 
     private void savePdf(String base64) {
         try {
-            String fileName = "amextra_cte" + requestSolicitudCredito.data.clienteId + "_" + System.currentTimeMillis();
+            String fileName = "amextra_cte" + requestSolicitudCredito.getData().getClienteID() + "_" + System.currentTimeMillis();
             final File dwldsPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName + ".pdf");
             byte[] pdfAsBytes = Base64.decode(base64, 0);
             FileOutputStream os;
@@ -225,14 +225,14 @@ public class ProyeccionCuotas extends AppCompatActivity {
             os.flush();
             os.close();
 
-            new SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Advertencia")
                     .setContentText("Archivo guardado: " + fileName)
                     .show();
 
         } catch (IOException e) {
 
-            new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE)
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                     .setTitleText("Error")
                     .setContentText("savePdf: " + e)
                     .show();

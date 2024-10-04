@@ -3,10 +3,6 @@ package com.amextra.SolicitudCredito;
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -25,6 +21,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.MainActivity;
 import com.amextra.SMS.EnviaSMS;
@@ -47,13 +47,14 @@ import com.amextra.io.Response.ResponseFrecuenciaPago;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class SolicitudDeCredito extends AppCompatActivity {
@@ -76,28 +77,39 @@ public class SolicitudDeCredito extends AppCompatActivity {
     long idFrecuenciaPago, idPrdouctoCredito, idDestinoCredito;
     int dia, mes, anio;
     int montoC;
-    boolean esRecompra;
+    boolean esRecompra = false, isSick = false;
     String curpCliente;
-    boolean smsValidado = true;
     int MAX_SOLCITUD = 200000;
     String N_REQ_SOL_CRED = "REQSOLCRED";
     String N_REQ_PROYEC = "REQPROYEC";
     Button validaSmsBtn;
     TextView noCliente, nombreCliente, txtFrecPago;
-    TextInputEditText inputCurp;
+    TextInputEditText inputCurp, txtDissease;
     final androidx.fragment.app.FragmentManager mFragmentManH = getSupportFragmentManager();
     final MenuHeader menuHeader = new MenuHeader();
     final androidx.fragment.app.FragmentTransaction mFragmentHeaderTransac = mFragmentManH.beginTransaction();
     InfoUSer responseLogIn = new InfoUSer();
     String INFO_USER = "infoLogIn";
-    TextInputLayout layOutTeditTxtFechaSolicitud, layoutPlazo, layoutFrecuencia, layOutDestinoCredito, layOutProductosCredito, layOutTxtCurp;
-    private boolean isAproboVerificacionSms;
+
+    CheckBox isSickCheck;
+    String disseaseDesc = "";
+
+    String formatLabelAmount = "";
+
+    TextInputLayout layOutTeditTxtFechaSolicitud, layoutPlazo, layoutFrecuencia,
+            layOutDestinoCredito, layOutProductosCredito, layOutTxtCurp, layOutDescDissease;
+    private boolean smsValidado = true;
+
+    String CURP_CLI = "CURP_CLI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solicitud_de_credito);
         cargaComponentes();
+        esRecompraCheck.setChecked(esRecompra);
+        isSickCheck.setChecked(isSick);
+        layOutDescDissease.setEnabled(isSick);
         Bundle bHeader = new Bundle();
         Bundle recepcion = getIntent().getExtras();
         if (recepcion != null) {
@@ -141,7 +153,7 @@ public class SolicitudDeCredito extends AppCompatActivity {
         txtFechaSolicitud.setFocusable(false);
         calendar = Calendar.getInstance();
         dia = calendar.get(Calendar.DAY_OF_MONTH);
-        mes = calendar.get(Calendar.MONTH)+1;
+        mes = calendar.get(Calendar.MONTH) + 1;
         anio = calendar.get(Calendar.YEAR);
         txtFechaSolicitud.setText(anio + "-" + return2digits(mes) + "-" + return2digits(dia));
         seekBar.setMax(MAX_SOLCITUD);
@@ -183,6 +195,35 @@ public class SolicitudDeCredito extends AppCompatActivity {
         });
 
 
+        isSickCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                layOutDescDissease.setEnabled(isChecked);
+                isSick = isChecked;
+                if (!isChecked) {
+                    disseaseDesc = "";
+                    txtDissease.setText("");
+                }
+            }
+        });
+
+
+        txtDissease.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                disseaseDesc = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void consultaInformacionCliente(String curp) {
@@ -199,21 +240,21 @@ public class SolicitudDeCredito extends AppCompatActivity {
                 boolean status = response.isSuccessful();
                 if (code == 200 && status) {
                     ResponseCurpClienteSolicitud datos = response.body();
-                    if (datos.response.codigo == 200) {
-                        nombreCliente.setText(datos.data.nombres.toUpperCase() + " " + datos.data.apellidoPaterno.toUpperCase() + " " + datos.data.apellidoMaterno.toUpperCase());
-                        noCliente.setText(String.valueOf(datos.data.idCliente));
+                    if (datos.getResponse().getCodigo() == 200) {
+                        nombreCliente.setText(datos.getData().getNombres().toUpperCase() + " " + datos.getData().getApellidoPaterno().toUpperCase() + " " + datos.getData().getApellidoMaterno().toUpperCase());
+                        noCliente.setText(String.valueOf(datos.getData().getIDCliente()));
 
-                        isAproboVerificacionSms = datos.data.isAproboVerificacionSms();
+                        smsValidado = datos.getData().isAproboVerificacionSms();
 
-                        if (!isAproboVerificacionSms) {
+                        if (!smsValidado) {
                             validaSmsBtn.setVisibility(View.VISIBLE);
 
                             validaSmsBtn.setOnClickListener(v -> {
                                 Intent reenviaSms = new Intent(SolicitudDeCredito.this, EnviaSMS.class);
                                 Bundle sender = new Bundle();
                                 sender.clear();
-                                sender.putSerializable("infoLogIn",responseLogIn);
-                                sender.putSerializable("telefono", datos.data.telefono);
+                                sender.putSerializable("infoLogIn", responseLogIn);
+                                sender.putSerializable("telefono", datos.getData().getTelefono());
                                 sender.putSerializable("curp", curp);
                                 reenviaSms.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 reenviaSms.putExtras(sender);
@@ -228,14 +269,12 @@ public class SolicitudDeCredito extends AppCompatActivity {
                         nombreCliente.setText("Cliente no encontrado");
                         dialogFragment.dismiss();
                         new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.WARNING_TYPE)
-                                .setContentText(datos.response.codigo + " " + datos.response.mensaje)
+                                .setContentText(datos.getResponse().getCodigo() + " " + datos.getResponse().getMensaje())
                                 .setTitleText("Advertencia")
                                 .show();
                     }
-                }
-
-                else {
-                    new SweetAlertDialog(SolicitudDeCredito.this,SweetAlertDialog.ERROR_TYPE)
+                } else {
+                    new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -314,17 +353,23 @@ public class SolicitudDeCredito extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                if (!s.toString().equals(formatLabelAmount)) {
+                    montoCredito.removeTextChangedListener(this);
+                    DecimalFormat df2 = new DecimalFormat("$#,###,###.##");
+                    montoC = defineValor(s.toString());
+                    seekBar.setProgress(montoC);
+                    String formated = df2.format(montoC);
+                    Log.d("garibatos format", formated);
+                    montoCredito.setText(formated);
+                    montoCredito.setSelection(formated.length());
+
+                    montoCredito.addTextChangedListener(this);
+                }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                String text = s.toString();
-                montoC = defineValor(text);
-                int largo = text.length();
-                montoCredito.setSelection(largo);
-                seekBar.setProgress(montoC);
 
 
             }
@@ -335,11 +380,13 @@ public class SolicitudDeCredito extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                DecimalFormat df2 = new DecimalFormat("$#,###,###.##");
 
 
-
-                    montoC = progress;
-                    montoCredito.setText(String.valueOf(progress));
+                montoC = progress;
+                String fors = df2.format(montoC);
+                Log.d("garibatos format", fors);
+                montoCredito.setText(fors);
 
 
             }
@@ -364,13 +411,13 @@ public class SolicitudDeCredito extends AppCompatActivity {
                 int code = response.code();
                 if (code == 200 && response.isSuccessful()) {
                     ResponseFrecuenciaPago resp = response.body();
-                    if (resp.response.codigo == 200) {
+                    if (resp.getResponse().getCodigo() == 200) {
                         ArrayList<String> frecuencias = new ArrayList<>();
                         ArrayList<Long> idsFrecuencias = new ArrayList<>();
-                        FrecuenciaPago[] frecuenciaPagos = resp.data.frecuenciasPago;
+                        FrecuenciaPago[] frecuenciaPagos = resp.getData().getFrecuenciasPago();
                         for (FrecuenciaPago frecuencia : frecuenciaPagos) {
-                            frecuencias.add(frecuencia.nombre);
-                            idsFrecuencias.add(frecuencia.idFrecuenciaPago);
+                            frecuencias.add(frecuencia.getNombre());
+                            idsFrecuencias.add(frecuencia.getIDFrecuenciaPago());
                         }
 
                         ArrayAdapter<String> spinner = new ArrayAdapter<String>(SolicitudDeCredito.this, android.R.layout.simple_spinner_dropdown_item, frecuencias);
@@ -384,18 +431,15 @@ public class SolicitudDeCredito extends AppCompatActivity {
                         });
 
 
-                    }
-                    else {
+                    } else {
                         new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.WARNING_TYPE)
-                                .setContentText(resp.response.codigo + " " + resp.response.mensaje)
+                                .setContentText(resp.getResponse().getCodigo() + " " + resp.getResponse().getMensaje())
                                 .setTitleText("Advertencia")
                                 .show();
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(SolicitudDeCredito.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -428,7 +472,7 @@ public class SolicitudDeCredito extends AppCompatActivity {
                 int code = response.code();
                 if (code == 200 && response.isSuccessful()) {
                     ResponseCatalogoProductos resp = response.body();
-                    if (resp.response.codigo == 200) {
+                    if (resp.getResponse().getCodigo() == 200) {
                         ArrayList<String> productos = new ArrayList<>();
                         ArrayList<Long> idsProductos = new ArrayList<>();
                         ArrayList<Producto> catalogo = resp.data.productos;
@@ -449,15 +493,13 @@ public class SolicitudDeCredito extends AppCompatActivity {
 
                     } else {
                         new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.WARNING_TYPE)
-                                .setContentText(resp.response.codigo + " " + resp.response.mensaje)
+                                .setContentText(resp.getResponse().getCodigo() + " " + resp.getResponse().getCodigo())
                                 .setTitleText("Advertencia")
                                 .show();
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(SolicitudDeCredito.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -492,7 +534,7 @@ public class SolicitudDeCredito extends AppCompatActivity {
                 if (code == 200 && response.isSuccessful()) {
                     ResponseDestinoCredito resp = response.body();
 
-                    if (resp.response.codigo == 200) {
+                    if (resp.getResponse().getCodigo() == 200) {
                         ArrayList<String> destino = new ArrayList<>();
                         ArrayList<Long> idsDestino = new ArrayList<>();
                         DestinosCredito[] destinosCreditos = resp.data.destinosCredito;
@@ -509,18 +551,16 @@ public class SolicitudDeCredito extends AppCompatActivity {
                                 idDestinoCredito = idsDestino.get(position);
                             }
                         });
-                    }else{
+                    } else {
                         new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.WARNING_TYPE)
-                                .setContentText(resp.response.codigo + " " + resp.response.mensaje)
+                                .setContentText(resp.getResponse().getCodigo() + " " + resp.getResponse().getMensaje())
                                 .setTitleText("Advertencia")
                                 .show();
                     }
 
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(SolicitudDeCredito.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -565,8 +605,9 @@ public class SolicitudDeCredito extends AppCompatActivity {
 
     private int defineValor(String s) {
         String v = s.replaceAll("[\\D]", "");
+        v = v.replaceAll("[$,.]", "");
         int value;
-        if (v.equals("")) {
+        if (v.isEmpty()) {
             value = 0;
         } else {
             value = Integer.parseInt(v);
@@ -580,6 +621,8 @@ public class SolicitudDeCredito extends AppCompatActivity {
         DataRequestSolicitudCredito dataRequestSolicitudCredito = requestSolicitudCredito.getData();
 
         dataRequestSolicitudCredito.setClienteID(noCliente.getText().toString());
+        dataRequestSolicitudCredito.setDisseaseDescription(disseaseDesc);
+        dataRequestSolicitudCredito.setSick(isSick);
         dataRequestSolicitudCredito.setRevolvente(esRecompra);
         dataRequestSolicitudCredito.setPlazo(plazo.getText().toString());
         dataRequestSolicitudCredito.setFrecuenciaPagoID(String.valueOf(idFrecuenciaPago));
@@ -652,6 +695,13 @@ public class SolicitudDeCredito extends AppCompatActivity {
             layoutPlazo.setErrorEnabled(false);
         }
 
+        if (isSick && disseaseDesc.isBlank()) {
+            status = false;
+            layOutDescDissease.setError("Por favor ingrese la descripción de la enfermedad");
+        } else {
+            layOutDescDissease.setErrorEnabled(false);
+        }
+
 
         return status;
 
@@ -661,7 +711,7 @@ public class SolicitudDeCredito extends AppCompatActivity {
 
         siguiente.setOnClickListener(v -> {
 
-            if (!isAproboVerificacionSms) {
+            if (!smsValidado) {
                 new SweetAlertDialog(SolicitudDeCredito.this, SweetAlertDialog.WARNING_TYPE)
                         .setContentText("Para continuar es necesario validar  el código SMS del cliente")
                         .setTitleText("Advertencia")
@@ -680,10 +730,11 @@ public class SolicitudDeCredito extends AppCompatActivity {
                 sender.putSerializable(N_REQ_PROYEC, requestProyeccion);
                 sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
                 sender.putString("nombre", n.toUpperCase());
-                sender.putSerializable(INFO_USER,responseLogIn);
+                sender.putSerializable(INFO_USER, responseLogIn);
 
                 sender.putString("idCliente", c);
                 sender.putString(nombreTit, titulo);
+                sender.putString(CURP_CLI, curpCliente);
                 solicitudCreditoScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 solicitudCreditoScreenIntent.putExtras(sender);
                 startActivity(solicitudCreditoScreenIntent);
@@ -709,6 +760,9 @@ public class SolicitudDeCredito extends AppCompatActivity {
         validaSmsBtn = findViewById(R.id.validaSmsBtn);
         plazo = findViewById(R.id.plazo);
         inputCurp = findViewById(R.id.inputCurp);
+        txtDissease = findViewById(R.id.txtDissease);
+        isSickCheck = findViewById(R.id.isSick);
+        layOutDescDissease = findViewById(R.id.layOutDescDissease);
 
 
         layOutTeditTxtFechaSolicitud = findViewById(R.id.layOutTeditTxtFechaSolicitud);

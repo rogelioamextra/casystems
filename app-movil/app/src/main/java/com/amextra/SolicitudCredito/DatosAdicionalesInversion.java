@@ -1,13 +1,13 @@
 package com.amextra.SolicitudCredito;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
@@ -29,7 +29,7 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
     String N_REQ_SOL_CRED = "REQSOLCRED";
     String INFO_USER = "infoLogIn";
     double tasa = 4.34;
-    TextInputEditText montoSemanal, montoQuincenal, montoMensual, montoTransporte,montoRenta,montoServicios,montoSueldo;
+    TextInputEditText montoSemanal, montoQuincenal, montoMensual, montoTransporte, montoRenta, montoServicios, montoSueldo;
 
     final androidx.fragment.app.FragmentManager mFragmentManH = getSupportFragmentManager();
     final MenuHeader menuHeader = new MenuHeader();
@@ -42,12 +42,14 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
     Bundle bTransact = new Bundle();
 
     int transporte = 0, renta = 0, servicios = 0, sueldos = 0, totalGastosNegocio = 0;
-    int montoMensualr=0, montoQuincenalNum = 0, montoSemanalNum = 0, totalQincenaMes = 0;
+    int montoMensualr = 0, montoQuincenalNum = 0, montoSemanalNum = 0, totalQincenaMes = 0;
     InfoUSer responseLogIn = new InfoUSer();
 
-    double montoMensualResult = 0,totalSemanaMes = 0;
+    double montoMensualResult = 0, totalSemanaMes = 0;
     Bundle bHeader = new Bundle();
 
+    String curpCliente = "";
+    final String CURP_CLI = "CURP_CLI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +72,18 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
         if (recepcion != null) {
             titulo = (recepcion.getString(nombreTit));
             responseLogIn = (InfoUSer) recepcion.getSerializable(INFO_USER);
+            curpCliente = recepcion.getString(CURP_CLI);
             if (getIntent().hasExtra(N_REQ_SOL_CRED)) {
                 requestSolicitudCredito = (RequestSolicitudCredito) recepcion.getSerializable(N_REQ_SOL_CRED);
-                if (requestSolicitudCredito.data.ingresos != null && requestSolicitudCredito.data.ingresos.gastoTotal!=null) {
+                if (requestSolicitudCredito.getData().getIngresos() != null && requestSolicitudCredito.getData().getIngresos().getGastoTotal() != null) {
 
-                    montoSueldo.setText(requestSolicitudCredito.data.ingresos.gastoSueldos);
-                    montoTransporte.setText(requestSolicitudCredito.data.ingresos.gastoTransporte);
-                    montoRenta.setText(requestSolicitudCredito.data.ingresos.gastoRenta);
-                    montoServicios.setText(requestSolicitudCredito.data.ingresos.gastoServicios);
-                    montoSemanal.setText(requestSolicitudCredito.data.ingresos.inversionSemanalMonto);
-                    montoQuincenal.setText(requestSolicitudCredito.data.ingresos.inversionQuincenalMonto);
-                    montoMensual.setText(requestSolicitudCredito.data.ingresos.inversionMensualMonto);
+                    montoSueldo.setText(requestSolicitudCredito.getData().getIngresos().getGastoSueldos());
+                    montoTransporte.setText(requestSolicitudCredito.getData().getIngresos().getGastoTransporte());
+                    montoRenta.setText(requestSolicitudCredito.getData().getIngresos().getGastoRenta());
+                    montoServicios.setText(requestSolicitudCredito.getData().getIngresos().getGastoServicios());
+                    montoSemanal.setText(requestSolicitudCredito.getData().getIngresos().getInversionSemanalMonto());
+                    montoQuincenal.setText(requestSolicitudCredito.getData().getIngresos().getInversionQuincenalMonto());
+                    montoMensual.setText(requestSolicitudCredito.getData().getIngresos().getInversionMensualMonto());
                     realizaCalculo();
                 }
             }
@@ -88,11 +91,11 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
         bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
         bTransact.putInt("itm", 3);
         bTransact.putString(nombreTit, titulo);
-        bTransact.putSerializable(INFO_USER,responseLogIn);
+        bTransact.putSerializable(INFO_USER, responseLogIn);
 
 
         bHeader.putString(nombreTit, titulo);
-        bHeader.putSerializable(INFO_USER,responseLogIn);
+        bHeader.putSerializable(INFO_USER, responseLogIn);
 
         menuHeader.setArguments(bHeader);
         mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
@@ -111,7 +114,6 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
         listenerGstos(montoSueldo);
 
 
-
         toGastosMensuales();
     }
 
@@ -124,8 +126,8 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
             boolean status = (receptor.getBoolean(nombreStatus));
             sender.putString(nombreTit, titulo);
             sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
-            sender.putSerializable(INFO_USER,responseLogIn);
-
+            sender.putSerializable(INFO_USER, responseLogIn);
+            sender.putString(CURP_CLI, curpCliente);
             sender.putBoolean(nombreStatus, status);
             solicitudCreditoScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
@@ -196,11 +198,11 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
         montoMensualr = defineValor(montoMensual.getText().toString());
 
 
-        montoMensualResult = montoMensualr+totalQincenaMes+totalSemanaMes;
+        montoMensualResult = montoMensualr + totalQincenaMes + totalSemanaMes;
     }
 
 
-    private void calculaTotalGasto(){
+    private void calculaTotalGasto() {
 
 
         transporte = defineValor(montoTransporte.getText().toString());
@@ -245,14 +247,13 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
         capturaInfo();
         bTransact.clear();
         bHeader.clear();
-        bTransact.putSerializable(N_REQ_SOL_CRED,requestSolicitudCredito);
-        bTransact.putString(nombreTit,titulo);
-        bTransact.putSerializable(INFO_USER,responseLogIn);
+        bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        bTransact.putString(nombreTit, titulo);
+        bTransact.putSerializable(INFO_USER, responseLogIn);
 
 
-
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable(INFO_USER,responseLogIn);
+        bHeader.putString(nombreTit, titulo);
+        bHeader.putSerializable(INFO_USER, responseLogIn);
         menuHeader.setArguments(bHeader);
         menuPat.setArguments(bTransact);
     }

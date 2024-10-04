@@ -36,35 +36,52 @@ import javax.persistence.Transient;
 public class CatClientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_cliente")
     private Long idCliente;
+    
     @Column(name = "status")
     private Boolean status;
+    
     @Column(name = "json")
     @JsonIgnore
     private String json;
+    
     @Basic(optional = false)
     @Column(name = "aprobo_verificacion_sms")
     private boolean aproboVerificacionSms;
+    
     @Column(name = "aprobo_nip")
     private boolean aproboNip;
-  
+    
+    @Basic(optional = false)
+    @Column(name = "espolitico")
+    private boolean espolitico;
+    
+    @Column(name = "politicaljobdescription")
+    private String politicaljobdescription;
+    
+    
     @JoinColumn(name = "id_direccion", referencedColumnName = "id_direccion")
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private CatDirecciones idDireccion;
+    
     @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private CatPersonas idPersona;
+    
     @JoinColumn(name = "id_datos_laborales", referencedColumnName = "id_datos_laborales")
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private DtDatosLaborales idDatosLaborales;
+    
     @OneToMany(mappedBy = "idCliente", cascade = CascadeType.ALL)
     private List<DtReferenciasPersonales> dtReferenciasPersonalesList;
     @JoinColumn(name = "id_dt_identificacion", referencedColumnName = "id_dt_identificacion")
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    
     private DtIdentificaciones idDtIdentificacion;
     @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursales")
     @ManyToOne
@@ -76,6 +93,7 @@ public class CatClientes implements Serializable {
     @JsonIgnore
 
     private CatUsuarios idAsesor;
+    
     @Transient
     private String nombreAsesor;
 
@@ -218,6 +236,22 @@ public class CatClientes implements Serializable {
 
     public void setAproboNip(boolean aproboNip) {
         this.aproboNip = aproboNip;
+    }
+
+    public boolean isEspolitico() {
+        return espolitico;
+    }
+
+    public void setEspolitico(boolean espolitico) {
+        this.espolitico = espolitico;
+    }
+
+    public String getPoliticaljobdescription() {
+        return politicaljobdescription;
+    }
+
+    public void setPoliticaljobdescription(String politicaljobdescription) {
+        this.politicaljobdescription = politicaljobdescription;
     }
 
    

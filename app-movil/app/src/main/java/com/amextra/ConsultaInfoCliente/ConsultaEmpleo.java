@@ -1,16 +1,15 @@
 package com.amextra.ConsultaInfoCliente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.amextra.AltaEdicionCliente.DatosClienteLaborales;
 import com.amextra.amextra.R;
-
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuInformacionCliente;
 import com.amextra.io.Request.RequestInsertClient;
@@ -20,7 +19,7 @@ import com.amextra.io.Response.ResponseGetCliente;
 
 public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
 
-    Button  btnEditarInfo;
+    Button btnEditarInfo;
     Button btnSiguiente;
     ResponseGetCliente infoCliente = null;
     String nombreStatus = "esAlta";
@@ -34,10 +33,10 @@ public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacion
             txtMunicipio,
             txtReciboNomina,
             txtIngresoMensual,
-            txtAntiguedad,txtColonia,txtPuesto;
+            txtAntiguedad, txtColonia, txtPuesto;
 
     ResponseGetCliente responseGetCliente = new ResponseGetCliente();
-    String clienteInfo ="INFO_CLIENT";
+    String clienteInfo = "INFO_CLIENT";
     final androidx.fragment.app.FragmentManager mFragmentManager = getSupportFragmentManager();
 
     final MenuInformacionCliente menuInformacionCliente = new MenuInformacionCliente();
@@ -62,8 +61,8 @@ public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacion
         if (recepcion != null) {
             titulo = (recepcion.getString(nombreTit));
             esAlta = recepcion.getBoolean(nombreStatus);
-            if(getIntent().hasExtra(clienteInfo)){
-                responseGetCliente =(ResponseGetCliente) recepcion.getSerializable(clienteInfo);
+            if (getIntent().hasExtra(clienteInfo)) {
+                responseGetCliente = (ResponseGetCliente) recepcion.getSerializable(clienteInfo);
                 getInfoCliente(responseGetCliente);
                 responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
             }
@@ -71,18 +70,18 @@ public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacion
 
         }
 
-        mBundle.putString(nombreTit,titulo);
-        mBundle.putSerializable(clienteInfo,responseGetCliente);
-        mBundle.putString(nombreTit,titulo);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putInt("itm",2);
-        mBundle.putBoolean(nombreStatus,esAlta);
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
+        mBundle.putString(nombreTit, titulo);
+        mBundle.putSerializable(clienteInfo, responseGetCliente);
+        mBundle.putString(nombreTit, titulo);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putInt("itm", 2);
+        mBundle.putBoolean(nombreStatus, esAlta);
+        bHeader.putString(nombreTit, titulo);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
         menuInformacionCliente.setArguments(mBundle);
         menuHeader.setArguments(bHeader);
-        mFragmentHeaderTransac.add(R.id.frameHeader,menuHeader).commit();
-        mFragmentTransaction.add(R.id.frameLayout,menuInformacionCliente).commit();
+        mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
+        mFragmentTransaction.add(R.id.frameLayout, menuInformacionCliente).commit();
         aConsultaInfReferencias();
         editaInfoLaboral();
     }
@@ -90,16 +89,16 @@ public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacion
     private void getInfoCliente(ResponseGetCliente responseGetCliente) {
         Cliente datos = responseGetCliente.data.cliente;
 
-        if(datos.idDatosLaborales!=null){
+        if (datos.idDatosLaborales != null) {
             txtEmpresa.setText(datos.idDatosLaborales.idCaracteristicaNegocio.nombre);
             txtGiro.setText(datos.idDatosLaborales.idGiroNegocio.nombre);
-            txtCalleNo.setText(datos.idDatosLaborales.idDireccion.calle+"- No."+datos.idDatosLaborales.idDireccion.numeroExterior);
+            txtCalleNo.setText(datos.idDatosLaborales.idDireccion.calle + "- No." + datos.idDatosLaborales.idDireccion.numeroExterior);
             txtMunicipio.setText(datos.idDatosLaborales.idDireccion.idMunicipio.nombre);
             txtColonia.setText(datos.idDatosLaborales.idDireccion.idColonia.nombre);
             txtCp.setText(datos.idDatosLaborales.idDireccion.cp);
-            if(datos.idDatosLaborales.recibosNomina){
+            if (datos.idDatosLaborales.recibosNomina) {
                 txtReciboNomina.setText("Si");
-            }else{
+            } else {
                 txtReciboNomina.setText("No");
             }
             txtIngresoMensual.setText(String.valueOf(datos.idDatosLaborales.ingresoMensual));
@@ -117,9 +116,9 @@ public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacion
             Intent consultaInfDireccion = new Intent(ConsultaEmpleo.this, DatosClienteLaborales.class);
             consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             boolean status = (receptor.getBoolean(nombreStatus));
-            sender.putSerializable("infoLogIn",responseLogIn);
+            sender.putSerializable("infoLogIn", responseLogIn);
             sender.putString(nombreTit, "Editar Datos del Cliente");
-            sender.putSerializable(clienteInfo,responseGetCliente);
+            sender.putSerializable(clienteInfo, responseGetCliente);
             sender.putBoolean(nombreStatus, status);
             consultaInfDireccion.putExtras(sender);
             startActivity(consultaInfDireccion);
@@ -131,10 +130,10 @@ public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacion
             Bundle bundle = new Bundle();
             Intent consultaInfDireccion = new Intent(ConsultaEmpleo.this, ConsultaReferencia.class);
             consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            bundle.putSerializable("infoLogIn",responseLogIn);
+            bundle.putSerializable("infoLogIn", responseLogIn);
             bundle.putString(nombreTit, titulo);
             bundle.putBoolean(nombreStatus, esAlta);
-            bundle.putSerializable(clienteInfo,responseGetCliente);
+            bundle.putSerializable(clienteInfo, responseGetCliente);
             consultaInfDireccion.putExtras(bundle);
             startActivity(consultaInfDireccion);
         });
@@ -159,6 +158,6 @@ public class ConsultaEmpleo extends AppCompatActivity implements MenuInformacion
 
     @Override
     public void transfiereInfo(RequestInsertClient req) {
-        Log.d("consultaC", "se ejecuta en transfiere info: "+2);
+        Log.d("consultaC", "se ejecuta en transfiere info: " + 2);
     }
 }

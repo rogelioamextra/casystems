@@ -3,8 +3,6 @@ package com.amextra.AltaEdicionCliente;
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -17,6 +15,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.amextra.MainActivity;
 import com.amextra.amextra.R;
@@ -111,7 +111,7 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
                 requestInsertClient = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
 
                 if (requestInsertClient.data != null) {
-                    if (requestInsertClient.data.datosLaborales != null ) {
+                    if (requestInsertClient.data.datosLaborales != null) {
                         mapDataClient(requestInsertClient.data);
                         existeInfo = true;
                     }
@@ -124,8 +124,8 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
                     Cliente cliente = responseGetCliente.data.cliente;
                     ConverterReqClient converterReqClient = new ConverterReqClient();
                     requestInsertClient = converterReqClient.converter(cliente);
-                    if(requestInsertClient.data!=null){
-                        if(requestInsertClient.data.datosLaborales != null){
+                    if (requestInsertClient.data != null) {
+                        if (requestInsertClient.data.datosLaborales != null) {
                             existeInfo = true;
                             mapDataClient(requestInsertClient.data);
                         }
@@ -133,8 +133,8 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
                 }
                 if (getIntent().hasExtra(REQ_ALTA_CLI)) {
                     requestInsertClient = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
-                    if(requestInsertClient.data!=null){
-                        if(requestInsertClient.data.datosLaborales != null){
+                    if (requestInsertClient.data != null) {
+                        if (requestInsertClient.data.datosLaborales != null) {
                             existeInfo = true;
                             mapDataClient(requestInsertClient.data);
                         }
@@ -147,12 +147,12 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
         mBundle.putString(nombreTit, titulo);
         mBundle.putInt("itm", 5);
         mBundle.putBoolean(nombreStatus, esAlta);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
 
 
         bHeader.putString(nombreTit, titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
         bHeader.putSerializable("geo", geolocalizacion);
 
         menuInformacionCliente.setArguments(mBundle);
@@ -163,7 +163,7 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
 
         calendar = Calendar.getInstance();
         dia = calendar.get(Calendar.DAY_OF_MONTH);
-        mes = calendar.get(Calendar.MONTH)+1;
+        mes = calendar.get(Calendar.MONTH) + 1;
         anio = calendar.get(Calendar.YEAR);
 
         switchRecNomina.setChecked(reciboNomina);
@@ -239,11 +239,11 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
                         idsGiro.add(caracteristica.idCaracteristicaNegocio);
                     }
 
-                    if(existeInfo){
+                    if (existeInfo) {
                         Long idCaracteristica = requestInsertClient.data.datosLaborales.caracteristicasNegocioId;
                         for (CaracteristicasNegocio caracteristica : caratesticas) {
-                            if(idCaracteristica == caracteristica.idCaracteristicaNegocio ){
-                                idDescEmpresa =idCaracteristica;
+                            if (idCaracteristica == caracteristica.idCaracteristicaNegocio) {
+                                idDescEmpresa = idCaracteristica;
                                 spinTxtEmpresaNegocio.setText(caracteristica.nombre);
                                 break;
                             }
@@ -260,11 +260,9 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
 
                         }
                     });
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosClienteLaborales.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosClienteLaborales.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -303,11 +301,11 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
                         IDNegocio.add(String.valueOf(giro.idGirosNegocio));
                     }
 
-                    if(existeInfo){
+                    if (existeInfo) {
                         Long idCaracteristica = requestInsertClient.data.datosLaborales.giroNegocioId;
-                        for  (GirosNegocio giro : girosNegocios) {
-                            if(idCaracteristica == giro.idGirosNegocio ){
-                                idDescGiroEmpresaNegocio =idCaracteristica;
+                        for (GirosNegocio giro : girosNegocios) {
+                            if (idCaracteristica == giro.idGirosNegocio) {
+                                idDescGiroEmpresaNegocio = idCaracteristica;
                                 spinGiroEmpresaNegocio.setText(giro.nombre);
                                 break;
                             }
@@ -323,11 +321,9 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
                             idDescGiroEmpresaNegocio = Long.parseLong(IDNegocio.get(position));
                         }
                     });
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosClienteLaborales.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosClienteLaborales.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -357,7 +353,7 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
             boolean status = (receptor.getBoolean(nombreStatus));
             if (validaInformacion()) {
                 capturaInformacion();
-                sender.putSerializable("infoLogIn",responseLogIn);
+                sender.putSerializable("infoLogIn", responseLogIn);
                 sender.putString(nombreTit, titulo);
                 sender.putBoolean(nombreStatus, status);
                 sender.putSerializable("reqAltaCliente", requestInsertClient);
@@ -371,7 +367,7 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
 
     private void capturaInformacion() {
         DataReqCliente dataReqCliente = requestInsertClient.getData();
-        if(!existeInfo){
+        if (!existeInfo) {
             dataReqCliente.setDatosLaborales(new DatosLaborales());
             dataReqCliente.getDatosLaborales().setTelefono(txtTelefonoEmpresa.getText().toString());
             dataReqCliente.getDatosLaborales().setGiroNegocioID(idDescGiroEmpresaNegocio);
@@ -382,7 +378,7 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
             dataReqCliente.getDatosLaborales().setRecibosNomina(reciboNomina);
             dataReqCliente.getDatosLaborales().setFechaIngreso(txtFechaIngreso.getText().toString());
             requestInsertClient.setData(dataReqCliente);
-        }else{
+        } else {
             dataReqCliente.getDatosLaborales().setTelefono(txtTelefonoEmpresa.getText().toString());
             dataReqCliente.getDatosLaborales().setGiroNegocioID(idDescGiroEmpresaNegocio);
             dataReqCliente.getDatosLaborales().setCaracteristicasNegocioId(idDescEmpresa);
@@ -439,11 +435,11 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
             layOutEmpresa.setErrorEnabled(false);
         }
 
-       if (giro.equals("")) {
+        if (giro.equals("")) {
             status = false;
-           layOutGiro.setError("El giro de la empresa es necesario");
+            layOutGiro.setError("El giro de la empresa es necesario");
         } else {
-           layOutGiro.setErrorEnabled(false);
+            layOutGiro.setErrorEnabled(false);
         }
 
         return status;
@@ -452,13 +448,13 @@ public class DatosClienteLaborales extends AppCompatActivity implements MenuInfo
     @Override
     public void transfiereInfo(RequestInsertClient req) {
 
-        if(validaInformacion()){
+        if (validaInformacion()) {
 
             capturaInformacion();
 
         }
-            mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
         menuInformacionCliente.setArguments(mBundle);
 
 

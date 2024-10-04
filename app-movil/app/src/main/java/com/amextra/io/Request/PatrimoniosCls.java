@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class PatrimoniosCls implements Serializable {
 
-    public String tipoPatrimonioId;
-    public String precio;
-    public String imagen;
-    public boolean cambioImagen;
-    public  String nombrePtr;
+    private String tipoPatrimonioId;
+    private String precio;
+    private String imagen;
+    private boolean cambioImagen;
+    private String nombrePtr;
 
     public String getTipoPatrimonioId() {
         return tipoPatrimonioId;
@@ -30,15 +30,35 @@ public class PatrimoniosCls implements Serializable {
         this.nombrePtr = nombrePtr;
     }
 
-    public String getTipoPatrimonioID() { return tipoPatrimonioId; }
-    public void setTipoPatrimonioID(String value) { this.tipoPatrimonioId = value; }
+    public String getTipoPatrimonioID() {
+        return tipoPatrimonioId;
+    }
 
-    public String getPrecio() { return precio; }
-    public void setPrecio(String value) { this.precio = value; }
+    public void setTipoPatrimonioID(String value) {
+        this.tipoPatrimonioId = value;
+    }
 
-    public String getImagen() { return imagen; }
-    public void setImagen(String value) { this.imagen = value; }
+    public String getPrecio() {
+        return precio;
+    }
 
-    public boolean getCambioImagen() { return cambioImagen; }
-    public void setCambioImagen(boolean value) { this.cambioImagen = value; }
+    public void setPrecio(String value) {
+        this.precio = value;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String value) {
+        this.imagen = value;
+    }
+
+    public boolean getCambioImagen() {
+        return cambioImagen;
+    }
+
+    public void setCambioImagen(boolean value) {
+        this.cambioImagen = value;
+    }
 }

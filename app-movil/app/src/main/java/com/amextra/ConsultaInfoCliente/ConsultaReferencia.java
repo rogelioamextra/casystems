@@ -1,7 +1,5 @@
 package com.amextra.ConsultaInfoCliente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 
-import com.amextra.SMS.EnviaSMS;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.amextra.AltaEdicionCliente.ReferenciasAlta;
+import com.amextra.SMS.EnviaSMS;
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuInformacionCliente;
@@ -23,15 +23,15 @@ import com.amextra.io.Response.ResponseGetCliente;
 import com.amextra.utils.ListaReferenciasAdapter;
 
 public class ConsultaReferencia extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
-    Button  btnSiguiente, btnEditarInfo;
+    Button btnSiguiente, btnEditarInfo;
     String nombreStatus = "esAlta";
     String nombreTit = "Titulo";
     TableLayout tableRef;
     String titulo;
     boolean esAlta;
-    String clienteInfo ="INFO_CLIENT";
-    boolean esEdicionOalta=false;
-    String esAltaOedicion="ALTA-EDICION";
+    String clienteInfo = "INFO_CLIENT";
+    boolean esEdicionOalta = false;
+    String esAltaOedicion = "ALTA-EDICION";
     ResponseGetCliente responseGetCliente = new ResponseGetCliente();
     final androidx.fragment.app.FragmentManager mFragmentManager = getSupportFragmentManager();
     final androidx.fragment.app.FragmentManager mFragmentManH = getSupportFragmentManager();
@@ -44,6 +44,7 @@ public class ConsultaReferencia extends AppCompatActivity implements MenuInforma
     LinearLayout noContent;
 
     InfoUSer responseLogIn = new InfoUSer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,38 +63,38 @@ public class ConsultaReferencia extends AppCompatActivity implements MenuInforma
             titulo = (recepcion.getString(nombreTit));
             esAlta = recepcion.getBoolean(nombreStatus);
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
-            Log.d("respLog", "onCreate: "+responseLogIn.usuarioId);
+            Log.d("respLog", "onCreate: " + responseLogIn.usuarioId);
 
-            if(getIntent().hasExtra(clienteInfo)){
-            responseGetCliente =(ResponseGetCliente) recepcion.getSerializable(clienteInfo);
+            if (getIntent().hasExtra(clienteInfo)) {
+                responseGetCliente = (ResponseGetCliente) recepcion.getSerializable(clienteInfo);
                 pintaReferencias(responseGetCliente.data.cliente.dtReferenciasPersonalesList);
 
             }
 
         }
-        mBundle.putSerializable("infoLogIn",responseLogIn);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
 
-        mBundle.putSerializable(clienteInfo,responseGetCliente);
-        mBundle.putString(nombreTit,titulo);
-        mBundle.putInt("itm",3);
-        mBundle.putBoolean(nombreStatus,esAlta);
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putString(nombreTit,titulo);
+        mBundle.putSerializable(clienteInfo, responseGetCliente);
+        mBundle.putString(nombreTit, titulo);
+        mBundle.putInt("itm", 3);
+        mBundle.putBoolean(nombreStatus, esAlta);
+        bHeader.putString(nombreTit, titulo);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putString(nombreTit, titulo);
 
         menuInformacionCliente.setArguments(mBundle);
         menuHeader.setArguments(bHeader);
-        mFragmentHeaderTransac.add(R.id.frameHeader,menuHeader).commit();
-        mFragmentTransaction.add(R.id.frameLayout,menuInformacionCliente).commit();
+        mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
+        mFragmentTransaction.add(R.id.frameLayout, menuInformacionCliente).commit();
 
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent smsEnvia = new Intent(ConsultaReferencia.this, EnviaSMS.class);
                 Bundle sender = new Bundle();
-                sender.putSerializable("infoLogIn",responseLogIn);
-                sender.putString("telefono",responseGetCliente.data.cliente.idPersona.telefono);
-                sender.putString("curp",responseGetCliente.data.cliente.idPersona.curp);
+                sender.putSerializable("infoLogIn", responseLogIn);
+                sender.putString("telefono", responseGetCliente.data.cliente.idPersona.telefono);
+                sender.putString("curp", responseGetCliente.data.cliente.idPersona.curp);
                 smsEnvia.putExtras(sender);
                 smsEnvia.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(smsEnvia);
@@ -104,14 +105,14 @@ public class ConsultaReferencia extends AppCompatActivity implements MenuInforma
 
     }
 
-    private void pintaReferencias(DtReferenciasPersonalesList[] dtReferenciasPersonalesLists){
-        if(dtReferenciasPersonalesLists.length>0){
+    private void pintaReferencias(DtReferenciasPersonalesList[] dtReferenciasPersonalesLists) {
+        if (dtReferenciasPersonalesLists.length > 0) {
 
             adapter = new ListaReferenciasAdapter(this, R.layout.custom_referencia_card, dtReferenciasPersonalesLists);
             listaReferencias.setAdapter(adapter);
             listaReferencias.setVisibility(View.VISIBLE);
             noContent.setVisibility(View.GONE);
-        }else{
+        } else {
             noContent.setVisibility(View.VISIBLE);
             listaReferencias.setVisibility(View.GONE);
         }
@@ -129,8 +130,8 @@ public class ConsultaReferencia extends AppCompatActivity implements MenuInforma
                 consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 sender.putString(nombreTit, "Editar Datos del Cliente");
                 sender.putBoolean(nombreStatus, esAlta);
-                sender.putSerializable(clienteInfo,responseGetCliente);
-                sender.putSerializable("infoLogIn",responseLogIn);
+                sender.putSerializable(clienteInfo, responseGetCliente);
+                sender.putSerializable("infoLogIn", responseLogIn);
 
                 consultaInfDireccion.putExtras(sender);
                 startActivity(consultaInfDireccion);
@@ -140,6 +141,6 @@ public class ConsultaReferencia extends AppCompatActivity implements MenuInforma
 
     @Override
     public void transfiereInfo(RequestInsertClient req) {
-        Log.d("consultaC", "se ejecuta en transfiere info: "+4);
+        Log.d("consultaC", "se ejecuta en transfiere info: " + 4);
     }
 }

@@ -3,9 +3,6 @@ package com.amextra.AltaEdicionCliente;
 import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -22,6 +19,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.MainActivity;
 import com.amextra.MenuHomeScreen;
@@ -63,7 +62,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
     String nombreTit = "Titulo";
     String LABEL_REGISTRADO = "ya se encuentra registrada";
     String clienteInfo = "INFO_CLIENT";
-    String REQ_ALTA_CLI = "reqAltaCliente",idDescribeEstado;
+    String REQ_ALTA_CLI = "reqAltaCliente", idDescribeEstado;
     Geolocalizacion geolocalizacion = new Geolocalizacion();
     Calendar calendar;
     DatePickerDialog picker;
@@ -74,7 +73,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
     RequestInsertClient requestInsertClient_up = new RequestInsertClient();
 
     String titulo, describeNacionalidad;
-    long  idDescribeNacionalidad;
+    long idDescribeNacionalidad;
     Toast toast = null;
     int duration = Toast.LENGTH_SHORT;
 
@@ -100,6 +99,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
     String idClinte;
     boolean statusCliente = true;
     InfoUSer responseLogIn = new InfoUSer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,11 +116,10 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
             esAlta = recepcion.getBoolean(nombreStatus);
             geolocalizacion = (Geolocalizacion) recepcion.getSerializable("geo");
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
-            if(esAlta){
+            if (esAlta) {
                 RequestInsertClient reqInsCliTmp = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
-                if(reqInsCliTmp!= null)
-                {
-                    if(reqInsCliTmp.data!=null){
+                if (reqInsCliTmp != null) {
+                    if (reqInsCliTmp.data != null) {
                         requestInsertClient = reqInsCliTmp;
                         mapDataClient(requestInsertClient);
                         existeInfo = true;
@@ -137,11 +136,10 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                     existeInfo = true;
                     mapDataClient(requestInsertClient);
 
-                }else{
+                } else {
                     RequestInsertClient reqInsCliTmp = (RequestInsertClient) recepcion.getSerializable(REQ_ALTA_CLI);
-                    if(reqInsCliTmp!= null)
-                    {
-                        if(reqInsCliTmp.data!=null){
+                    if (reqInsCliTmp != null) {
+                        if (reqInsCliTmp.data != null) {
                             requestInsertClient = reqInsCliTmp;
                             existeInfo = true;
                             mapDataClient(requestInsertClient);
@@ -155,16 +153,15 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
         }
 
 
-
         mBundle.putString(nombreTit, titulo);
         mBundle.putInt("itm", 0);
         mBundle.putBoolean(nombreStatus, esAlta);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
 
 
         bHeader.putString(nombreTit, titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
         bHeader.putSerializable("geo", geolocalizacion);
 
         menuInformacionCliente.setArguments(mBundle);
@@ -177,8 +174,6 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
         dia = calendar.get(Calendar.DAY_OF_MONTH);
         mes = calendar.get(Calendar.MONTH);
         anio = calendar.get(Calendar.YEAR);
-
-
 
 
         continuaRegistroDatosPersonales();
@@ -196,7 +191,8 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                 String curp = s.toString();
                 if (curp.length() == 18) {
                     requestConsultaCurp.getData().setCurp(curp);
-                    if(esAlta){
+                    if (esAlta) {
+                        requestConsultaCurp.getData().setPosibleCliente(true);
                         consultaCurp(requestConsultaCurp);
                     }
                     layOutTxtCurp.setErrorEnabled(false);
@@ -217,7 +213,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
     }
 
     private void mapDataClient(RequestInsertClient requestInsertClient) {
-        if(requestInsertClient.data !=null) {
+        if (requestInsertClient.data != null) {
             editTxtNombre.setText(requestInsertClient.data.persona.nombres);
             editTxtApellidoP.setText(requestInsertClient.data.persona.apellidoPaterno);
             editTxtApellidoM.setText(requestInsertClient.data.persona.apellidoMaterno);
@@ -283,10 +279,10 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                             idNacList.add(String.valueOf(nacionalidad.idNacionalidad));
                         }
 
-                        if(requestInsertClient.data !=null) {
+                        if (requestInsertClient.data != null) {
                             Long idNac = requestInsertClient.data.persona.nacionalidadId;
                             for (Nacionalidade nacionalidad : nacionalidades_) {
-                                if(idNac.equals(nacionalidad.idNacionalidad)){
+                                if (idNac.equals(nacionalidad.idNacionalidad)) {
                                     txtTestExposed.setText(nacionalidad.nombre.toUpperCase());
                                     idDescribeNacionalidad = idNac;
                                     break;
@@ -305,11 +301,9 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                     } else {
                         Toast.makeText(context, nacionalidades.response.codigo + " " + nacionalidades.response.mensaje, duration);
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesClientes.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesClientes.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -330,6 +324,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
             }
         });
     }
+
     private void consultaLugaresNac() {
         Call<Responseestados> call = ApiAdapter.getApiService(responseLogIn.token).estados();
         call.enqueue(new Callback<Responseestados>() {
@@ -347,10 +342,10 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                             estados.add(estado.nombre.toUpperCase());
                             idsEstados.add(estado.codigoEstado);
                         }
-                        if(requestInsertClient.data !=null) {
-                            String idEstado =requestInsertClient.data.persona.lugarNacimientoId;
+                        if (requestInsertClient.data != null) {
+                            String idEstado = requestInsertClient.data.persona.lugarNacimientoId;
                             for (Estado estado : listaEstado) {
-                                if(idEstado.equals(estado.codigoEstado)){
+                                if (idEstado.equals(estado.codigoEstado)) {
                                     spinnerTxtLugarNac.setText(estado.nombre.toUpperCase());
                                     idDescribeEstado = estado.codigoEstado;
                                     break;
@@ -372,11 +367,9 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                         Toast.makeText(DatosPersonalesClientes.this, data.response.codigo + " - " + data.response.mensaje, Toast.LENGTH_SHORT).show();
 
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesClientes.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesClientes.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -431,8 +424,8 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
 
                     } else {
                         dialogFragment.dismiss();
-                        SweetAlertDialog dialog = new SweetAlertDialog(DatosPersonalesClientes.this,SweetAlertDialog.ERROR_TYPE);
-                        if(curp.response.mensaje.contains(LABEL_REGISTRADO)){
+                        SweetAlertDialog dialog = new SweetAlertDialog(DatosPersonalesClientes.this, SweetAlertDialog.ERROR_TYPE);
+                        if (curp.response.mensaje.contains(LABEL_REGISTRADO)) {
                             //status = false;
                             dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
@@ -446,8 +439,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                             dialog.setContentText(curp.response.mensaje.toUpperCase());
 
                             dialog.show();
-                        }
-                        else{
+                        } else {
                             dialog.setConfirmText("Continuar");
                             dialog.setContentText(curp.response.mensaje.toUpperCase());
                             dialog.show();
@@ -457,11 +449,9 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                         consultaLugaresNac();
                     }
 
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesClientes.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesClientes.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -482,14 +472,13 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                 call.cancel();
                 btnCalendario.setVisibility(View.VISIBLE);
                 dialogFragment.dismiss();
-                toast.makeText(context, t.toString(), duration).show();
+                Toast.makeText(context, t.toString(), duration).show();
 
 
             }
         });
 
     }
-
 
 
     private void blockElements() {
@@ -593,12 +582,12 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
         return status;
     }
 
-    private void toMenu(){
+    private void toMenu() {
         Bundle sender = new Bundle();
         Intent menuHome = new Intent(DatosPersonalesClientes.this, MenuHomeScreen.class);
         sender.putSerializable("geo", geolocalizacion);
         sender.putBoolean(nombreStatus, esAlta);
-        sender.putSerializable("infoLogIn",responseLogIn);
+        sender.putSerializable("infoLogIn", responseLogIn);
         menuHome.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         menuHome.putExtras(sender);
         startActivity(menuHome);
@@ -619,7 +608,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
                     sender.putString(nombreTit, titulo);
                     sender.putSerializable("geo", geolocalizacion);
                     sender.putInt("idGenero", idGenero);
-                    sender.putSerializable("infoLogIn",responseLogIn);
+                    sender.putSerializable("infoLogIn", responseLogIn);
                     sender.putBoolean(nombreStatus, esAlta);
                     screenDatosPersonalesCont.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     sender.putSerializable(REQ_ALTA_CLI, requestInsertClient);
@@ -654,7 +643,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
 
 
     private void setInfoDataCliente() {
-        if(!existeInfo){
+        if (!existeInfo) {
             requestInsertClient.setData(new DataReqCliente());
             DataReqCliente dataReqCliente = new DataReqCliente();
             dataReqCliente.setPersona(new Persona());
@@ -672,7 +661,7 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
             dataReqCliente.setStatus(true);
 
             requestInsertClient.setData(dataReqCliente);
-        }else{
+        } else {
             requestInsertClient.getData().setAsesorId(responseLogIn.usuarioId);
             requestInsertClient.getData().setStatus(statusCliente);
             requestInsertClient.getData().getPersona().setID(requestInsertClient.data.persona.id);
@@ -687,16 +676,15 @@ public class DatosPersonalesClientes extends AppCompatActivity implements MenuIn
         }
 
 
-
     }
 
     @Override
     public void transfiereInfo(RequestInsertClient require) {
-        if(validacampos()){
+        if (validacampos()) {
             setInfoDataCliente();
         }
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putSerializable(REQ_ALTA_CLI,requestInsertClient);
+        mBundle.putSerializable("infoLogIn", responseLogIn);
+        mBundle.putSerializable(REQ_ALTA_CLI, requestInsertClient);
         menuInformacionCliente.setArguments(mBundle);
     }
 

@@ -17,6 +17,7 @@ import com.mx.ca.viu.modelos.CatProductosCredito;
 import com.mx.ca.viu.modelos.CatProperties;
 import com.mx.ca.viu.modelos.CatServiciosValidacionesExternos;
 import com.mx.ca.viu.modelos.CatUsuarios;
+import com.mx.ca.viu.modelos.DtAval;
 import com.mx.ca.viu.modelos.DtComparacionFacial;
 
 import com.mx.ca.viu.modelos.DtEgresos;
@@ -24,7 +25,7 @@ import com.mx.ca.viu.modelos.DtIngresos;
 import com.mx.ca.viu.modelos.DtPatrimonio;
 
 import com.mx.ca.viu.modelos.MvSolicitudesAmextra;
-
+import com.mx.ca.viu.modelos.dtos.request.Aval;
 import com.mx.ca.viu.modelos.dtos.request.PatrimoniosSolicitud;
 import com.mx.ca.viu.modelos.dtos.request.ProyeccionRequest;
 import com.mx.ca.viu.modelos.dtos.request.ProyeccionResponse;
@@ -47,10 +48,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 /**
  *
@@ -73,14 +76,28 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
     @Autowired
     MvSolicitudesAmextraRepository mvsolicitudes;
 
+    
     @Override
     public SolicitudResponse solicitudNuevoTransform(SolicitudRequest request) {
         
-
+        MvSolicitudesAmextra solicitud = new MvSolicitudesAmextra();
         SolicitudResponse response = new SolicitudResponse();
+        boolean isSick = request.getData().isSick();
+        String disseaseDescription = request.getData().getDisseaseDescription();
+        Set<Aval> avales = request.getData().getAvales();
 
+        
+            
         try {
-                   
+            logger.info("Json info newCreditApply method clientesNuevoTransform ->: {}", Transform.toJSON(request));
+            
+            
+             if(avales.isEmpty()){
+                 
+                 throw new Exception("Se debe capturar almenos un aval para podergenerar una solicitud de credito");
+             }
+            
+            
             if (request.getData().getClienteId() == null || request.getData().getClienteId().isEmpty()) {
                 throw new Exception("El campo clienteId es requerido");
 
@@ -90,11 +107,25 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
                 throw new Exception("El Cliente ya cuenta con 2 solicitudes de credito activas");
 
             }
-
-            MvSolicitudesAmextra solicitud = new MvSolicitudesAmextra();
-            solicitud.setJson(Transform.toJSON(request));
-            solicitud.setIdCliente(genericoRepository.findByID(CatClientes.class,
-                    Long.valueOf(request.getData().getClienteId())));
+            
+            if(isSick && disseaseDescription.equalsIgnoreCase("")){
+                throw new Exception("Si el cliente padece alguna enfermedad se debe ingresar la descripción de la misma.");
+            }
+            
+            
+            if(!request.getData().getConfirmaIngresos()){
+                throw new Exception("Por favor solicite al cliente aceptar la declarativa de ingresos.");
+            }
+            
+            
+            
+            
+            solicitud.setDisseasedescription(disseaseDescription);
+            solicitud.setSick(isSick);
+            
+            
+            solicitud.setJson("");
+            solicitud.setIdCliente(genericoRepository.findByID(CatClientes.class,Long.valueOf(request.getData().getClienteId())));
             solicitud
                     .setIdFrecuencia(genericoRepository.findByID(CatFrecuenciaPago.class, Long.valueOf(request.getData().getFrecuenciaPagoId())));
             solicitud.setIdDestinoCredito(genericoRepository.findByID(CatDestinoCreditos.class, Long.valueOf(request.getData().getDestinoCreditoId())));
@@ -139,7 +170,7 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
 
                 for (DtPatrimonio sol : solicitud.getDtPatrimonioList()) {
                     
-                    logger.info("Valor de la imagen  del patrimonio: {}", sol.getNombreImagen());
+                    //logger.info("Valor de la imagen  del patrimonio: {}", sol.getNombreImagen());
                     
                     if (!sol.getNombreImagen().isEmpty()) {
                         if (!Objects.equals(sol.getNombreImagen(), "NO_IMAGE")) {
@@ -159,6 +190,54 @@ public class CatSolicitudesServiceImpl implements CatSolicitudService {
 
                     }
 
+                }
+                
+                logger.error("size avales: "+avales.size());
+                
+                if(!avales.isEmpty()){
+                
+                    for(Aval aval:avales){ 
+                
+                        DtAval avalDb = new DtAval();
+                        logger.error("aval"+ aval.toString());
+                        avalDb.setApellidoMaterno(aval.getApellidoMaterno());
+                        avalDb.setApellidoPaterno(aval.getApellidoPaterno());
+                        avalDb.setNombre(aval.getNombre());
+                        avalDb.setCurp(aval.getCurp());
+                        avalDb.setFechaNacimiento(aval.getFechaNacimiento());
+                        avalDb.setTelefono(aval.getTelefono());
+                        avalDb.setTipoId(aval.getTipoIdentificacion());
+                        avalDb.setIdCliente(Long.valueOf(request.getData().getClienteId()));
+                        avalDb.setIdSolicitud(solicitud.getIdSolicitud());
+                        genericoRepository.guardar(avalDb);
+                        long tipoId = aval.getTipoIdentificacion();
+                        if(aval.getTipoIdentificacion() != 1){
+                        
+                            byte[] imgId = org.apache.commons.codec.binary.Base64.decodeBase64(aval.getFrontal());
+                            String nameImgId = aval.getCurp()+"_t"+tipoId;
+                            ftp.sendFileSFTP(imgId, nameImgId, obtenpropiedades(solicitud.getIdCliente().getIdPersona().getCurp()+"/aval"+tipoId));
+                            
+                            
+                        }else{
+                                
+                            byte[] imgFront = org.apache.commons.codec.binary.Base64.decodeBase64(aval.getFrontal());
+                            String frontImgId = aval.getCurp()+"_t"+tipoId+"_f";
+                            ftp.sendFileSFTP(imgFront, frontImgId, obtenpropiedades(solicitud.getIdCliente().getIdPersona().getCurp()+"/aval"+tipoId));
+                            
+                            
+                            
+                            byte[] imgBack = org.apache.commons.codec.binary.Base64.decodeBase64(aval.getReverso());
+                            String backImgId = aval.getCurp()+"_t"+tipoId+"_b";
+                            ftp.sendFileSFTP(imgBack, backImgId, obtenpropiedades(solicitud.getIdCliente().getIdPersona().getCurp()+"/aval"+tipoId));
+                        
+                        }
+                        
+                                                    
+                        byte[] imgComprobante = org.apache.commons.codec.binary.Base64.decodeBase64(aval.getComprobanteDomicilio());
+                            String comprobanteImgId = aval.getCurp()+"_comprobanteDomicilio";
+                            ftp.sendFileSFTP(imgComprobante, comprobanteImgId, obtenpropiedades(solicitud.getIdCliente().getIdPersona().getCurp()+"/aval"+tipoId));
+                    
+                    }
                 }
                 response.getData().setSolicitudId(solicitud.getIdSolicitud().toString());
                 response.getResponse().setCodigo(200);

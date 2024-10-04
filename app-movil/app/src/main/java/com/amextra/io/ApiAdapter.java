@@ -12,7 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiAdapter {
     private static ApiService API_SERVICE;
-    private static final String BASE_URL = "http://172.208.80.69:8000";
+    //private static final String BASE_URL = "http://192.168.1.132:8000";
+    private static final String BASE_URL = "http://dfixtapaluca2.dyndns.org:8000";
 
     public static ApiService getApiService(final String token) {
 

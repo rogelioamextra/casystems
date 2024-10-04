@@ -1,7 +1,5 @@
 package com.amextra.SolicitudCredito;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DecimalFormat;
 
-public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.TransfiereDatos{
+public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.TransfiereDatos {
     Button siguiente;
     RadioButton radioEgresos;
     String nombreStatus = "esAlta";
@@ -34,21 +34,24 @@ public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.T
     String INFO_USER = "infoLogIn";
     TextInputEditText montoAlimentos, montoRenta, montoGastosEscuela, montoTelefono, montoLuz, montoAgua,
             montoGas, montoTransporte, montoVestido, montoEsparcimiento, montoReparaciones;
-    double montoDoAlimentos =0,montoDoRenta=0,montoDoGastosEscuela=0,montoDoTelefono=0,montoDoLuz=0;
-    double montoDoAgua =0,montoDoGas=0,montoDoTransporte=0,montoDoVestido=0,montoDoEsparcimiento=0,montoDoReparaciones=0,totalGeneral=0;
+    double montoDoAlimentos = 0, montoDoRenta = 0, montoDoGastosEscuela = 0, montoDoTelefono = 0, montoDoLuz = 0;
+    double montoDoAgua = 0, montoDoGas = 0, montoDoTransporte = 0, montoDoVestido = 0, montoDoEsparcimiento = 0, montoDoReparaciones = 0, totalGeneral = 0;
     TextView montoTotal;
+
     final androidx.fragment.app.FragmentManager mFragmentManH = getSupportFragmentManager();
     final MenuHeader menuHeader = new MenuHeader();
     final androidx.fragment.app.FragmentTransaction mFragmentHeaderTransac = mFragmentManH.beginTransaction();
 
-    final androidx.fragment.app.FragmentManager mFragmentPat= getSupportFragmentManager();
+    final androidx.fragment.app.FragmentManager mFragmentPat = getSupportFragmentManager();
     final MenuSolicitudCredito menuPat = new MenuSolicitudCredito();
     final androidx.fragment.app.FragmentTransaction mFragmentTransactPat = mFragmentPat.beginTransaction();
 
     Bundle bTransact = new Bundle();
-    InfoUSer responseLogIn ;
+    InfoUSer responseLogIn;
     Bundle bHeader = new Bundle();
 
+    String curpCliente = "";
+    final String CURP_CLI = "CURP_CLI";
 
 
     @Override
@@ -61,36 +64,37 @@ public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.T
         if (recepcion != null) {
             responseLogIn = (InfoUSer) recepcion.getSerializable(INFO_USER);
             titulo = (recepcion.getString(nombreTit));
-            if(getIntent().hasExtra(N_REQ_SOL_CRED)){
+            curpCliente = recepcion.getString(CURP_CLI);
+            if (getIntent().hasExtra(N_REQ_SOL_CRED)) {
                 requestSolicitudCredito = (RequestSolicitudCredito) recepcion.getSerializable(N_REQ_SOL_CRED);
-                if(requestSolicitudCredito.data.egresos!=null){
-                    montoAlimentos.setText(requestSolicitudCredito.data.egresos.alimentos);
-                    montoRenta.setText(requestSolicitudCredito.data.egresos.renta);
-                    montoGastosEscuela.setText(requestSolicitudCredito.data.egresos.gastosEscolares);
-                    montoTelefono.setText(requestSolicitudCredito.data.egresos.telefono);
-                    montoLuz.setText(requestSolicitudCredito.data.egresos.luz);
-                    montoAgua.setText(requestSolicitudCredito.data.egresos.agua);
-                    montoGas.setText(requestSolicitudCredito.data.egresos.gas);
-                    montoTransporte.setText(requestSolicitudCredito.data.egresos.transporteGasolina);
-                    montoVestido.setText(requestSolicitudCredito.data.egresos.vestido);
-                    montoEsparcimiento.setText(requestSolicitudCredito.data.egresos.esparcimiento);
-                    montoReparaciones.setText(requestSolicitudCredito.data.egresos.mantenimientoReparaciones);
+                if (requestSolicitudCredito.getData().getEgresos() != null) {
+                    montoAlimentos.setText(requestSolicitudCredito.getData().getEgresos().getAlimentos());
+                    montoRenta.setText(requestSolicitudCredito.getData().getEgresos().getRenta());
+                    montoGastosEscuela.setText(requestSolicitudCredito.getData().getEgresos().getGastosEscolares());
+                    montoTelefono.setText(requestSolicitudCredito.getData().getEgresos().getTelefono());
+                    montoLuz.setText(requestSolicitudCredito.getData().getEgresos().getLuz());
+                    montoAgua.setText(requestSolicitudCredito.getData().getEgresos().getAgua());
+                    montoGas.setText(requestSolicitudCredito.getData().getEgresos().getGas());
+                    montoTransporte.setText(requestSolicitudCredito.getData().getEgresos().getTransporteGasolina());
+                    montoVestido.setText(requestSolicitudCredito.getData().getEgresos().getVestido());
+                    montoEsparcimiento.setText(requestSolicitudCredito.getData().getEgresos().getEsparcimiento());
+                    montoReparaciones.setText(requestSolicitudCredito.getData().getEgresos().getMantenimientoReparaciones());
                     generaCalculo();
                 }
             }
         }
 
 
-        bTransact.putSerializable(N_REQ_SOL_CRED,requestSolicitudCredito);
-        bTransact.putInt("itm",1);
-        bTransact.putString(nombreTit,titulo);
+        bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        bTransact.putInt("itm", 1);
+        bTransact.putString(nombreTit, titulo);
 
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable(INFO_USER,responseLogIn);
-        bTransact.putSerializable(INFO_USER,responseLogIn);
+        bHeader.putString(nombreTit, titulo);
+        bHeader.putSerializable(INFO_USER, responseLogIn);
+        bTransact.putSerializable(INFO_USER, responseLogIn);
 
         menuHeader.setArguments(bHeader);
-        mFragmentHeaderTransac.add(R.id.frameHeader,menuHeader).commit();
+        mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
 
         menuPat.setArguments(bTransact);
         mFragmentTransactPat.add(R.id.frameLayout, menuPat).commit();
@@ -107,7 +111,7 @@ public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.T
         setListenerTextEdit(montoVestido);
         setListenerTextEdit(montoEsparcimiento);
         setListenerTextEdit(montoReparaciones);
-        toFinEgresos();
+        toAvales();
     }
 
 
@@ -205,16 +209,17 @@ public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.T
 
     }
 
-    private void toFinEgresos() {
+    private void toAvales() {
         siguiente.setOnClickListener(v -> {
             Bundle sender = new Bundle();
             Bundle receptor = getIntent().getExtras();
-            Intent solicitudCreditoScreenIntent = new Intent(Egresos.this, Patrimonios.class);
+            Intent solicitudCreditoScreenIntent = new Intent(Egresos.this, AvalesPrincipal.class);
             solicitudCreditoScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             boolean status = (receptor.getBoolean(nombreStatus));
             capturaInfo();
             sender.putString(nombreTit, titulo);
-            sender.putSerializable(INFO_USER,responseLogIn);
+            sender.putSerializable(INFO_USER, responseLogIn);
+            sender.putString(CURP_CLI, curpCliente);
             sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
             sender.putBoolean(nombreStatus, status);
             solicitudCreditoScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -226,9 +231,9 @@ public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.T
     @Override
     public void transfiereinfocredito() {
         capturaInfo();
-        bTransact.putSerializable(N_REQ_SOL_CRED,requestSolicitudCredito);
-        bTransact.putString(nombreTit,titulo);
-        bTransact.putSerializable(INFO_USER,responseLogIn);
+        bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        bTransact.putString(nombreTit, titulo);
+        bTransact.putSerializable(INFO_USER, responseLogIn);
         menuPat.setArguments(bTransact);
     }
 }

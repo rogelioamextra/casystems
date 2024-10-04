@@ -63,86 +63,129 @@ public interface ApiService {
 
     @GET("/clientes")
     Call<ResponseGetClientes> getListClientes();
+
     @GET("/catalogos/avisos")
     Call<ResponseAvisos> avisos();
+
     @POST("/login/entrar")
     Call<ResponseLogin> postIniciaSesion(@Body RequestLogin requestLogin);
+
     @POST("/login/existecorreo")
     Call<ResponseExisteCorreo> postExisteCorreon(@Body RequestExisteCorreo requestExisteCorreo);
+
     @POST("/correo/recuperapass")
     Call<ResponseRecuperaPass> postRecuperaPass(@Body RequestRecuperaPass requestRecuperaPass);
+
     @POST("/login/actualizapass")
     Call<ResponseActualizaPass> postActualizaPass(@Body RequestActualizaPass requestActualizaPass);
+
     @GET("/clientes/{id}")
     Call<ResponseGetCliente> getCliente(@Path("id") String id);
+
     @GET("/clientes/imagenescliente/{id}")
     Call<ResponseImagesCte> getImagesClient(@Path("id") String id);
+
     @GET("/clientes/curp/{curp}")
     Call<ResponseCurpClienteSolicitud> getCurpClienteSolicitud(@Path("curp") String curp);
+
     @POST("/clientes")
     Call<ResponseGetClientes> generaAltaCliente(@Body RequestInsertClient resquestAltaCliente);
+
     @PUT("/clientes")
     Call<ResponseGetClientes> actualizaCliente(@Body RequestInsertClient resquestAltaCliente);
+
     @GET("/solicitud/cliente/{id}")
     Call<ResponseSolicitudesCreditoCliente> solicitudesCreditoCliente(@Path("id") String id);
+
     @GET("/clientes/asesor/{id}")
     Call<ResponseGetClientes> getClientesAsesor(@Path("id") String id);
+
     @GET("/clientes/validaciontelefono/{phone}")
-    Call<ResValidaTelefono> validaNumeroTelfono(@Path("phone")String telefono);
+    Call<ResValidaTelefono> validaNumeroTelfono(@Path("phone") String telefono);
 
     //--------- CATALOGOS --------->
     @GET("/catalogos/gradosEscolares")
     Call<ResponseCatalogoGradosEscolares> gradosEscolares();
+
     @GET("/catalogos/estadosCiviles")
     Call<ResponseCatalogosEstadoCivil> estadosCivil();
+
     @GET("/catalogos/nacionalidades")
     Call<ResponseCatalogosNacionalidad> nacionalidades();
+
     @GET("/catalogos/tiposResidencias")
     Call<ResponseTiposResidencia> tipoResidencia();
+
     @GET("/catalogos/girosNegocioEmpresas")
     Call<ResponseGirosNegocios> giroNegocio();
+
     @GET("/catalogos/caracteristicasNegocios")
     Call<ResponseCaracteristicasNegocios> caracteristicasNegocios();
+
     @GET("/catalogos/tiemposActualesEmpleo")
     Call<ResponseTiemposActualesEmpleo> tiemposActualesEmpleo();
+
     @GET("/catalogos/tiposViviendas")
     Call<ResponsetiposViviendas> tiposViviendas();
+
     @POST("/valida/curp")
     Call<ResponseCurp> consultaCurp(@Body RequestConsultaCurp requestConsultaCurp);
+
     @POST("/envio/sms/")
     Call<ResponseEnvioSMS> enviaSMS(@Body RequestEnvioSMS requestEnvioSMS);
-    @POST("/envio/validar")
+
+    @POST("/envio/valida-sms")
     Call<ResponseValidaSMS> validaSMS(@Body RequestValidaSMS requestValidaSMS);
+
     @POST("/ocr/ine/")
     Call<ResponseValidaIne> validaIne(@Body RequestvalidaIne requestvalidaIne);
+
     @POST("/ocr/reconocimientofacial")
     Call<ResponseValidaIne> pruebaVida(@Body ReqReconocimiento reqReconocimiento);
-    @GET("/catalogos/estados") Call<Responseestados> estados();
-    @GET("/catalogos/municipiosPorEstado/{id}") Call<ResponsemunicipiosPorEstado> municipiosPorEstado(@Path("id") String id);
-    @GET("/catalogos/ciudadPorEstado/{id}") Call<ResponseciudadPorEstado> ciudadPorEstado(@Path("id") String id);
-    @GET("/catalogos/coloniaPorMunicipio/{id}") Call<ResponsecoloniaPorMunicipio> coloniaPorMunicipio(@Path("id") String id);
+
+    @GET("/catalogos/estados")
+    Call<Responseestados> estados();
+
+    @GET("/catalogos/municipiosPorEstado/{id}")
+    Call<ResponsemunicipiosPorEstado> municipiosPorEstado(@Path("id") String id);
+
+    @GET("/catalogos/ciudadPorEstado/{id}")
+    Call<ResponseciudadPorEstado> ciudadPorEstado(@Path("id") String id);
+
+    @GET("/catalogos/coloniaPorMunicipio/{id}")
+    Call<ResponsecoloniaPorMunicipio> coloniaPorMunicipio(@Path("id") String id);
+
     @GET("/catalogos/codigoPostal/{id}")
     Call<ResponsecodigoPostal> codigoPostal(@Path("id") String id);
+
     @GET("/catalogos/parentescos")
     Call<ResponseParentescos> parentescos();
+
     @GET("/catalogos/tiposIdentificaciones")
     Call<ResponseIdentificaicon> identificaciones();
+
     @GET("/catalogos/frecuenciasPago")
     Call<ResponseFrecuenciaPago> frecuenciaPago();
+
     @GET("/catalogos/productos")
     Call<ResponseCatalogoProductos> catalogoProductos();
+
     @GET("/catalogos/destinoCreditos")
     Call<ResponseDestinoCredito> destinoCreditos();
+
     @POST("/solicitud/proyeccion")
     Call<ResponseSolicitudProyeccion> solicitudProyeccion(@Body RequestProyeccion requestProyeccion);
+
     @POST("/solicitud/")
     Call<ResponseAddSolicitudCredito> addSolicitudCredito(@Body RequestSolicitudCredito requestSolicitudCredito);
+
     @GET("/catalogos/patrimonios")
     Call<ResponsePatrimonios> patrimonios();
 
     //--------- AGENDA --------->
     @POST("/agenda/pendientes/asesorfecha/")
     Call<ResponseAgenda> agendaPendientes(@Body RequestCitasEmpleado requestCitasEmpleado);
+
     @POST("/agenda/registrarAsitencia/")
     Call<ResponseAgenda> confirmaAsistencia(@Body RequestRegistraAsistencia registraAsistencia);
 

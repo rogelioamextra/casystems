@@ -7,7 +7,9 @@ public final class Constants {
 
     public static final String SERVER_ERROR_TEXT = "Ocurrió un error, por favor intente nuvamente";
 
-    public static final int QUALITY_IMAGE = 10;
+    public static final int QUALITY_IMAGE = 30;
 
-    private Constants() {};
+    private Constants() {
+    }
+
 }

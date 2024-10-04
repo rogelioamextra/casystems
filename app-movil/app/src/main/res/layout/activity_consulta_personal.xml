@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
@@ -18,7 +17,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/frameHeader"/>
+            android:id="@+id/frameHeader" />
 
         <LinearLayout
             android:id="@+id/cardContent"
@@ -35,16 +34,19 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="20dp">
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/frameLayout"
-                android:layout_marginBottom="10dp"
-                />
+                android:id="@+id/frameMenu"
+                android:clickable="true"
+                android:layout_marginBottom="10dp" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp">
+
                 <ScrollView
                     android:id="@+id/scrollView"
                     android:layout_width="fill_parent"
@@ -54,8 +56,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:fillViewport="true"
-                    android:scrollbarStyle="outsideInset"
-                    >
+                    android:scrollbarStyle="outsideInset">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -69,13 +70,13 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:orientation="vertical">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:padding="10dp"
-                                >
+                                android:padding="10dp">
 
                                 <TextView
                                     android:layout_width="100dp"
@@ -83,7 +84,8 @@
                                     android:text="No. Cliente:"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:id="@+id/txtIdClient"
@@ -91,9 +93,9 @@
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -107,7 +109,8 @@
                                     android:text="Nombre:"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -115,8 +118,7 @@
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -132,7 +134,8 @@
                                     android:text="Correo :"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -140,9 +143,9 @@
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -156,7 +159,8 @@
                                     android:text="Estado civil :"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -164,9 +168,9 @@
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -180,7 +184,8 @@
                                     android:text="Tipo Identificaciòn"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -188,8 +193,7 @@
                                     android:text=""
                                     android:id="@+id/tipoId"
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -205,7 +209,8 @@
                                     android:text="Genero: "
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -213,9 +218,9 @@
                                     android:id="@+id/idGenero"
                                     android:text=""
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -229,7 +234,8 @@
                                     android:text="Nacionalidad: "
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -237,9 +243,9 @@
                                     android:id="@+id/idNacionalidad"
                                     android:text=""
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -253,7 +259,8 @@
                                     android:text="Lugar de Nacimiento"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -261,9 +268,9 @@
                                     android:text=""
                                     android:id="@+id/idLugarNacimiento"
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -277,7 +284,8 @@
                                     android:text="Fecha de Nacimiento"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -285,9 +293,9 @@
                                     android:text=""
                                     android:id="@+id/idFechaNacimiento"
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -301,7 +309,8 @@
                                     android:text="R.F.C"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -309,9 +318,9 @@
                                     android:text=""
                                     android:id="@+id/idRfc"
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -325,7 +334,8 @@
                                     android:text="Código Identificaciòn"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -333,9 +343,9 @@
                                     android:text=""
                                     android:id="@+id/txtIdIne"
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -349,7 +359,8 @@
                                     android:text="Clave Identificaciòn"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -357,8 +368,7 @@
                                     android:text=""
                                     android:textSize="16sp"
                                     android:id="@+id/txtIdClaveIne"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -374,7 +384,8 @@
                                     android:text="Numero Identificacion"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -382,9 +393,9 @@
                                     android:text=""
                                     android:textSize="16sp"
                                     android:id="@+id/txtCodigoIne"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -398,7 +409,8 @@
                                     android:text="Emision"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -406,9 +418,9 @@
                                     android:text=""
                                     android:textSize="16sp"
                                     android:id="@+id/txtEmision"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -422,7 +434,8 @@
                                     android:text="Vigencia"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -430,9 +443,9 @@
                                     android:text=""
                                     android:textSize="16sp"
                                     android:id="@+id/txtVigencia"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -446,7 +459,8 @@
                                     android:text="CURP:"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -454,9 +468,9 @@
                                     android:text=""
                                     android:id="@+id/idCurp"
                                     android:textSize="16sp"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -470,7 +484,8 @@
                                     android:text="Grado Maximo de estudios"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -478,9 +493,9 @@
                                     android:text=""
                                     android:textSize="16sp"
                                     android:id="@+id/idMaxEstudios"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:background="@drawable/border_bottom"
@@ -494,7 +509,8 @@
                                     android:text="Telefono"
                                     android:textSize="16sp"
                                     android:textColor="@color/Morado"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_marginStart="30dp"
@@ -502,11 +518,9 @@
                                     android:text=""
                                     android:textSize="16sp"
                                     android:id="@+id/numTelefono"
-                                    android:textColor="@color/Morado"
-                                    />
+                                    android:textColor="@color/Morado" />
                             </LinearLayout>
                         </LinearLayout>
-
 
 
                     </LinearLayout>
@@ -557,14 +571,12 @@
     </LinearLayout>
 
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/gradient_green_white"
-        />
+        android:background="@drawable/gradient_green_white" />
 
 
 </RelativeLayout>

@@ -6,6 +6,7 @@
 package com.mx.ca.viu.services;
 
 import com.mx.ca.viu.modelos.BtValidacionSms;
+import com.mx.ca.viu.modelos.dtos.request.RequestEnvioSms;
 import com.mx.ca.viu.modelos.dtos.request.RequestValidarCodigoSms;
 import com.mx.ca.viu.modelos.dtos.response.EnvioSmsResponse;
 import com.mx.ca.viu.modelos.dtos.response.ValidacionSmsResponse;
@@ -16,7 +17,7 @@ import com.mx.ca.viu.modelos.dtos.response.ValidacionSmsResponse;
  */
 public interface ValidacionSmsServices {
 
-    public EnvioSmsResponse enviarCodigoValidacion(String numeroEnvio, String curp);
+    public EnvioSmsResponse enviarCodigoValidacion(RequestEnvioSms request);
 
 
     public ValidacionSmsResponse validarCodigo(RequestValidarCodigoSms request);

@@ -73,8 +73,11 @@ public class ControllerServicioSolicitud {
     @PostMapping()
     public ResponseEntity<SolicitudResponse> post(@RequestBody SolicitudRequest entity, Principal principal) {
         try {
-            logger.info("peticion entrante cliente:" + Transform.toJSON(entity));
+            logger.info("isSick :"+entity.getData().isSick()+"disseaseDescription "+entity.getData().getDisseaseDescription()+ "confirmaIngresos"+ entity.getData().getConfirmaIngresos());
 
+            //logger.info("peticion entrante cliente:" + Transform.toJSON(entity));
+            Transform.toJSON(entity);
+            
         } catch (JsonProcessingException ex) {
             Logger.getLogger(ControllerServicioSolicitud.class.getName()).log(Level.SEVERE, null, ex);
         }

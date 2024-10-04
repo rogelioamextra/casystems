@@ -7,7 +7,9 @@ package com.mx.ca.viu.modelos.dtos.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mx.ca.viu.modelos.dtos.generico.GenericAuth;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -27,31 +29,56 @@ public class SolicitudRequest extends GenericAuth implements Serializable {
 
         @JsonProperty("clienteId")
         private String clienteId;
+        
         @JsonProperty("asesorId")
         private String asesorId;
+        
         @JsonProperty("frecuenciaPagoId")
         private String frecuenciaPagoId;
+        
         @JsonProperty("productoCreditoId")
         private String productoCreditoId;
+        
         @JsonProperty("destinoCreditoId")
         private String destinoCreditoId;
+        
         @JsonProperty("plazo")
         private String plazo;
+        
         @JsonProperty("revolvente")
         private String revolvente;
+        
         @JsonProperty("fechaSolicitud")
         private String fechaSolicitud;
+        
         @JsonProperty("monto")
         private String monto;
+        
         @JsonProperty("latitud")
         private String latitud;
+        
         @JsonProperty("longitud")
         private String longitud;
+        
         @JsonProperty("egresos")
         private EgresosSolicitud egresos;
+        
+        @JsonProperty("disseaseDescription")
+        private String disseaseDescription;
+        
+        
+        @JsonProperty("confirmaIngresos")
+        private Boolean confirmaIngresos;
+        
+        @JsonProperty("sick")
+        private boolean sick;
 
         @JsonProperty("patrimonios")
         private List<PatrimoniosSolicitud> patrimonios;
+        
+        
+        
+        private Set<Aval> avales = new HashSet<>();
 
         @JsonProperty("ingresos")
         private IngresosSolicitud ingresos;
@@ -174,8 +201,39 @@ public class SolicitudRequest extends GenericAuth implements Serializable {
         public void setLongitud(String longitud) {
             this.longitud = longitud;
         }
-        
-        
+
+        public String getDisseaseDescription() {
+            return disseaseDescription;
+        }
+
+        public void setDisseaseDescription(String disseaseDescription) {
+            this.disseaseDescription = disseaseDescription;
+        }
+
+        public Boolean getConfirmaIngresos() {
+            return confirmaIngresos;
+        }
+
+        public void setConfirmaIngresos(Boolean confirmaIngresos) {
+            this.confirmaIngresos = confirmaIngresos;
+        }
+
+        public boolean isSick() {
+            return sick;
+        }
+
+        public void setSick(boolean sick) {
+            this.sick = sick;
+        }
+
+        public Set<Aval> getAvales() {
+            return avales;
+        }
+
+        public void setAvales(Set<Aval> avales) {
+            this.avales = avales;
+        }
+      
 
     }
 

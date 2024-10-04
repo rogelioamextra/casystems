@@ -4,10 +4,6 @@ import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.QUALITY_IMAGE;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,12 +16,17 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.MainActivity;
 import com.amextra.MenuHomeScreen;
@@ -35,6 +36,7 @@ import com.amextra.dialogs.ManejaPatrimonio;
 import com.amextra.dialogs.MenuHeader;
 import com.amextra.dialogs.MenuSolicitudCredito;
 import com.amextra.io.ApiAdapter;
+import com.amextra.io.Request.Aval;
 import com.amextra.io.Request.PatrimoniosCls;
 import com.amextra.io.Request.RequestSolicitudCredito;
 import com.amextra.io.Response.InfoUSer;
@@ -59,11 +61,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Patrimonios extends AppCompatActivity
-        implements ManejaPatrimonio.EnviaInformacion ,
+        implements ManejaPatrimonio.EnviaInformacion,
         MenuSolicitudCredito.TransfiereDatos,
-        ListaPatrimoniosAdapter.Listener{
+        ListaPatrimoniosAdapter.Listener {
 
-    Button  generaSolicitud;
+    Button generaSolicitud;
 
     String nombreTit = "Titulo";
     String titulo;
@@ -71,32 +73,44 @@ public class Patrimonios extends AppCompatActivity
     String N_REQ_SOL_CRED = "REQSOLCRED";
     ImageButton btnAgregaPatrimonio;
     ArrayList<Patrimonio> listaPatrimonios = new ArrayList<>();
-   ArrayList<PatrimoniosCls> newPatrimonios = new ArrayList<>();
+    ArrayList<PatrimoniosCls> newPatrimonios = new ArrayList<>();
+
     final androidx.fragment.app.FragmentManager mFragmentManH = getSupportFragmentManager();
     final MenuHeader menuHeader = new MenuHeader();
     final androidx.fragment.app.FragmentTransaction mFragmentHeaderTransac = mFragmentManH.beginTransaction();
-    final androidx.fragment.app.FragmentManager mFragmentPat= getSupportFragmentManager();
+    final androidx.fragment.app.FragmentManager mFragmentPat = getSupportFragmentManager();
     final MenuSolicitudCredito menuPat = new MenuSolicitudCredito();
     final androidx.fragment.app.FragmentTransaction mFragmentTransactPat = mFragmentPat.beginTransaction();
+
+
     InfoUSer responseLogIn = new InfoUSer();
     private FusedLocationProviderClient fusedLocationClient;
     Bundle bTransact = new Bundle();
     Bundle bHeader = new Bundle();
 
+    CheckBox checkIngresos;
+
     LinearLayout noContent;
 
     ListView listPatrimonios;
 
-     ListaPatrimoniosAdapter adapter;
-     LinearLayout totalPrecios;
-     TextView txtTotal;
+    ListaPatrimoniosAdapter adapter;
+    LinearLayout totalPrecios;
+    TextView txtTotal;
 
-     boolean isEditing = false;
-     int itemIsEditing;
+    boolean isEditing = false;
+    int itemIsEditing;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
-    boolean existeInfo =  false;
+    boolean confirmIngresos = false;
+
+    boolean existeInfo = false;
     String INFO_USER = "infoLogIn";
+
+    String curpCliente = "";
+    final String CURP_CLI = "CURP_CLI";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,33 +123,31 @@ public class Patrimonios extends AppCompatActivity
         noContent = findViewById(R.id.noContent);
         generaSolicitud = findViewById(R.id.generaSolicitud);
         listPatrimonios = findViewById(R.id.listPatrimonios);
+        checkIngresos = findViewById(R.id.checkIngresos);
         totalPrecios = findViewById(R.id.totalPrecios);
         txtTotal = findViewById(R.id.txtTotal);
         totalPrecios.setVisibility(View.GONE);
 
 
-
-
         if (recepcion != null) {
             titulo = (recepcion.getString(nombreTit));
+            curpCliente = recepcion.getString(CURP_CLI);
             responseLogIn = (InfoUSer) recepcion.getSerializable(INFO_USER);
 
 
-
-
-            if(getIntent().hasExtra(N_REQ_SOL_CRED)){
+            if (getIntent().hasExtra(N_REQ_SOL_CRED)) {
                 requestSolicitudCredito = (RequestSolicitudCredito) recepcion.getSerializable(N_REQ_SOL_CRED);
-                if(requestSolicitudCredito.data.patrimonios!=null){
-                    newPatrimonios  = requestSolicitudCredito.data.patrimonios;
-                    existeInfo= true;
+                assert requestSolicitudCredito != null;
+                if (requestSolicitudCredito.getData().getPatrimonios() != null) {
+                    confirmIngresos = requestSolicitudCredito.getData().getConfirmaIngresos() != null && requestSolicitudCredito.getData().getConfirmaIngresos();
+                    checkIngresos.setChecked(confirmIngresos);
+                    newPatrimonios = requestSolicitudCredito.getData().getPatrimonios();
+                    existeInfo = true;
 
                 }
             }
 
         }
-
-
-
 
 
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -154,23 +166,30 @@ public class Patrimonios extends AppCompatActivity
         });
 
 
+        bHeader.putString(nombreTit, titulo);
+        bHeader.putSerializable(INFO_USER, responseLogIn);
+        bTransact.putSerializable(INFO_USER, responseLogIn);
 
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable(INFO_USER,responseLogIn);
-        bTransact.putSerializable(INFO_USER,responseLogIn);
-
-        bTransact.putSerializable(N_REQ_SOL_CRED,requestSolicitudCredito);
-        bTransact.putInt("itm",2);
-        bTransact.putString(nombreTit,titulo);
+        bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        bTransact.putInt("itm", 2);
+        bTransact.putString(nombreTit, titulo);
 
         menuHeader.setArguments(bHeader);
-        mFragmentHeaderTransac.add(R.id.frameHeader,menuHeader).commit();
+        mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
         menuPat.setArguments(bTransact);
         mFragmentTransactPat.add(R.id.frameLayout, menuPat).commit();
 
         traePatrimonios();
         altaSolicitudCredito();
         clickbtnAgregaPatrimonio();
+
+        checkIngresos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                requestSolicitudCredito.getData().setConfirmaIngresos(isChecked);
+                confirmIngresos = isChecked;
+            }
+        });
 
 
     }
@@ -195,83 +214,90 @@ public class Patrimonios extends AppCompatActivity
         generaSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(requestSolicitudCredito.data != null){
-                    DialogFragment dialogFragment =  LoaderTransparent.loaderTransparent("Generando Solicitud de Credito");
-                    dialogFragment.show(getSupportFragmentManager(),"LoaderTransparent");
-                    replacePathToBase64();
-                    requestSolicitudCredito.getData().setPatrimonios(newPatrimonios);
-                    Call<ResponseAddSolicitudCredito> call = ApiAdapter.getApiService(responseLogIn.token).addSolicitudCredito(requestSolicitudCredito);
-                    call.enqueue(new Callback<ResponseAddSolicitudCredito>() {
-                        @Override
-                        public void onResponse(Call<ResponseAddSolicitudCredito> call, Response<ResponseAddSolicitudCredito> response) {
-                            int code = response.code();
-                            boolean status = response.isSuccessful();
-                            if(code == 200 && status){
-                                ResponseAddSolicitudCredito respuesta = response.body();
-                                long finalCode =respuesta.response.codigo;
-                                if(finalCode == 200){
-                                    Bundle sender = new Bundle();
-                                    Toast.makeText(Patrimonios.this, "Solicitud de crédito generada: "+respuesta.data.solicitudId, Toast.LENGTH_SHORT).show();
-                                    sender.putSerializable(INFO_USER,responseLogIn);
+                if (!confirmIngresos) {
+                    new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.WARNING_TYPE)
+                            .setContentText("Se debe de confirmar los ingresos para poder generar una solicitud de crédito")
+                            .setTitleText("Advertencia")
+                            .show();
 
-                                    requestSolicitudCredito = new RequestSolicitudCredito();
-                                    newPatrimonios = new ArrayList<>();
-                                    requestSolicitudCredito = new RequestSolicitudCredito();
-                                    Intent home = new Intent(Patrimonios.this, MenuHomeScreen.class);
-                                    home.putExtras(sender);
-                                    home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.SUCCESS_TYPE)
-                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                @Override
-                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                    startActivity(home);
-                                                    finish();
-                                                }
-                                            })
-                                            .setTitleText("Solicitud de crédito")
-                                            .setContentText("Solicitud generada,"+respuesta.response.codigo+" - "+respuesta.response.mensaje+" No Solicitud : "+respuesta.data.solicitudId )
-                                            .show();
+                } else {
+
+                    if (requestSolicitudCredito.getData() != null) {
+                        requestSolicitudCredito.getData().setConfirmaIngresos(true);
+                        DialogFragment dialogFragment = LoaderTransparent.loaderTransparent("Generando Solicitud de Credito");
+                        dialogFragment.show(getSupportFragmentManager(), "LoaderTransparent");
+                        replacePathToBase64();
+                        requestSolicitudCredito.getData().setPatrimonios(newPatrimonios);
+                        Call<ResponseAddSolicitudCredito> call = ApiAdapter.getApiService(responseLogIn.token).addSolicitudCredito(requestSolicitudCredito);
+                        call.enqueue(new Callback<ResponseAddSolicitudCredito>() {
+                            @Override
+                            public void onResponse(Call<ResponseAddSolicitudCredito> call, Response<ResponseAddSolicitudCredito> response) {
+                                int code = response.code();
+                                boolean status = response.isSuccessful();
+                                if (code == 200 && status) {
+                                    ResponseAddSolicitudCredito respuesta = response.body();
+                                    long finalCode = respuesta.response.codigo;
+                                    if (finalCode == 200) {
+                                        Bundle sender = new Bundle();
+                                        Toast.makeText(Patrimonios.this, "Solicitud de crédito generada: " + respuesta.data.solicitudId, Toast.LENGTH_SHORT).show();
+                                        sender.putSerializable(INFO_USER, responseLogIn);
+
+                                        requestSolicitudCredito = new RequestSolicitudCredito();
+                                        newPatrimonios = new ArrayList<>();
+                                        requestSolicitudCredito = new RequestSolicitudCredito();
+                                        Intent home = new Intent(Patrimonios.this, MenuHomeScreen.class);
+                                        home.putExtras(sender);
+                                        home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                        new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.SUCCESS_TYPE)
+                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                        startActivity(home);
+                                                        finish();
+                                                    }
+                                                })
+                                                .setTitleText("Solicitud de crédito")
+                                                .setContentText("Solicitud generada," + respuesta.response.codigo + " - " + respuesta.response.mensaje + " No Solicitud : " + respuesta.data.solicitudId)
+                                                .show();
 
 
-                                    dialogFragment.dismiss();
-                                }else{
-                                    dialogFragment.dismiss();
+                                        dialogFragment.dismiss();
+                                    } else {
+                                        dialogFragment.dismiss();
+                                        new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Solicitud de crédito")
+                                                .setContentText("Error al generar la solicitud" + respuesta.response.codigo + " - " + respuesta.response.mensaje)
+                                                .show();
+                                    }
+                                } else {
+                                    final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
                                     new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.ERROR_TYPE)
-                                            .setTitleText("Solicitud de crédito")
-                                            .setContentText("Error al generar la solicitud"+respuesta.response.codigo+" - "+respuesta.response.mensaje)
+                                            .setTitleText("Error")
+                                            .setContentText(alertText)
+                                            .setConfirmText("Continuar")
+                                            .setConfirmClickListener(sweetAlertDialog -> {
+                                                finish();
+                                                Intent login = new Intent(Patrimonios.this, MainActivity.class);
+                                                login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                                startActivity(login);
+                                            })
                                             .show();
                                 }
                             }
 
-                            else {
-                                final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                                new SweetAlertDialog(Patrimonios.this,SweetAlertDialog.ERROR_TYPE)
-                                        .setTitleText("Error")
-                                        .setContentText(alertText)
-                                        .setConfirmText("Continuar")
-                                        .setConfirmClickListener(sweetAlertDialog -> {
-                                            finish();
-                                            Intent login = new Intent(Patrimonios.this, MainActivity.class);
-                                            login.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                            startActivity(login);
-                                        })
-                                        .show();
+                            @Override
+                            public void onFailure(Call<ResponseAddSolicitudCredito> call, Throwable t) {
+                                dialogFragment.dismiss();
                             }
-                        }
+                        });
+                    } else {
+                        new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.WARNING_TYPE)
+                                .setContentText("Se debe capturar almenos un patrimonio, por favor realice esta captura")
+                                .setTitleText("Advertencia")
+                                .show();
+                    }
 
-                        @Override
-                        public void onFailure(Call<ResponseAddSolicitudCredito> call, Throwable t) {
-                            dialogFragment.dismiss();
-                        }
-                    });
-                }else{
-
-                    new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.WARNING_TYPE)
-                            .setContentText("Se debe capturar almenos un patrimonio, por favor realice esta captura")
-                            .setTitleText("Advertencia")
-                            .show();
                 }
-
 
 
             }
@@ -289,18 +315,38 @@ public class Patrimonios extends AppCompatActivity
         });
     }
 
-    private void replacePathToBase64(){
-        if(newPatrimonios.size()> 0){
-            for (int i = 0; i <newPatrimonios.size() ; i++) {
+    private void replacePathToBase64() {
+        if (newPatrimonios.size() > 0) {
+            for (int i = 0; i < newPatrimonios.size(); i++) {
                 PatrimoniosCls tmpPat = newPatrimonios.get(i);
-                if (Objects.isNull(tmpPat.imagen)) {
+                if (Objects.isNull(tmpPat.getImagen())) {
                     tmpPat.setImagen("NO_IMAGE");
                 } else {
-                    String path = tmpPat.imagen;
-                    String base64 = pathToBase64(path,QUALITY_IMAGE);
+                    String path = tmpPat.getImagen();
+                    String base64 = pathToBase64(path, QUALITY_IMAGE);
                     tmpPat.setImagen(base64);
                 }
 
+            }
+        }
+
+        ArrayList<Aval> avales = requestSolicitudCredito.getData().getAvales();
+        if (!avales.isEmpty()) {
+            for (Aval aval : avales) {
+                if (!aval.getComprobanteDomicilio().isEmpty()) {
+                    String pathC = aval.getComprobanteDomicilio();
+                    aval.setComprobanteDomicilio(pathToBase64(pathC, QUALITY_IMAGE));
+                }
+
+                if (!aval.getFrontal().isEmpty()) {
+                    String pathF = aval.getFrontal();
+                    aval.setFrontal(pathToBase64(pathF, QUALITY_IMAGE));
+                }
+
+                if (!aval.getReverso().isEmpty()) {
+                    String pathR = aval.getReverso();
+                    aval.setReverso(pathToBase64(pathR, QUALITY_IMAGE));
+                }
             }
         }
     }
@@ -316,15 +362,13 @@ public class Patrimonios extends AppCompatActivity
                     ResponsePatrimonios responsePatrimonios = response.body();
                     if (responsePatrimonios.response.codigo == 200) {
                         listaPatrimonios = responsePatrimonios.data.patrimonios;
-                        if(existeInfo){
+                        if (existeInfo) {
                             llenaTablaPats();
                         }
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(Patrimonios.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(Patrimonios.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -349,16 +393,16 @@ public class Patrimonios extends AppCompatActivity
     @Override
     public void transfierePatrimonio(PatrimoniosCls pat) {
         if (pat != null) {
-            if(isEditing){
-                PatrimoniosCls tmp =  newPatrimonios.get(itemIsEditing);
+            if (isEditing) {
+                PatrimoniosCls tmp = newPatrimonios.get(itemIsEditing);
 
-                tmp.setTipoPatrimonioID(pat.tipoPatrimonioId);
-                tmp.setPrecio(pat.precio);
-                tmp.setCambioImagen(pat.cambioImagen);
-                tmp.setImagen(pat.imagen);
+                tmp.setTipoPatrimonioID(pat.getTipoPatrimonioID());
+                tmp.setPrecio(pat.getPrecio());
+                tmp.setCambioImagen(pat.getCambioImagen());
+                tmp.setImagen(pat.getImagen());
                 llenaTablaPats();
 
-            }else{
+            } else {
                 newPatrimonios.add(pat);
                 llenaTablaPats();
             }
@@ -369,7 +413,7 @@ public class Patrimonios extends AppCompatActivity
     private String obtenNombrePatrimonio(String idPatrimonio) {
         String patr = "";
 
-        if(listaPatrimonios.size()>0){
+        if (listaPatrimonios.size() > 0) {
             for (Patrimonio item : listaPatrimonios) {
                 String id = String.valueOf(item.idPatrimonio);
                 String name = item.nombre;
@@ -385,15 +429,15 @@ public class Patrimonios extends AppCompatActivity
     }
 
     private String pathToBase64(String path, int quality) {
-        File imgFile = new  File(path);
+        File imgFile = new File(path);
         String endBse = "";
-        if(imgFile.exists()){
+        if (imgFile.exists()) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             Bitmap bitmap = BitmapFactory.decodeFile(path);
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
-            endBse = Base64.encodeToString(byteArray, Base64.NO_WRAP);;
-        }else{
+            endBse = Base64.encodeToString(byteArray, Base64.NO_WRAP);
+        } else {
             endBse = path;
         }
 
@@ -409,14 +453,14 @@ public class Patrimonios extends AppCompatActivity
             ArrayList<ListaPatrimonio> patAdapter = new ArrayList<>();
             DecimalFormat formatter = new DecimalFormat("###,###.###");
 
-            for (PatrimoniosCls patrim: newPatrimonios) {
+            for (PatrimoniosCls patrim : newPatrimonios) {
                 ListaPatrimonio tmpPat = new ListaPatrimonio();
-                long monto =Long.parseLong(patrim.precio);
-                String nombreP = obtenNombrePatrimonio(patrim.tipoPatrimonioId);
+                long monto = Long.parseLong(patrim.getPrecio());
+                String nombreP = obtenNombrePatrimonio(patrim.getTipoPatrimonioID());
 
                 tmpPat.setNombre(nombreP);
                 tmpPat.setMonto("$" + formatter.format(monto));
-                totalPatrimonios = totalPatrimonios +monto;
+                totalPatrimonios = totalPatrimonios + monto;
                 patAdapter.add(tmpPat);
             }
             txtTotal.setText("$" + formatter.format(totalPatrimonios));
@@ -440,12 +484,12 @@ public class Patrimonios extends AppCompatActivity
     @Override
     public void transfiereinfocredito() {
 
-        if(newPatrimonios.size() >0){
+        if (newPatrimonios.size() > 0) {
             requestSolicitudCredito.getData().setPatrimonios(newPatrimonios);
         }
-        bTransact.putSerializable(N_REQ_SOL_CRED,requestSolicitudCredito);
-        bTransact.putString(nombreTit,titulo);
-        bTransact.putSerializable(INFO_USER,responseLogIn);
+        bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        bTransact.putString(nombreTit, titulo);
+        bTransact.putSerializable(INFO_USER, responseLogIn);
         menuPat.setArguments(bTransact);
 
     }
@@ -454,12 +498,12 @@ public class Patrimonios extends AppCompatActivity
     @Override
     public void deleteItem(int id) {
         newPatrimonios.remove(id);
-        if(newPatrimonios.size()>0){
+        if (newPatrimonios.size() > 0) {
 
-            for (PatrimoniosCls pat:newPatrimonios) {
-                Log.d("borraado", "deleteItem: "+pat.tipoPatrimonioId);
-                Log.d("borraado", "deleteItem: "+pat.precio);
-                Log.d("borraado", "deleteItem: "+pat.imagen);
+            for (PatrimoniosCls pat : newPatrimonios) {
+                Log.d("borraado", "deleteItem: " + pat.getTipoPatrimonioID());
+                Log.d("borraado", "deleteItem: " + pat.getPrecio());
+                Log.d("borraado", "deleteItem: " + pat.getImagen());
 
             }
         }
@@ -471,7 +515,7 @@ public class Patrimonios extends AppCompatActivity
     public void editItem(int id) {
         PatrimoniosCls item = newPatrimonios.get(id);
         itemIsEditing = id;
-        ManejaPatrimonio dialogFragment = ManejaPatrimonio.manejaPatrimonio(listaPatrimonios,item);
+        ManejaPatrimonio dialogFragment = ManejaPatrimonio.manejaPatrimonio(listaPatrimonios, item);
         dialogFragment.show(getSupportFragmentManager(), "ManejaPatrimonio");
         isEditing = true;
     }

@@ -13,13 +13,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
@@ -35,8 +28,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.amextra.amextra.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
+import com.amextra.amextra.R;
 import com.amextra.io.Request.PatrimoniosCls;
 import com.amextra.io.Response.Patrimonio;
 import com.google.android.material.textfield.TextInputEditText;
@@ -62,7 +60,7 @@ public class ManejaPatrimonio extends DialogFragment {
 
     Activity actividad;
     private AutoCompleteTextView productosCredito;
-    Button btnCancelar,saveBtn;
+    Button btnCancelar, saveBtn;
     ImageButton btnCamara;
     TextInputEditText txtPrecio;
     ImageView imgPatrimonio;
@@ -70,20 +68,21 @@ public class ManejaPatrimonio extends DialogFragment {
     EnviaInformacion enviaInformacion;
 
     PatrimoniosCls patrimonio = new PatrimoniosCls();
-    String textoImagen ="";
-    TextInputLayout layoutPartrimonio,layoutPrecio;
+    String textoImagen = "";
+    TextInputLayout layoutPartrimonio, layoutPrecio;
 
     String currentPath, descPat;
     Uri imageUri;
 
     int quality = 100;
     boolean existInfo = false;
+
     public static ManejaPatrimonio manejaPatrimonio(ArrayList<Patrimonio> lista, PatrimoniosCls patrimonio) {
-        ManejaPatrimonio manejaPatrimonio= new ManejaPatrimonio();
+        ManejaPatrimonio manejaPatrimonio = new ManejaPatrimonio();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("patrimonios",lista);
-        if(patrimonio!= null){
-            bundle.putSerializable("item",patrimonio);
+        bundle.putSerializable("patrimonios", lista);
+        if (patrimonio != null) {
+            bundle.putSerializable("item", patrimonio);
         }
         manejaPatrimonio.setArguments(bundle);
         return manejaPatrimonio;
@@ -113,13 +112,13 @@ public class ManejaPatrimonio extends DialogFragment {
 
 
         PatrimoniosCls p = (PatrimoniosCls) getArguments().getSerializable("item");
-        if(p!=null){
+        if (p != null) {
             mapData(p);
         }
 
 
         ArrayList<Patrimonio> listaPatrimonios = (ArrayList<Patrimonio>) getArguments().getSerializable("patrimonios");
-        if(listaPatrimonios != null){
+        if (listaPatrimonios != null) {
             llenaDropPatrimonios(listaPatrimonios);
         }
 
@@ -139,14 +138,14 @@ public class ManejaPatrimonio extends DialogFragment {
 
     private void mapData(PatrimoniosCls p) {
         existInfo = true;
-        txtPrecio.setText(p.precio);
+        txtPrecio.setText(p.getPrecio());
 
-        if (Objects.nonNull(p.imagen)) {
+        if (Objects.nonNull(p.getImagen())) {
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            currentPath = p.imagen;
+            currentPath = p.getImagen();
             textoImagen = currentPath;
-            File imgFile = new  File(currentPath);
+            File imgFile = new File(currentPath);
 
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -183,13 +182,13 @@ public class ManejaPatrimonio extends DialogFragment {
         btnCamara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fileName = "img_amx_"+descPat+"_";
+                String fileName = "img_amx_" + descPat + "_";
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                 File storageDir = actividad.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                 try {
                     File image = File.createTempFile(fileName + timeStamp, ".jpg", storageDir);
                     currentPath = image.getAbsolutePath();
-                    imageUri  = FileProvider.getUriForFile(actividad, "com.amextra.fileprovider", image);
+                    imageUri = FileProvider.getUriForFile(actividad, "com.amextra.fileprovider", image);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(intent, 1);
@@ -205,7 +204,7 @@ public class ManejaPatrimonio extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                if(validaMonto()){
+                if (validaMonto()) {
                     enviaInformacion.transfierePatrimonio(patrimonio);
                     dismiss();
                 }
@@ -228,14 +227,14 @@ public class ManejaPatrimonio extends DialogFragment {
 
         ArrayList<String> nombresPatrimonios = new ArrayList<>();
         ArrayList<String> idsPatrimonios = new ArrayList<>();
-        for (Patrimonio patrimonio:listaPatrimonios) {
+        for (Patrimonio patrimonio : listaPatrimonios) {
             nombresPatrimonios.add(patrimonio.nombre);
             idsPatrimonios.add(String.valueOf(patrimonio.idPatrimonio));
         }
 
-        if(existInfo){
-            for (Patrimonio patrimonioLis:listaPatrimonios) {
-                if(patrimonio.tipoPatrimonioId.equals(patrimonioLis.idPatrimonio)){
+        if (existInfo) {
+            for (Patrimonio patrimonioLis : listaPatrimonios) {
+                if (patrimonio.getTipoPatrimonioID().equals(patrimonioLis.idPatrimonio)) {
                     productosCredito.setText(patrimonioLis.nombre);
                     break;
                 }
@@ -284,9 +283,8 @@ public class ManejaPatrimonio extends DialogFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  null;
+        return null;
     }
-
 
 
     public void onAttach(@NonNull Context context) {
@@ -309,24 +307,24 @@ public class ManejaPatrimonio extends DialogFragment {
     }
 
 
-    private boolean validaMonto(){
-        boolean continua= true;
+    private boolean validaMonto() {
+        boolean continua = true;
 
         String precio = txtPrecio.getText().toString();
-        if (precio.equals("") ||  precio.equals("0")){
+        if (precio.equals("") || precio.equals("0")) {
             continua = false;
             layoutPrecio.setError("Monto requerido");
-        }else{
+        } else {
             layoutPrecio.setErrorEnabled(false);
         }
-        if ((productosCredito.getText()).equals("")){
+        if ((productosCredito.getText()).equals("")) {
             continua = false;
             layoutPartrimonio.setError("Seleccione un patrimonio");
-        }else{
+        } else {
             layoutPartrimonio.setErrorEnabled(false);
         }
 
-        if ((textoImagen).equals("")){
+        if ((textoImagen).equals("")) {
             continua = true;
 
         }
@@ -334,9 +332,9 @@ public class ManejaPatrimonio extends DialogFragment {
         return continua;
     }
 
-    public interface EnviaInformacion{
+    public interface EnviaInformacion {
 
-        public  void transfierePatrimonio( PatrimoniosCls pat);
+        void transfierePatrimonio(PatrimoniosCls pat);
 
     }
 

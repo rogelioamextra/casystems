@@ -4,9 +4,6 @@ import static com.amextra.utils.Constants.MISSING_TOKEN_TEXT;
 import static com.amextra.utils.Constants.QUALITY_IMAGE;
 import static com.amextra.utils.Constants.SERVER_ERROR_TEXT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +19,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.Beans.ImagesIdentificacion;
 import com.amextra.MainActivity;
@@ -137,11 +137,7 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
             }
         }
 
-        if (idGenero == 1) {
-            switchGenero.setChecked(true);
-        } else {
-            switchGenero.setChecked(false);
-        }
+        switchGenero.setChecked(idGenero == 1);
 
         mBundle.putString(nombreTit, titulo);
         mBundle.putInt("itm", 1);
@@ -195,6 +191,7 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
         }
 
     }
+
     private String pathToBase64(String path, int quality) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -320,11 +317,9 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                             dialogFragment.show(getSupportFragmentManager(), "IneScanner");
                         }
                     });
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesClientesB.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -384,11 +379,9 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                         }
                     });
 
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesClientesB.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -468,25 +461,23 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                 int code = response.code();
                 boolean status = response.isSuccessful();
 
-                if(code==200 && status ){
-                    if(info.response.codigo == 200){
-                        new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.SUCCESS_TYPE)
+                if (code == 200 && status) {
+                    if (info.response.codigo == 200) {
+                        new SweetAlertDialog(DatosPersonalesClientesB.this, SweetAlertDialog.SUCCESS_TYPE)
                                 .setTitleText("Prueba de vida")
-                                .setContentText("" + info.response.codigo+" - "+info.response.mensaje)
+                                .setContentText(info.response.codigo + " - " + info.response.mensaje)
                                 .show();
                         call.cancel();
-                    }else{
-                        new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                    } else {
+                        new SweetAlertDialog(DatosPersonalesClientesB.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Prueba de vida")
-                                .setContentText("" + info.response.codigo+" - "+info.response.mensaje)
+                                .setContentText(info.response.codigo + " - " + info.response.mensaje)
                                 .show();
                     }
 
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesClientesB.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")
@@ -542,11 +533,9 @@ public class DatosPersonalesClientesB extends AppCompatActivity implements IneSc
                                 .setTitleText(datos.response.codigo + " " + datos.response.mensaje)
                                 .show();
                     }
-                }
-
-                else {
+                } else {
                     final String alertText = (code == 400 || code == 401) ? MISSING_TOKEN_TEXT : SERVER_ERROR_TEXT;
-                    new SweetAlertDialog(DatosPersonalesClientesB.this,SweetAlertDialog.ERROR_TYPE)
+                    new SweetAlertDialog(DatosPersonalesClientesB.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
                             .setContentText(alertText)
                             .setConfirmText("Continuar")

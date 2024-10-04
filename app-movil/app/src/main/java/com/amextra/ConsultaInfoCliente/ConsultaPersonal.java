@@ -1,15 +1,17 @@
 package com.amextra.ConsultaInfoCliente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.amextra.AltaEdicionCliente.DatosPersonalesClientes;
 import com.amextra.amextra.R;
@@ -21,65 +23,66 @@ import com.amextra.io.Response.InfoUSer;
 import com.amextra.io.Response.ResponseGetCliente;
 
 public class ConsultaPersonal extends AppCompatActivity implements MenuInformacionCliente.TransfiereDatos {
-    Button  btnEditarInfo, nxtBtn;
-    TextView txtIdClient, txtNombreClient, idGenero, idNacionalidad, idLugarNacimiento,txtCodigoIne,tipoId,txtEstadoCivil;
-    TextView idFechaNacimiento, idRfc, txtIdIne, txtIdClaveIne, idCurp, idMaxEstudios,numTelefono,txtEmision,txtVigencia,txtMail;
+    Button btnEditarInfo, nxtBtn;
+    TextView txtIdClient, txtNombreClient, idGenero, idNacionalidad, idLugarNacimiento, txtCodigoIne, tipoId, txtEstadoCivil;
+    TextView idFechaNacimiento, idRfc, txtIdIne, txtIdClaveIne, idCurp, idMaxEstudios, numTelefono, txtEmision, txtVigencia, txtMail;
     String nombreStatus = "esAlta";
     String nombreTit = "Titulo";
     String titulo;
     boolean esAlta;
-    String clienteInfo ="INFO_CLIENT";
-    ResponseGetCliente responseGetCliente = new ResponseGetCliente();
-    final androidx.fragment.app.FragmentManager mFragmentManager = getSupportFragmentManager();
-
-    final MenuInformacionCliente menuInformacionCliente = new MenuInformacionCliente();
-    final androidx.fragment.app.FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-    final androidx.fragment.app.FragmentManager mFragmentManH = getSupportFragmentManager();
-    final MenuHeader menuHeader = new MenuHeader();
-    final androidx.fragment.app.FragmentTransaction mFragmentHeaderTransac = mFragmentManH.beginTransaction();
-
+    String clienteInfo = "INFO_CLIENT";
+    FrameLayout frameMenu, frameHeader;
     InfoUSer responseLogIn = new InfoUSer();
+    ResponseGetCliente responseGetCliente = new ResponseGetCliente();
+
+    MenuInformacionCliente menuInformacionCliente = new MenuInformacionCliente();
+    MenuHeader menuHeader = new MenuHeader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta_personal);
 
+        FragmentManager fragManagerHead = this.getSupportFragmentManager();
+        FragmentManager fragManagerMenu = this.getSupportFragmentManager();
+
+        FragmentTransaction transactionHead = fragManagerHead.beginTransaction();
+        FragmentTransaction transactionMenu = fragManagerMenu.beginTransaction();
+
         Bundle recepcion = getIntent().getExtras();
-        Bundle mBundle = new Bundle();
-        Bundle bHeader = new Bundle();
+        Bundle clientBundle = new Bundle();
+        Bundle headerBundle = new Bundle();
         iniciaComponentes();
 
 
-        if(recepcion!=null){
+        if (recepcion != null) {
             titulo = (recepcion.getString(nombreTit));
             esAlta = recepcion.getBoolean(nombreStatus);
-            responseGetCliente =(ResponseGetCliente) recepcion.getSerializable(clienteInfo);
+            responseGetCliente = (ResponseGetCliente) recepcion.getSerializable(clienteInfo);
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
             setInfoClient(responseGetCliente);
         }
 
 
+        clientBundle.putSerializable(clienteInfo, responseGetCliente);
+        clientBundle.putSerializable("infoLogIn", responseLogIn);
+        clientBundle.putInt("itm", 0);
+        clientBundle.putBoolean(nombreStatus, esAlta);
+        clientBundle.putString(nombreTit, titulo);
+        headerBundle.putString(nombreTit, titulo);
+        headerBundle.putSerializable("infoLogIn", responseLogIn);
+        menuInformacionCliente.setArguments(clientBundle);
+        menuHeader.setArguments(headerBundle);
 
-        mBundle.putSerializable(clienteInfo,responseGetCliente);
-        mBundle.putSerializable("infoLogIn",responseLogIn);
-        mBundle.putInt("itm",0);
-        mBundle.putBoolean(nombreStatus,esAlta);
-        mBundle.putString(nombreTit,titulo);
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
-        menuInformacionCliente.setArguments(mBundle);
-        menuHeader.setArguments(bHeader);
-        mFragmentHeaderTransac.add(R.id.frameHeader,menuHeader).commit();
-        mFragmentTransaction.add(R.id.frameLayout,menuInformacionCliente).commit();
-
+        transactionHead.add(R.id.frameHeader, menuHeader);
+        transactionHead.commit();
+        transactionMenu.add(R.id.frameMenu, menuInformacionCliente);
+        transactionMenu.commit();
 
 
         editaInfoPersonal();
         consultaDireccion();
-        }
-
-
+    }
 
 
     private void editaInfoPersonal() {
@@ -91,9 +94,9 @@ public class ConsultaPersonal extends AppCompatActivity implements MenuInformaci
 
                 consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 sender.putString(nombreTit, "Editar Datos del Cliente");
-                sender.putSerializable("infoLogIn",responseLogIn);
+                sender.putSerializable("infoLogIn", responseLogIn);
                 sender.putBoolean(nombreStatus, esAlta);
-                sender.putSerializable(clienteInfo,responseGetCliente);
+                sender.putSerializable(clienteInfo, responseGetCliente);
                 consultaInfDireccion.putExtras(sender);
                 startActivity(consultaInfDireccion);
             }
@@ -109,14 +112,13 @@ public class ConsultaPersonal extends AppCompatActivity implements MenuInformaci
                 consultaInfDireccion.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 bundle.putString(nombreTit, titulo);
                 bundle.putBoolean(nombreStatus, esAlta);
-                bundle.putSerializable(clienteInfo,responseGetCliente);
-                bundle.putSerializable("infoLogIn",responseLogIn);
+                bundle.putSerializable(clienteInfo, responseGetCliente);
+                bundle.putSerializable("infoLogIn", responseLogIn);
                 consultaInfDireccion.putExtras(bundle);
                 startActivity(consultaInfDireccion);
             }
         });
     }
-
 
 
     private void iniciaComponentes() {
@@ -142,15 +144,19 @@ public class ConsultaPersonal extends AppCompatActivity implements MenuInformaci
         tipoId = findViewById(R.id.tipoId);
         txtMail = findViewById(R.id.txtMail);
         txtEstadoCivil = findViewById(R.id.txtEstadoCivil);
+        frameMenu = findViewById(R.id.frameMenu);
+        frameHeader = findViewById(R.id.frameHeader);
+
     }
 
+    @SuppressLint("SetTextI18n")
     private void setInfoClient(ResponseGetCliente responseGetCliente) {
         Cliente datos = responseGetCliente.data.cliente;
         txtIdClient.setText(String.valueOf(datos.idCliente));
-        txtNombreClient.setText(String.valueOf(datos.idPersona.nombres+" "+datos.idPersona.apellidoPaterno+" "+datos.idPersona.apellidoMaterno));
-        if ((datos.idPersona.genero==1)){
+        txtNombreClient.setText(datos.idPersona.nombres + " " + datos.idPersona.apellidoPaterno + " " + datos.idPersona.apellidoMaterno);
+        if ((datos.idPersona.genero == 1)) {
             idGenero.setText("Hombre");
-        }else{
+        } else {
             idGenero.setText("Mujer");
         }
         idNacionalidad.setText(datos.idPersona.idNacionalidad.nombre);
@@ -175,6 +181,6 @@ public class ConsultaPersonal extends AppCompatActivity implements MenuInformaci
 
     @Override
     public void transfiereInfo(RequestInsertClient req) {
-        Log.d("consultaC", "se ejecuta en transfiere info: "+3);
+        Log.d("consultaC", "se ejecuta en transfiere info: " + 3);
     }
 }

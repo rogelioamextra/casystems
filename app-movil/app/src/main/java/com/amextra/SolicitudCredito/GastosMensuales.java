@@ -1,7 +1,5 @@
 package com.amextra.SolicitudCredito;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +7,8 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.amextra.amextra.R;
 import com.amextra.dialogs.MenuHeader;
@@ -28,7 +28,7 @@ public class GastosMensuales extends AppCompatActivity implements MenuSolicitudC
     String nombreStatus = "esAlta";
     String nombreTit = "Titulo";
     String titulo;
-    TextInputEditText gastosTransporte, gastosRenta, gastosServicios, gastosSueldos,gastosTotales;
+    TextInputEditText gastosTransporte, gastosRenta, gastosServicios, gastosSueldos, gastosTotales;
 
     String N_REQ_SOL_CRED = "REQSOLCRED";
     long totalGastos;
@@ -36,9 +36,9 @@ public class GastosMensuales extends AppCompatActivity implements MenuSolicitudC
     final androidx.fragment.app.FragmentManager mFragmentManH = getSupportFragmentManager();
     final MenuHeader menuHeader = new MenuHeader();
     final androidx.fragment.app.FragmentTransaction mFragmentHeaderTransac = mFragmentManH.beginTransaction();
-    int montoTransporte =0,montoRenta=0,montoServicios=0,montoSueldos=0;
+    int montoTransporte = 0, montoRenta = 0, montoServicios = 0, montoSueldos = 0;
 
-    final androidx.fragment.app.FragmentManager mFragmentPat= getSupportFragmentManager();
+    final androidx.fragment.app.FragmentManager mFragmentPat = getSupportFragmentManager();
     final MenuSolicitudCredito menuPat = new MenuSolicitudCredito();
     final androidx.fragment.app.FragmentTransaction mFragmentTransactPat = mFragmentPat.beginTransaction();
 
@@ -65,29 +65,28 @@ public class GastosMensuales extends AppCompatActivity implements MenuSolicitudC
             titulo = (recepcion.getString(nombreTit));
             responseLogIn = (InfoUSer) recepcion.getSerializable("infoLogIn");
 
-            if(getIntent().hasExtra(N_REQ_SOL_CRED)){
+            if (getIntent().hasExtra(N_REQ_SOL_CRED)) {
                 requestSolicitudCredito = (RequestSolicitudCredito) recepcion.getSerializable(N_REQ_SOL_CRED);
-                if(requestSolicitudCredito.data.ingresos!=null){
+                if (requestSolicitudCredito.getData().getIngresos() != null) {
 
-                    gastosRenta.setText(requestSolicitudCredito.data.ingresos.gastoRenta);
-                    gastosTransporte.setText(requestSolicitudCredito.data.ingresos.gastoTransporte);
-                    gastosServicios.setText(requestSolicitudCredito.data.ingresos.gastoServicios);
-                    gastosSueldos.setText(requestSolicitudCredito.data.ingresos.gastoSueldos);
-                    gastosTotales.setText(requestSolicitudCredito.data.ingresos.gastoTotal);
+                    gastosRenta.setText(requestSolicitudCredito.getData().getIngresos().getGastoRenta());
+                    gastosTransporte.setText(requestSolicitudCredito.getData().getIngresos().getGastoTransporte());
+                    gastosServicios.setText(requestSolicitudCredito.getData().getIngresos().getGastoServicios());
+                    gastosSueldos.setText(requestSolicitudCredito.getData().getIngresos().getGastoSueldos());
+                    gastosTotales.setText(requestSolicitudCredito.getData().getIngresos().getGastoTotal());
                     generaCaluloTotal();
                 }
             }
         }
 
 
-
-        bTransact.putSerializable(N_REQ_SOL_CRED,requestSolicitudCredito);
-        bTransact.putInt("itm",1);
-        bTransact.putString(nombreTit,titulo);
-        bHeader.putString(nombreTit,titulo);
-        bHeader.putSerializable("infoLogIn",responseLogIn);
+        bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        bTransact.putInt("itm", 1);
+        bTransact.putString(nombreTit, titulo);
+        bHeader.putString(nombreTit, titulo);
+        bHeader.putSerializable("infoLogIn", responseLogIn);
         menuHeader.setArguments(bHeader);
-        mFragmentHeaderTransac.add(R.id.frameHeader,menuHeader).commit();
+        mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
 
         menuPat.setArguments(bTransact);
         mFragmentTransactPat.add(R.id.frameLayout, menuPat).commit();
@@ -103,11 +102,17 @@ public class GastosMensuales extends AppCompatActivity implements MenuSolicitudC
     private void listenersEditText(EditText edit) {
         edit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {generaCaluloTotal();}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                generaCaluloTotal();
+            }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -118,17 +123,17 @@ public class GastosMensuales extends AppCompatActivity implements MenuSolicitudC
         montoRenta = defineValor(gastosRenta.getText().toString());
         montoServicios = defineValor(gastosServicios.getText().toString());
         montoSueldos = defineValor(gastosSueldos.getText().toString());
-        totalGastos = montoServicios+montoRenta+montoTransporte+montoSueldos;
+        totalGastos = montoServicios + montoRenta + montoTransporte + montoSueldos;
         String totalFormat = formatter.format(totalGastos);
         gastosTotales.setText(totalFormat);
 
     }
 
     private int defineValor(String s) {
-        int value ;
+        int value;
         if (s.equals("")) {
             value = 0;
-        }else{
+        } else {
             value = Integer.parseInt(s);
 
         }
@@ -154,7 +159,7 @@ public class GastosMensuales extends AppCompatActivity implements MenuSolicitudC
             boolean status = (receptor.getBoolean(nombreStatus));
             getInformacion();
             sender.putString(nombreTit, titulo);
-            sender.putSerializable("infoLogIn",responseLogIn);
+            sender.putSerializable("infoLogIn", responseLogIn);
             sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
             sender.putBoolean(nombreStatus, status);
             solicitudCreditoScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -167,9 +172,9 @@ public class GastosMensuales extends AppCompatActivity implements MenuSolicitudC
     @Override
     public void transfiereinfocredito() {
         getInformacion();
-        bTransact.putSerializable(N_REQ_SOL_CRED,requestSolicitudCredito);
-        bTransact.putString(nombreTit,titulo);
-        bTransact.putSerializable("infoLogIn",responseLogIn);
+        bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        bTransact.putString(nombreTit, titulo);
+        bTransact.putSerializable("infoLogIn", responseLogIn);
         menuPat.setArguments(bTransact);
 
     }

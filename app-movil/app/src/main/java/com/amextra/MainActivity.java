@@ -1,27 +1,31 @@
 package com.amextra;
 
 
-
+import static android.os.Build.VERSION.SDK_INT;
 import static com.amextra.utils.Constants.NO_TOKEN_VALUE;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-
+import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.amextra.Beans.Data;
 import com.amextra.Beans.RequestLogin;
@@ -36,11 +40,11 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import cn.pedant.SweetAlert.SweetAlertDialog ;
 
 public class MainActivity extends AppCompatActivity implements Callback<ResponseLogin> {
     Button btnIniciaSesion;
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
     String INFO_USER = "infoLogIn";
     private LocationCallback locationCallback;
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +97,10 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
 
         }
 
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.MANAGE_MEDIA}, MY_CAMERA_REQUEST_CODE);
 
+        }
 
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -102,10 +110,10 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
                 if (location != null) {
                     geolocalizacion.setLatitude(String.valueOf(location.getLatitude()));
                     geolocalizacion.setLongitud(String.valueOf(location.getLongitude()));
-                    currentLocation=location;
-                    Log.d("loc", "onLocationResult: "+currentLocation.getLatitude());
+                    currentLocation = location;
+                    Log.d("loc", "onLocationResult: " + currentLocation.getLatitude());
 
-                }else{
+                } else {
                     buildLocationCallback();
                 }
             }
@@ -123,12 +131,13 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
                 }
                 for (Location location : locationResult.getLocations()) {
                     // Update UI with location data
-                    currentLocation=location;
+                    currentLocation = location;
                     geolocalizacion.setLatitude(String.valueOf(currentLocation.getLatitude()));
                     geolocalizacion.setLongitud(String.valueOf(currentLocation.getLongitude()));
-                    Log.d("loc", "onLocationResult: "+currentLocation.getLatitude());
+                    Log.d("loc", "onLocationResult: " + currentLocation.getLatitude());
                 }
-            };
+            }
+
         };
     }
 
@@ -140,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             } else {
 
-                new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE)
+                new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Error")
                         .setContentText("Permisos no proporcionados, por favor proporcione los permisos solicitados para poder continuar")
                         .show();
@@ -148,11 +157,23 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
             }
 
         }
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                Uri uri = Uri.fromParts("package", this.getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.MANAGE_EXTERNAL_STORAGE}, 1);
+
+            }
+        }
 
 
     }
-
-
 
 
     private void iniciaSesion() {
@@ -198,12 +219,11 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
             texInputEmail.setActivated(true);
 
 
-        } else if(password.equals("")){
+        } else if (password.equals("")) {
             dialogFragment.dismiss();
             texInputPassword.setError("Contraseña requerida");
 
-        }
-        else {
+        } else {
 
             requestLogin.getData().setUsuario(usuario);
             requestLogin.getData().setPassword(password);
@@ -225,20 +245,20 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
                 if (responseLogIn.response.codigo == 200) {
                     transfiereDatos.putString(nombreTit, titulo);
                     transfiereDatos.putSerializable("geo", geolocalizacion);
-                    transfiereDatos.putSerializable("infoLogIn",responseLogIn.data.infoUSer);
+                    transfiereDatos.putSerializable("infoLogIn", responseLogIn.data.infoUSer);
 
                     menuScreenIntent.putExtras(transfiereDatos);
                     menuScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(menuScreenIntent);
                     dialogFragment.dismiss();
 
-                }else{
+                } else {
 
                     text = responseLogIn.response.codigo + "  " + responseLogIn.response.mensaje;
                     dialogFragment.dismiss();
                     texInputEmail.setActivated(true);
                     texInputPassword.setActivated(true);
-                    new SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
+                    new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Advertencia")
                             .setContentText(text.toString())
                             .show();
@@ -257,8 +277,8 @@ public class MainActivity extends AppCompatActivity implements Callback<Response
         dialogFragment.dismiss();
         texInputEmail.setActivated(true);
         texInputPassword.setActivated(true);
-        Toast.makeText(MainActivity.this,text.toString(),Toast.LENGTH_LONG).show();
-        new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE)
+        Toast.makeText(MainActivity.this, text.toString(), Toast.LENGTH_LONG).show();
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Error de comunicacion")
                 .setContentText("Favor de contactar a su administrador de sistemas")
                 .show();

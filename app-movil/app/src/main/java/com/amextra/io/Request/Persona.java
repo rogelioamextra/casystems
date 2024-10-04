@@ -19,9 +19,20 @@ public class Persona implements Serializable {
     public long gradoMaximoEstudiosId;
     public long nacionalidadId;
     public String lugarNacimientoId;
+    private Political political;
+
+
 
     public String getID() { return id; }
     public void setID(String value) { this.id = value; }
+
+    public Political getPolitical() {
+        return political;
+    }
+
+    public void setPolitical(Political political) {
+        this.political = political;
+    }
 
     public String getNombres() { return nombres; }
     public void setNombres(String value) { this.nombres = value; }
@@ -64,4 +75,6 @@ public class Persona implements Serializable {
 
     public String getLugarNacimientoID() { return lugarNacimientoId; }
     public void setLugarNacimientoID(String value) { this.lugarNacimientoId = value; }
+
+
 }

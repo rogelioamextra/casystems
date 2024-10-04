@@ -3,10 +3,19 @@ package com.amextra.io.Request;
 import java.io.Serializable;
 
 public class DataResValidaSMS implements Serializable {
-    public String numeroEnvio;
-    public String codigo;
-    public String nip;
-    public String curp;
+    private String numeroEnvio;
+    private String codigo;
+    private String nip;
+    private String curp;
+    private boolean isAval = false;
+
+    public boolean isAval() {
+        return isAval;
+    }
+
+    public void setAval(boolean aval) {
+        isAval = aval;
+    }
 
     public String getNip() {
         return nip;
@@ -24,10 +33,20 @@ public class DataResValidaSMS implements Serializable {
         this.curp = curp;
     }
 
-    public String getNumeroEnvio() { return numeroEnvio; }
-    public void setNumeroEnvio(String value) { this.numeroEnvio = value; }
+    public String getNumeroEnvio() {
+        return numeroEnvio;
+    }
 
-    public String getCodigo() { return codigo; }
-    public void setCodigo(String value) { this.codigo = value; }
+    public void setNumeroEnvio(String value) {
+        this.numeroEnvio = value;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String value) {
+        this.codigo = value;
+    }
 
 }

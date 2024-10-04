@@ -5,20 +5,36 @@ import java.util.ArrayList;
 
 public class DataRequestSolicitudCredito implements Serializable {
 
-    public String clienteId;
-    public String frecuenciaPagoId;
-    public String productoCreditoId;
-    public String destinoCreditoId;
-    public String plazo;
+    private String clienteId;
+    private String frecuenciaPagoId;
+    private String productoCreditoId;
+    private String destinoCreditoId;
+    private String plazo;
 
-    public String latitud;
-    public String asesorId;
-    public boolean revolvente;
-    public String fechaSolicitud;
-    public String monto;
-    public Egresos_ egresos;
-    public ArrayList<PatrimoniosCls> patrimonios;
-    public Ingresos_ ingresos;
+    private String latitud;
+    private String asesorId;
+    private boolean revolvente;
+    private String fechaSolicitud;
+    private String monto;
+    private Egresos_ egresos;
+    private ArrayList<PatrimoniosCls> patrimonios;
+    private Ingresos_ ingresos;
+
+
+    private String disseaseDescription;
+    private Boolean sick;
+    private Boolean confirmaIngresos = false;
+
+
+    private ArrayList<Aval> avales = new ArrayList<Aval>();
+
+    public ArrayList<Aval> getAvales() {
+        return avales;
+    }
+
+    public void setAvales(ArrayList<Aval> avales) {
+        this.avales = avales;
+    }
 
     public String getLatitud() {
         return latitud;
@@ -37,6 +53,7 @@ public class DataRequestSolicitudCredito implements Serializable {
     }
 
     public String longitud;
+
     public String getClienteId() {
         return clienteId;
     }
@@ -82,37 +99,117 @@ public class DataRequestSolicitudCredito implements Serializable {
     }
 
 
+    public String getClienteID() {
+        return clienteId;
+    }
 
-    public String getClienteID() { return clienteId; }
-    public void setClienteID(String value) { this.clienteId = value; }
+    public void setClienteID(String value) {
+        this.clienteId = value;
+    }
 
-    public String getFrecuenciaPagoID() { return frecuenciaPagoId; }
-    public void setFrecuenciaPagoID(String value) { this.frecuenciaPagoId = value; }
+    public String getFrecuenciaPagoID() {
+        return frecuenciaPagoId;
+    }
 
-    public String getProductoCreditoID() { return productoCreditoId; }
-    public void setProductoCreditoID(String value) { this.productoCreditoId = value; }
+    public void setFrecuenciaPagoID(String value) {
+        this.frecuenciaPagoId = value;
+    }
 
-    public String getDestinoCreditoID() { return destinoCreditoId; }
-    public void setDestinoCreditoID(String value) { this.destinoCreditoId = value; }
+    public String getProductoCreditoID() {
+        return productoCreditoId;
+    }
 
-    public String getPlazo() { return plazo; }
-    public void setPlazo(String value) { this.plazo = value; }
+    public void setProductoCreditoID(String value) {
+        this.productoCreditoId = value;
+    }
 
-    public boolean getRevolvente() { return revolvente; }
-    public void setRevolvente(boolean value) { this.revolvente = value; }
+    public String getDestinoCreditoID() {
+        return destinoCreditoId;
+    }
 
-    public String getFechaSolicitud() { return fechaSolicitud; }
-    public void setFechaSolicitud(String value) { this.fechaSolicitud = value; }
+    public void setDestinoCreditoID(String value) {
+        this.destinoCreditoId = value;
+    }
 
-    public String getMonto() { return monto; }
-    public void setMonto(String value) { this.monto = value; }
+    public String getPlazo() {
+        return plazo;
+    }
 
-    public Egresos_ getEgresos() { return egresos; }
-    public void setEgresos(Egresos_ value) { this.egresos = value; }
+    public void setPlazo(String value) {
+        this.plazo = value;
+    }
 
-    public ArrayList<PatrimoniosCls> getPatrimonios() { return patrimonios; }
-    public void setPatrimonios(ArrayList<PatrimoniosCls> value) { this.patrimonios = value; }
+    public boolean getRevolvente() {
+        return revolvente;
+    }
 
-    public Ingresos_ getIngresos() { return ingresos; }
-    public void setIngresos(Ingresos_ value) { this.ingresos = value; }
+    public void setRevolvente(boolean value) {
+        this.revolvente = value;
+    }
+
+    public String getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public void setFechaSolicitud(String value) {
+        this.fechaSolicitud = value;
+    }
+
+    public String getMonto() {
+        return monto;
+    }
+
+    public void setMonto(String value) {
+        this.monto = value;
+    }
+
+    public Egresos_ getEgresos() {
+        return egresos;
+    }
+
+    public void setEgresos(Egresos_ value) {
+        this.egresos = value;
+    }
+
+    public ArrayList<PatrimoniosCls> getPatrimonios() {
+        return patrimonios;
+    }
+
+    public void setPatrimonios(ArrayList<PatrimoniosCls> value) {
+        this.patrimonios = value;
+    }
+
+    public Ingresos_ getIngresos() {
+        return ingresos;
+    }
+
+    public void setIngresos(Ingresos_ value) {
+        this.ingresos = value;
+    }
+
+    public String getDisseaseDescription() {
+        return disseaseDescription;
+    }
+
+    public void setDisseaseDescription(String disseaseDescription) {
+        this.disseaseDescription = disseaseDescription;
+    }
+
+    public Boolean getSick() {
+        return sick;
+    }
+
+    public void setSick(Boolean sick) {
+        this.sick = sick;
+    }
+
+    public Boolean getConfirmaIngresos() {
+        return confirmaIngresos;
+    }
+
+    public void setConfirmaIngresos(Boolean confirmaIngresos) {
+        this.confirmaIngresos = confirmaIngresos;
+    }
+
+
 }

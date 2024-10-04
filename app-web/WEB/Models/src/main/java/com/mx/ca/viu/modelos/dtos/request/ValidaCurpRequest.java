@@ -29,7 +29,12 @@ public class ValidaCurpRequest extends GenericAuth implements Serializable {
 
         @JsonProperty("curp")
         private String curp;
-
+        
+        
+        @JsonProperty("posibleCliente")
+        private boolean posibleCliente;
+                
+                
         public String getCurp() {
             return curp;
         }
@@ -37,6 +42,15 @@ public class ValidaCurpRequest extends GenericAuth implements Serializable {
         public void setCurp(String curp) {
             this.curp = curp;
         }
+
+        public boolean isPosibleCliente() {
+            return posibleCliente;
+        }
+
+        public void setPosibleCliente(boolean posibleCliente) {
+            this.posibleCliente = posibleCliente;
+        }
+        
         
         
 

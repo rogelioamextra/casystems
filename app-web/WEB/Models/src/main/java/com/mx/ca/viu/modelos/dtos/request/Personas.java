@@ -40,6 +40,8 @@ public class Personas {
     private Long nacionalidadId;
 
     private String lugarNacimientoId;
+    
+    private Political political;
 
     public Personas() {
     }
@@ -69,6 +71,14 @@ public class Personas {
 
     public void setApellidoPaterno(String apellidoPaterno) {
         this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public Political getPolitical() {
+        return political;
+    }
+
+    public void setPolitical(Political political) {
+        this.political = political;
     }
 
     public String getApellidoMaterno() {

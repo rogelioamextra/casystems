@@ -15,11 +15,14 @@ public class Cliente implements Serializable {
     public IdDtIdentificacion idDtIdentificacion;
     public IdTipoIdentificacion idTipoIdentificacion;
 
+    private boolean espolitico;
 
+    private String politicaljobdescription;
 
     public boolean isAproboVerificacionSMS() {
         return aproboVerificacionSMS;
     }
+
     public long getIdCliente() {
         return idCliente;
     }
@@ -78,4 +81,19 @@ public class Cliente implements Serializable {
     }
 
 
+    public boolean isEspolitico() {
+        return espolitico;
+    }
+
+    public void setEspolitico(boolean espolitico) {
+        this.espolitico = espolitico;
+    }
+
+    public String getPoliticaljobdescription() {
+        return politicaljobdescription;
+    }
+
+    public void setPoliticaljobdescription(String politicaljobdescription) {
+        this.politicaljobdescription = politicaljobdescription;
+    }
 }

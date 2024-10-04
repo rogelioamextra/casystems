@@ -33,11 +33,11 @@ public class ControllerServicioEnvioSms {
     @PostMapping("sms")
     public ResponseEntity<EnvioSmsResponse> post(@RequestBody RequestEnvioSms entity, Principal principal) {
         EnvioSmsResponse respuesta = new EnvioSmsResponse();
-        respuesta = validacionSmsServices.enviarCodigoValidacion(entity.getData().getNumeroEnvio(),entity.getData().getCurp());
+        respuesta = validacionSmsServices.enviarCodigoValidacion(entity );
         return ResponseEntity.ok(respuesta);
 
     }
-    @PostMapping("validar")
+    @PostMapping("valida-sms")
     public ResponseEntity<ValidacionSmsResponse> postValidar(@RequestBody RequestValidarCodigoSms entity, Principal principal) {
         ValidacionSmsResponse respuesta = new ValidacionSmsResponse();
          

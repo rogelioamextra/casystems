@@ -5,16 +5,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.amextra.SolicitudCredito.AvalesPrincipal;
 import com.amextra.SolicitudCredito.DatosAdicionales;
 import com.amextra.SolicitudCredito.Egresos;
 import com.amextra.SolicitudCredito.Patrimonios;
@@ -29,7 +29,7 @@ import com.amextra.io.Response.InfoUSer;
  */
 public class MenuSolicitudCredito extends Fragment {
     MenuSolicitudCredito.TransfiereDatos transfiereDatos;
-    RadioButton radioIngresos, radioEgresos, radioPatrimonios;
+    RadioButton radioIngresos, radioEgresos, radioPatrimonios, radioAvales;
 
     String nombreStatus = "esAlta";
     boolean esAltaG;
@@ -91,6 +91,10 @@ public class MenuSolicitudCredito extends Fragment {
                             Intent inte = new Intent(getActivity(), Patrimonios.class);
                             enviaData(inte);
                             break;
+                        case 5:
+                            Intent avales = new Intent(getActivity(), AvalesPrincipal.class);
+                            enviaData(avales);
+                            break;
                         default:
                             break;
                     }
@@ -126,6 +130,9 @@ public class MenuSolicitudCredito extends Fragment {
             case 3:
                 radioIngresos.setChecked(true);
                 break;
+            case 5:
+                radioAvales.setChecked(true);
+                break;
             default:
                 break;
         }
@@ -153,6 +160,7 @@ public class MenuSolicitudCredito extends Fragment {
         radioIngresos = v.findViewById(R.id.radioIngresos);
         radioEgresos = v.findViewById(R.id.radioEgresos);
         radioPatrimonios = v.findViewById(R.id.radioPatrimonios);
+        radioAvales = v.findViewById(R.id.radioAvales);
 
         numero = bund.getInt("itm");
         titulo = bund.getString(nombreTit);
@@ -160,11 +168,10 @@ public class MenuSolicitudCredito extends Fragment {
         requestSolicitudCredito = (RequestSolicitudCredito) bund.getSerializable(N_REQ_SOL_CRED);
 
 
-
-
         cambiarActividad(radioIngresos, 0);
         cambiarActividad(radioEgresos, 1);
         cambiarActividad(radioPatrimonios, 2);
+        cambiarActividad(radioAvales, 5);
         apartado(numero);
         return v;
 
@@ -172,6 +179,6 @@ public class MenuSolicitudCredito extends Fragment {
 
 
     public interface TransfiereDatos {
-        public void transfiereinfocredito();
+        void transfiereinfocredito();
     }
 }
