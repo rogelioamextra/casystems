@@ -5,9 +5,18 @@ import java.io.Serializable;
 public class InformacionAval implements Serializable {
     private String nombreCompleto;
     private String telefono;
+    private boolean confimaSms;
 
     public String getNombreCompleto() {
         return nombreCompleto;
+    }
+
+    public boolean isConfimaSms() {
+        return confimaSms;
+    }
+
+    public void setConfimaSms(boolean confimaSms) {
+        this.confimaSms = confimaSms;
     }
 
     public void setNombreCompleto(String nombreCompleto) {

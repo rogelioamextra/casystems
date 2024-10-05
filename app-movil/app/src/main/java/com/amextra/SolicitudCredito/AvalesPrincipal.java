@@ -261,6 +261,7 @@ public class AvalesPrincipal extends AppCompatActivity
                 InformacionAval tmp = new InformacionAval();
                 tmp.setNombreCompleto(aval.getNombre() + " " + aval.getApellidoPaterno() + " " + aval.getApellidoMaterno());
                 tmp.setTelefono(aval.getTelefono());
+                tmp.setConfimaSms(aval.isConfirmSms());
                 avals.add(tmp);
             }
 
@@ -294,15 +295,19 @@ public class AvalesPrincipal extends AppCompatActivity
 
     @Override
     public void sendAvalInfo(Aval aval) {
-        Log.d("addAval", aval.toString());
-        if (isEditing) {
-            avales.set(position, aval);
-            isEditing = false;
-        } else {
-            avales.add(aval);
+        if (aval != null) {
+            Log.d("addAval", aval.toString());
+            if (isEditing) {
+                avales.set(position, aval);
+                isEditing = false;
+            } else {
+                avales.add(aval);
+            }
+
+            drawAvales(avales);
+
         }
 
-        drawAvales(avales);
     }
 
     @Override

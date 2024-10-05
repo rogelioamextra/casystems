@@ -1,28 +1,43 @@
-package com.amextra.io.Request;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mx.ca.viu.modelos.dtos.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
+import java.util.Date;
 
-public class Aval implements Serializable {
-    private String nombre = "";
-    private String apellidoPaterno = "";
-    private String apellidoMaterno = "";
-    private String fechaNacimiento = "";
-    private String curp = "";
-    private String telefono = "";
-    private long tipoIdentificacion = 0L;
-    private String reverso = "";
-    private String frontal = "";
-    private String comprobanteDomicilio = "";
-    private boolean confirmSms = false;
+/**
+ *
+ * @author rogel
+ */
+public class Aval implements Serializable{
+    
+    
+    private String nombre;
+    
+    private String apellidoPaterno;
+    
+    private String apellidoMaterno;
+    
+    
+
+    private String fechaNacimiento;
+    
+    private String curp;
+    
+    private String telefono;
+    
+    private long tipoIdentificacion;
+    
+    private String reverso;
+    
+    private String frontal;
+    
+    private String comprobanteDomicilio;
 
 
-    public boolean isConfirmSms() {
-        return confirmSms;
-    }
-
-    public void setConfirmSms(boolean confirmSms) {
-        this.confirmSms = confirmSms;
-    }
 
     public String getNombre() {
         return nombre;
@@ -48,13 +63,7 @@ public class Aval implements Serializable {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
-    }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
 
     public String getCurp() {
         return curp;
@@ -104,20 +113,19 @@ public class Aval implements Serializable {
         this.comprobanteDomicilio = comprobanteDomicilio;
     }
 
-
     @Override
     public String toString() {
-        return "aval: {" +
-                "nombre='" + nombre + '\'' +
-                ", apellidoPaterno='" + apellidoPaterno + '\'' +
-                ", apellidoMaterno='" + apellidoMaterno + '\'' +
-                ", fechaNacimiento='" + fechaNacimiento + '\'' +
-                ", curp='" + curp + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", tipoIdentificacion=" + tipoIdentificacion +
-                ", reverso='" + reverso + '\'' +
-                ", frontal='" + frontal + '\'' +
-                ", comprobanteDomicilio='" + comprobanteDomicilio + '\'' +
-                '}';
+        return "aval: {" + "nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + ", tipoIdentificacion=" + tipoIdentificacion + ", reverso=" + reverso + ", frontal=" + frontal + ", comprobanteDomicilio=" + comprobanteDomicilio + '}';
     }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    
+    
 }

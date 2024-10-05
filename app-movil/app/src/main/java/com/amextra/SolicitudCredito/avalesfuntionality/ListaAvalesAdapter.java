@@ -1,6 +1,7 @@
 package com.amextra.SolicitudCredito.avalesfuntionality;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ListaAvalesAdapter extends ArrayAdapter<InformacionAval> {
         TextView telefono;
         ImageButton delete;
         ImageButton edit;
+        ImageButton confirmSms;
 
 
     }
@@ -47,6 +49,9 @@ public class ListaAvalesAdapter extends ArrayAdapter<InformacionAval> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String nc = getItem(position).getNombreCompleto();
         String pho = getItem(position).getTelefono();
+        boolean confirm = getItem(position).isConfimaSms();
+        int id = mContext.getResources().getIdentifier(confirm ? "ic_done_all_24" : "ic_sharp_close_24", "drawable", mContext.getPackageName());
+        Drawable drawable = mContext.getDrawable(id);
 
         final View result;
         ListaAvalesAdapter.ViewHolder holder;
@@ -61,6 +66,7 @@ public class ListaAvalesAdapter extends ArrayAdapter<InformacionAval> {
             holder.telefono = convertView.findViewById(R.id.telefono);
             holder.delete = convertView.findViewById(R.id.delete);
             holder.edit = convertView.findViewById(R.id.edit);
+            holder.confirmSms = convertView.findViewById(R.id.confirmSms);
             result = convertView;
             convertView.setTag(holder);
 
@@ -76,6 +82,9 @@ public class ListaAvalesAdapter extends ArrayAdapter<InformacionAval> {
 
         holder.nombreCompleto.setText(nc);
         holder.telefono.setText(pho);
+        holder.confirmSms.setImageDrawable(drawable);
+
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

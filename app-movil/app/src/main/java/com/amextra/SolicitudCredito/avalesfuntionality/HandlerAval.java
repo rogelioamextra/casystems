@@ -35,7 +35,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -290,12 +289,9 @@ public class HandlerAval extends DialogFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (s.length() == 5) {
-                    token = s.toString();
-                } else {
 
-                    Toast.makeText(actividad, "El token debe ser de 5 digitos", Toast.LENGTH_SHORT).show();
-                }
+                token = s.toString();
+
 
             }
 
@@ -361,20 +357,14 @@ public class HandlerAval extends DialogFragment {
             public void onResponse(Call<ResponseValidaSMS> call, Response<ResponseValidaSMS> response) {
                 if (response.isSuccessful() && response.code() == STATUS_OK) {
                     ResponseValidaSMS rs = response.body();
+                    assert rs != null;
                     if (rs.getResponse().getCodigo() == STATUS_OK) {
+                        objSend.setConfirmSms(true);
                         dfr.dismiss();
                         saveAval();
                     } else {
-                        dfr.dismiss();
-                        SweetAlertDialog sw = new SweetAlertDialog(actividad, SweetAlertDialog.ERROR_TYPE);
-                        sw.setTitleText("Error");
-                        sw.setContentText(rs.getResponse().mensaje);
-                        sw.setConfirmText("Continuar");
-                        sw.setConfirmClickListener(sweetAlertDialog -> {
-                            sw.dismiss();
-
-                        });
-                        sw.show();
+                        objSend.setConfirmSms(false);
+                        saveAval();
                         call.cancel();
 
                     }
@@ -383,6 +373,8 @@ public class HandlerAval extends DialogFragment {
 
             @Override
             public void onFailure(Call<ResponseValidaSMS> call, Throwable t) {
+                objSend.setConfirmSms(false);
+                saveAval();
                 dfr.dismiss();
                 SweetAlertDialog sw = new SweetAlertDialog(actividad, SweetAlertDialog.ERROR_TYPE);
                 sw.setTitleText("Error");
