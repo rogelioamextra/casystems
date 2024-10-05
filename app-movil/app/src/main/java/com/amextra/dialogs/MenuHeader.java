@@ -2,14 +2,13 @@ package com.amextra.dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
 
 import com.amextra.MenuHomeScreen;
 import com.amextra.amextra.R;
@@ -26,6 +25,9 @@ public class MenuHeader extends Fragment {
     String nombreTit = "Titulo";
     Button btnNoActionHeader;
     private ImageView cierraActividad;
+    String curpClie = "";
+    final String CURP_CLI = "CURP_CLI";
+
     public MenuHeader() {
         // Required empty public constructor
     }
@@ -60,14 +62,16 @@ public class MenuHeader extends Fragment {
         String titulo = bund.getString(nombreTit);
         responseLogIn = (InfoUSer) bund.getSerializable("infoLogIn");
         geolocalizacion = (Geolocalizacion) bund.getSerializable("geo");
+        curpClie = bund.getString(CURP_CLI);
         btnNoActionHeader.setText(titulo);
         cierraActividad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle sender = new Bundle();
-                sender.putSerializable("infoLogIn",responseLogIn);
-                sender.putSerializable("geo",geolocalizacion);
-                Intent intent = new Intent(getActivity(),MenuHomeScreen.class);
+                sender.putSerializable("infoLogIn", responseLogIn);
+                sender.putSerializable("geo", geolocalizacion);
+                sender.putSerializable(CURP_CLI, curpClie);
+                Intent intent = new Intent(getActivity(), MenuHomeScreen.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtras(sender);
                 startActivity(intent);

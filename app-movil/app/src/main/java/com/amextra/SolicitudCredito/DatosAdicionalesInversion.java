@@ -92,7 +92,8 @@ public class DatosAdicionalesInversion extends AppCompatActivity implements Menu
         bTransact.putInt("itm", 3);
         bTransact.putString(nombreTit, titulo);
         bTransact.putSerializable(INFO_USER, responseLogIn);
-
+        bHeader.putString(CURP_CLI, curpCliente);
+        bTransact.putString(CURP_CLI, curpCliente);
 
         bHeader.putString(nombreTit, titulo);
         bHeader.putSerializable(INFO_USER, responseLogIn);

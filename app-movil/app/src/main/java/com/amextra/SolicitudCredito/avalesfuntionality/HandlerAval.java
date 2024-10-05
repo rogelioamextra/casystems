@@ -348,46 +348,56 @@ public class HandlerAval extends DialogFragment {
     }
 
     private void validaSms(RequestValidaSMS body) {
-        DialogFragment dfr = LoaderTransparent.loaderTransparent("Validando token...");
-        dfr.show(getActivity().getSupportFragmentManager(), "LoaderTransparent");
 
-        Call<ResponseValidaSMS> call = ApiAdapter.getApiService(newToken).validaSMS(body);
-        call.enqueue(new Callback<ResponseValidaSMS>() {
-            @Override
-            public void onResponse(Call<ResponseValidaSMS> call, Response<ResponseValidaSMS> response) {
-                if (response.isSuccessful() && response.code() == STATUS_OK) {
-                    ResponseValidaSMS rs = response.body();
-                    assert rs != null;
-                    if (rs.getResponse().getCodigo() == STATUS_OK) {
-                        objSend.setConfirmSms(true);
-                        dfr.dismiss();
-                        saveAval();
-                    } else {
-                        objSend.setConfirmSms(false);
-                        saveAval();
-                        call.cancel();
+        String pin = txtTkn.getText().toString();
+        boolean doReq = pin.isEmpty() || pin.isBlank() || pin.length() < 5;
 
+        if (!doReq) {
+            DialogFragment dfr = LoaderTransparent.loaderTransparent("Validando token...");
+            dfr.show(getActivity().getSupportFragmentManager(), "LoaderTransparent");
+
+            Call<ResponseValidaSMS> call = ApiAdapter.getApiService(newToken).validaSMS(body);
+            call.enqueue(new Callback<ResponseValidaSMS>() {
+                @Override
+                public void onResponse(Call<ResponseValidaSMS> call, Response<ResponseValidaSMS> response) {
+                    if (response.isSuccessful() && response.code() == STATUS_OK) {
+                        ResponseValidaSMS rs = response.body();
+                        assert rs != null;
+                        if (rs.getResponse().getCodigo() == STATUS_OK) {
+                            objSend.setConfirmSms(true);
+                            dfr.dismiss();
+                            saveAval();
+                        } else {
+                            objSend.setConfirmSms(false);
+                            saveAval();
+                            call.cancel();
+
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseValidaSMS> call, Throwable t) {
-                objSend.setConfirmSms(false);
-                saveAval();
-                dfr.dismiss();
-                SweetAlertDialog sw = new SweetAlertDialog(actividad, SweetAlertDialog.ERROR_TYPE);
-                sw.setTitleText("Error");
-                sw.setContentText(t.toString());
-                sw.setConfirmText("Continuar");
-                sw.setConfirmClickListener(sweetAlertDialog -> {
-                    sw.dismiss();
+                @Override
+                public void onFailure(Call<ResponseValidaSMS> call, Throwable t) {
+                    objSend.setConfirmSms(false);
+                    saveAval();
+                    dfr.dismiss();
+                    SweetAlertDialog sw = new SweetAlertDialog(actividad, SweetAlertDialog.ERROR_TYPE);
+                    sw.setTitleText("Error");
+                    sw.setContentText(t.toString());
+                    sw.setConfirmText("Continuar");
+                    sw.setConfirmClickListener(sweetAlertDialog -> {
+                        sw.dismiss();
 
-                });
-                sw.show();
-                call.cancel();
-            }
-        });
+                    });
+                    sw.show();
+                    call.cancel();
+                }
+            });
+        } else {
+            objSend.setConfirmSms(false);
+            saveAval();
+        }
+
 
     }
 

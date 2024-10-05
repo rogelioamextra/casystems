@@ -105,6 +105,7 @@ public class ProyeccionCuotas extends AppCompatActivity {
         }
         bHeader.putSerializable("infoLogIn", responseLogIn);
         bHeader.putString(nombreTit, titulo);
+        bHeader.putString(CURP_CLI, curpCliente);
         menuHeader.setArguments(bHeader);
         mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();
 

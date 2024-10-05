@@ -105,9 +105,11 @@ public class DatosAdicionales extends AppCompatActivity implements MenuSolicitud
         bTransact.putInt("itm", 3);
         bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
         bTransact.putString(nombreTit, titulo);
+        bTransact.putString(CURP_CLI, curpCliente);
         bTransact.putSerializable("infoLogIn", responseLogIn);
 
         bHeader.putString(nombreTit, titulo);
+        bHeader.putString(CURP_CLI, curpCliente);
         bHeader.putSerializable("infoLogIn", responseLogIn);
         menuHeader.setArguments(bHeader);
         menuPat.setArguments(bTransact);

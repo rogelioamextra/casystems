@@ -84,7 +84,8 @@ public class Egresos extends AppCompatActivity implements MenuSolicitudCredito.T
             }
         }
 
-
+        bHeader.putString(CURP_CLI, curpCliente);
+        bTransact.putString(CURP_CLI, curpCliente);
         bTransact.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
         bTransact.putInt("itm", 1);
         bTransact.putString(nombreTit, titulo);

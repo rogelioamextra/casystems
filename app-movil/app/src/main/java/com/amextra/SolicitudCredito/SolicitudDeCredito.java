@@ -114,7 +114,7 @@ public class SolicitudDeCredito extends AppCompatActivity {
         Bundle recepcion = getIntent().getExtras();
         if (recepcion != null) {
             titulo = (recepcion.getString(nombreTit));
-            curpCliente = (recepcion.getString(labelCurp));
+            curpCliente = (recepcion.getString(CURP_CLI));
             responseLogIn = (InfoUSer) recepcion.getSerializable(INFO_USER);
 
             if (getIntent().hasExtra(esSmsVerificado)) {
@@ -124,6 +124,7 @@ public class SolicitudDeCredito extends AppCompatActivity {
             }
         }
         bHeader.putSerializable("infoLogIn", responseLogIn);
+        bHeader.putString(CURP_CLI, curpCliente);
         bHeader.putString(nombreTit, titulo);
         menuHeader.setArguments(bHeader);
         mFragmentHeaderTransac.add(R.id.frameHeader, menuHeader).commit();

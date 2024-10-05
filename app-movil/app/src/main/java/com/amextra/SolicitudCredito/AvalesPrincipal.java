@@ -117,7 +117,8 @@ public class AvalesPrincipal extends AppCompatActivity
         }
         drawAvales(avales);
         loadCatalogoIdentificacion();
-
+        bHeader.putString(CURP_CLI, curpCliente);
+        bTransact.putString(CURP_CLI, curpCliente);
         bHeader.putString(nombreTit, titulo);
         bHeader.putSerializable(INFO_USER, responseLogIn);
         bTransact.putSerializable(INFO_USER, responseLogIn);

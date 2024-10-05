@@ -41,6 +41,8 @@ public class MenuSolicitudCredito extends Fragment {
     String N_REQ_SOL_CRED = "REQSOLCRED";
     String INFO_USER = "infoLogIn";
     InfoUSer responseLogIn = new InfoUSer();
+    final String CURP_CLI = "CURP_CLI";
+    String curpCliente = "";
 
     public MenuSolicitudCredito() {
         // Required empty public constructor
@@ -145,6 +147,7 @@ public class MenuSolicitudCredito extends Fragment {
         bund.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
         bund.putString(nombreTit, titulo);
         bund.putSerializable(INFO_USER, responseLogIn);
+        bund.putString(CURP_CLI, curpCliente);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtras(bund);
         startActivity(intent);
@@ -165,6 +168,7 @@ public class MenuSolicitudCredito extends Fragment {
         numero = bund.getInt("itm");
         titulo = bund.getString(nombreTit);
         responseLogIn = (InfoUSer) bund.getSerializable(INFO_USER);
+        curpCliente = bund.getString(CURP_CLI);
         requestSolicitudCredito = (RequestSolicitudCredito) bund.getSerializable(N_REQ_SOL_CRED);
 
 
