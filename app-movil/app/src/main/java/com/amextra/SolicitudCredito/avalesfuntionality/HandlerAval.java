@@ -394,8 +394,27 @@ public class HandlerAval extends DialogFragment {
                 }
             });
         } else {
-            objSend.setConfirmSms(false);
-            saveAval();
+
+
+            SweetAlertDialog sw = new SweetAlertDialog(actividad, SweetAlertDialog.WARNING_TYPE);
+            sw.setTitleText("Atención");
+            sw.setContentText("Para continuar con tu solicitud de crédito, es necesario validar tu PIN. Si no recibes el PIN en unos minutos, por favor haz clic en \"Continuar\". Si has recibido el SMS, selecciona \"Validar Token\". Recuerda que la longitud del token es de 5 caracteres.\n" +
+                    "\n\n\n" +
+                    "Agradecemos tu colaboración y paciencia.");
+            sw.setConfirmText("Continuar");
+            sw.setCancelText("Validar Token");
+            sw.setCancelClickListener(sweetAlertDialog -> {
+                sw.dismiss();
+            });
+            sw.setConfirmClickListener(sweetAlertDialog -> {
+                objSend.setConfirmSms(false);
+                saveAval();
+                sw.dismiss();
+
+            });
+            sw.show();
+
+
         }
 
 

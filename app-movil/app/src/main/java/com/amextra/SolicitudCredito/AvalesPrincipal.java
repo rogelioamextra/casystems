@@ -215,25 +215,38 @@ public class AvalesPrincipal extends AppCompatActivity
 
 
     private void setToPatrimonios() {
-        if (avales.size() > 0) {
-            requestSolicitudCredito.getData().setAvales(avales);
-            Bundle sender = new Bundle();
-            Bundle receptor = getIntent().getExtras();
-            Intent patrimonios = new Intent(AvalesPrincipal.this, Patrimonios.class);
-            boolean status = (receptor.getBoolean(nombreStatus));
-            sender.putString(nombreTit, titulo);
-            sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
-            sender.putSerializable(INFO_USER, responseLogIn);
-            sender.putBoolean(nombreStatus, status);
-            sender.putString(CURP_CLI, curpCliente);
-            patrimonios.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            patrimonios.putExtras(sender);
-            startActivity(patrimonios);
 
+        if (!avales.isEmpty()) {
+            boolean isConfirm = true;
+            for (Aval aval : avales) {
+                if (!aval.isConfirmSms()) {
+                    isConfirm = false;
+                    break;
+                }
+            }
+            if (!isConfirm) {
+                SweetAlertDialog swr = new SweetAlertDialog(AvalesPrincipal.this, SweetAlertDialog.WARNING_TYPE);
+                swr.setTitleText("Atención");
+                swr.setContentText("Se detecto un aval que no cuenta con el la verificación de SMS."
+                        + "\n\n\n" +
+                        "¿Desea continuar?");
+                swr.setConfirmText("Continuar");
+                swr.setCancelText("Cancelar");
+                swr.setCancelClickListener(sweetAlertDialog -> {
+                    swr.dismiss();
+                });
+                swr.setConfirmClickListener(sweetAlertDialog -> {
+                    swr.dismiss();
+                    startAct();
+                });
+                swr.show();
+            } else {
+                startAct();
+            }
         } else {
             SweetAlertDialog sw = new SweetAlertDialog(AvalesPrincipal.this, SweetAlertDialog.WARNING_TYPE);
-            sw.setTitleText("Alerta");
-            sw.setContentText("Se debe contar con almenos una referencia para poder generar una solicitud.");
+            sw.setTitleText("Atención");
+            sw.setContentText("Para proceder con tu solicitud, es necesario que tengas al menos un aval registrado.");
             sw.setConfirmText("Continuar");
             sw.setConfirmClickListener(sweetAlertDialog -> {
                 sw.dismiss();
@@ -324,5 +337,21 @@ public class AvalesPrincipal extends AppCompatActivity
         }
 
 
+    }
+
+    private void startAct() {
+        requestSolicitudCredito.getData().setAvales(avales);
+        Bundle sender = new Bundle();
+        Bundle receptor = getIntent().getExtras();
+        Intent patrimonios = new Intent(AvalesPrincipal.this, Patrimonios.class);
+        boolean status = (receptor.getBoolean(nombreStatus));
+        sender.putString(nombreTit, titulo);
+        sender.putSerializable(N_REQ_SOL_CRED, requestSolicitudCredito);
+        sender.putSerializable(INFO_USER, responseLogIn);
+        sender.putBoolean(nombreStatus, status);
+        sender.putString(CURP_CLI, curpCliente);
+        patrimonios.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        patrimonios.putExtras(sender);
+        startActivity(patrimonios);
     }
 }
